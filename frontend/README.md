@@ -1,57 +1,16 @@
-# Polibench web app
+# React + Vite
 
-This directory contains the frontend application. It is built with [React](https://reactjs.org/) and [Vite](https://vitejs.dev/).
+This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
 
-## Requirements
+Currently, two official plugins are available:
 
-- [Node.js](https://nodejs.org/en/) for javascript execution and `npm` for package management.
+- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
+- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
 
-## Install
+## React Compiler
 
-To install the project's dependencies, run
+The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
 
-```console
-npm install
-```
+## Expanding the ESLint configuration
 
-## Running the server
-
-To compile the application and start a development server with hot reload :
-
-```console
-npm run dev
-```
-
-This will start a server running on `http://localhost:5173/`. Open a browser to this adress to access the frontend app.
-
-## Building the application
-
-To build the application for production, run
-
-```console
-npm run build
-```
-
-This will compile and process the application's source files into the `dist` directory, which can then be served by an http server.
-
-## Linting and formatting
-
-To lint the frontend code, run
-
-```console
-npm run lint
-```
-
-To format the code, run
-
-```console
-npm run format
-```
-
-**Note** in order to configure eslint to work properly with VScode, you should set the working directory in your workspace config (open settings with `cmd + ,` and search for `eslint working` ):
-
-```
-"eslint.workingDirectories": [
-    "./frontend"
-]
-```
+If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.

@@ -1,29 +1,21 @@
 import js from '@eslint/js'
 import globals from 'globals'
-import tseslint from 'typescript-eslint'
-import pluginReact from 'eslint-plugin-react'
-import json from '@eslint/json'
-import { defineConfig } from 'eslint/config'
-import eslintPluginPrettierRecommended from 'eslint-plugin-prettier/recommended'
+import reactHooks from 'eslint-plugin-react-hooks'
+import reactRefresh from 'eslint-plugin-react-refresh'
+import { defineConfig, globalIgnores } from 'eslint/config'
 
 export default defineConfig([
-  { files: ['**/*.{js,mjs,cjs,ts,jsx,tsx}'], plugins: { js }, extends: ['js/recommended'] },
-  { files: ['**/*.{js,mjs,cjs,ts,jsx,tsx}'], languageOptions: { globals: globals.browser } },
-  tseslint.configs.recommended,
+  globalIgnores(['dist']),
   {
-    ...pluginReact.configs.flat.recommended,
-    settings: {
-      react: {
-        version: 'detect',
-      },
+    files: ['**/*.{js,jsx}'],
+    extends: [
+      js.configs.recommended,
+      reactHooks.configs.flat.recommended,
+      reactRefresh.configs.vite,
+    ],
+    languageOptions: {
+      globals: globals.browser,
+      parserOptions: { ecmaFeatures: { jsx: true } },
     },
   },
-  {
-    rules: {
-      'react/react-in-jsx-scope': 'off',
-      'react/prop-types': 'off',
-    },
-  },
-  { files: ['**/*.json'], plugins: { json }, language: 'json/json', extends: ['json/recommended'] },
-  eslintPluginPrettierRecommended,
 ])
