@@ -62,40 +62,49 @@ function AuthProvider({children}) {
     const {data: utente, isLoading, isError, error} = useQuery({ //principalmente questa chiamata mi serve per prendere le info sugli utenti che mi serviranno per essere stampate nei componenti, ma non è strettamente legata al login
                 queryKey: ['user'],
                 queryFn: async ({signal}) => {
-                    const res = await fetch('/api/v1/users/me', {
+                    const response = await fetch('/api/v1/users/me', {
                         signal: signal,
                         headers: {
                             'Authorization': `Bearer ${accessToken}`
                         }
                     });
-                    if (!res.ok) {
-                        throw new Error('Failed to fetch user');
+                    if (!response.ok) {
+                         const errorData = await response.json().catch(() => ({}));
+                         throw new Error(errorData.detail || 'Failed to fetch user data');
                     }
-                    return await res.json();
+                    return await response.json();
                 },
                 enabled: isLoggedIn, //Poichè useQuery parte già all'avvio,
                 //  avrei un 401 ancora prima di dare la possibilità di mettere i dati.
                 // la query viene eseguita solo se l'utente è loggato
+                staleTime: 1000 * 60 * 10, //di default 1) vale zero ms e 2) viene rifatta la richiesta ogni volta che c'è un mount o si perde la connessione. Impostato a 10 min, invece, se cambio pagina non richiedo dati al backend
             })
    
     const loginMutation = useMutation({
 
-        
+        mutationKey: ['login'],
         mutationFn: async ({ username, password }) => {
             const params = new URLSearchParams(); //perchè il backend si aspetta i dati in formato x-www-form-urlencoded
             params.append('username', username);
             params.append('password', password);
-
-            const response = await fetch('/api/v1/login/access-token', {
+            let response;
+            try {
+                response = await fetch('/api/v1/login/access-token', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/x-www-form-urlencoded'
                 },
                 body: params //non si fa JSON.stringify perchè il backend si aspetta i dati in formato x-www-form-urlencoded e non JSON
+                
             });
+        } catch (networkError) {
+            console.error("Errore durante la fetch:", networkError);
+            throw new Error('Network error during login', { cause: networkError });
+        }
 
             if (!response.ok) {
-                throw new Error('Login failed');
+                const errorData = await response.json().catch(() => ({}));
+                throw new Error(errorData.detail || 'Login failed');
             }
             
             return await response.json();
