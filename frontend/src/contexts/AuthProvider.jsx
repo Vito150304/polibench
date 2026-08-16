@@ -1,6 +1,7 @@
 import {useState, useEffect} from "react";
 import {AuthContext} from "./AuthContext";
 import {useMutation, useQuery} from "@tanstack/react-query";
+import {useNavigate} from "react-router-dom";
 
 
 function AuthProvider({children}) {
@@ -10,6 +11,8 @@ function AuthProvider({children}) {
     });
     //const [utente, setUtente] = useState(null); non serve perchè si deriva da useQuery
     const isLoggedIn = !!accessToken; //posso derivare lo stato di login dal token
+
+    const navigate = useNavigate();
 
 
     //LOGIN CON GOOGLE, FLUSSO:
@@ -116,7 +119,7 @@ function AuthProvider({children}) {
             
             setAccessToken(tokenRicevuto);
             localStorage.setItem('accessToken', tokenRicevuto);
-            
+            navigate('/'); 
             
         },
         onError: (error) => {
