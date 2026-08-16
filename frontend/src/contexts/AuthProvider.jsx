@@ -13,6 +13,7 @@ function AuthProvider({children}) {
     const isLoggedIn = !!accessToken; //posso derivare lo stato di login dal token
 
     const navigate = useNavigate();
+    const [isLoadingWithCookie, setIsLoadingWithCookie] = useState(() => !localStorage.getItem('accessToken')); //se c'è il token, isLoading = false, altrimenti true. è lo stato che ho dovuto aggiungere per il ProtectedRoute
 
 
     //LOGIN CON GOOGLE, FLUSSO:
@@ -54,13 +55,14 @@ function AuthProvider({children}) {
                     // Se fallisce, significa semplicemente che non c'era nessun cookie.
                     // L'utente non è loggato in alcun modo. Tutto normale.
                     console.log("errore: ", error);
+                } finally {
+                    setIsLoadingWithCookie(false); //fine controllo 
                 }
             };
             
             TokenPresoDalCookie();
-        }
-    }, [accessToken]); // Dipende da accessToken
-
+        } 
+    }); // se dipendesse da accessToken, questo all'inizio sarebbe "", quindi farebbe partire la fetch, che a sua volta cambierebbe accessToken, che farebbe ripartire la fetch. Inoltre, si attiverebbe lo useEffect anche al logout. 
 
     const {data: utente, isLoading, isError, error} = useQuery({ //principalmente questa chiamata mi serve per prendere le info sugli utenti che mi serviranno per essere stampate nei componenti, ma non è strettamente legata al login
                 queryKey: ['user'],
@@ -147,7 +149,7 @@ function AuthProvider({children}) {
     }
 
     return (
-        <AuthContext.Provider value={{isLoggedIn, accessToken, login, logout, utente, isLoading, isError, error}}>
+        <AuthContext.Provider value={{isLoggedIn, accessToken, login, logout, utente, isLoading, isError, error, isLoadingWithCookie}}>
             {children}
         </AuthContext.Provider>
     )
