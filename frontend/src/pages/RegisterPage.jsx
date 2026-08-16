@@ -20,7 +20,7 @@ function RegisterPage() {
     }
 
 
-    return (
+    return (//Ci devo mettere l'interfaccia per registrazione con Google(?) non ricordo, controllare in futuro
         <>
         <form onSubmit={handleSubmit}>
             <input type="text" ref={firstNameRef} placeholder="First name" required />
