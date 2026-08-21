@@ -4,9 +4,11 @@ import { useNavigate } from 'react-router-dom';
 
 
 
+
 function useRegister() {
 
     const navigate = useNavigate();
+    
 
 
     const RegisterMutation = useMutation({
@@ -38,7 +40,8 @@ function useRegister() {
         },
         onSuccess: () => {
             console.log('Registration successful');
-            navigate('/login'); 
+            navigate('/email-sent'); // lo farò navigare a una pagina che dice "" (credo)
+
         },
         onError: (error) => {
             console.error("Errore durante la registrazione:", error);

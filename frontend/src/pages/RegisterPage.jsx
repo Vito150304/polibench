@@ -1,5 +1,5 @@
 import useRegister from '../hooks/useRegister';
-import { useRef } from 'react';
+import { useRef} from 'react';
 
 function RegisterPage() {
     const registerMutation = useRegister();
@@ -18,7 +18,6 @@ function RegisterPage() {
         };
         registerMutation.mutate(formData);
     }
-
 
     return (//Ci devo mettere l'interfaccia per registrazione con Google(?) non ricordo, controllare in futuro
         <>
