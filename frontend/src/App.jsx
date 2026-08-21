@@ -3,7 +3,7 @@ import RegisterPage from './pages/RegisterPage';
 import LoginPage from './pages/LoginPage';
 import { Routes, Route } from 'react-router-dom';
 import HomePage from './pages/HomePage';
-import DashboardPage from './pages/DashboardPage';
+import LeaderBoardPage from './pages/LeaderBoardPage';
 import SubmitExperimentPage from './pages/SubmitExperimentPage';
 import ModelPage from './pages/ModelPage';
 import Layout from './components/Layout';
@@ -22,9 +22,9 @@ function App() {
 
                 <Route path='/' element={<HomePage />} />
 
-                <Route path='/dashboard' element={
+                <Route path='/leaderboard' element={
                     <ProtectedRoute>
-                        <DashboardPage />
+                        <LeaderBoardPage />
                     </ProtectedRoute>} />
 
                 <Route path='/experiment' element={
