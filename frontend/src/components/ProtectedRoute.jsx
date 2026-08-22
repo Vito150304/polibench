@@ -2,7 +2,7 @@ import { useAuth } from '../contexts/AuthContext';
 import { Navigate } from 'react-router-dom';
 
 function ProtectedRoute({ children }) {
-    const {isLoggedIn, isLoadingWithCookie} = useAuth();
+    const {isLoggedIn, isCheckingSession} = useAuth();
 
     //devo gestire il caso di login con cookie. 
     // a livello di token,e di conseguenza di isLoggedIn, non cambia nulla. 
@@ -12,7 +12,7 @@ function ProtectedRoute({ children }) {
     // è ancora in volo (tempi dettati da useEffect). 
     // Se ProtectedRoute agisce subito, reindirizza l'utente a /login prima che 
     // la chiamata al refresh-token finisca.
-    if (isLoadingWithCookie) {
+    if (isCheckingSession) {
         return <div>Loading...</div>; //volendo ci posso mettere un'icona o componente di caricamento diverso
     }
 

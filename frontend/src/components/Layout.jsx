@@ -1,24 +1,26 @@
 import {Link, Outlet} from "react-router-dom";
 import { useAuth } from "../contexts/AuthContext";
 import { useState } from "react";
-import { CircleUserRound, House, Podium, CirclePlus, Cpu, Database } from 'lucide-react';
+import { CircleUserRound, House, Podium, CirclePlus, Cpu, Database, UserRound } from 'lucide-react';
 
 function Layout() {
 
-    const {isLoggedIn, isLoadingWithCookie, logout} = useAuth();
+    const {isLoggedIn, isCheckingSession, logout} = useAuth();
     const [isOpen, setIsOpen] = useState(false);
 
     const toggleMenu = () => {
         setIsOpen(!isOpen);
     }
 
-    if (isLoadingWithCookie) {
+    if (isCheckingSession) {
         return (
             <>
                 <header className="layout-header">
                     <h1>PoliBench</h1>
                 </header>
-                <p>Loading...</p> {/*volendo ci posso mettere un'icona o componente di caricamento diverso*/}
+                <p>Loading...</p> {/*volendo ci posso mettere un'icona o 
+                componente di caricamento diverso. 
+                Forse non serve perché è gestito da ProtectedRoute*/}
             </>
         )
     }
@@ -34,12 +36,13 @@ function Layout() {
                         <li><Link to="/experiment"><CirclePlus /> Submit Experiment</Link></li>
                         <li><Link to="/model"><Cpu /> Model</Link></li>
                         <li><Link to="/datasets"><Database /> Datasets</Link></li>
+                        <li><Link to="/leaderboardDemo"><Podium /> Leaderboard Demo</Link></li>
                     </ul>
                     {isLoggedIn && (
                         <>
                             <h3>ADMIN</h3>
                             <ul>
-                                <li><Link to="/users">Users</Link></li>
+                                <li><Link to="/users"><UserRound /> Users</Link></li>
                             </ul>
                         </>
                     )}
@@ -66,7 +69,7 @@ function Layout() {
                             )}
                         </>
                     ) : (
-                        <ul style={{ listStyle: 'none', display: 'flex', gap: '10px' }}>
+                        <ul>
                             <li><Link to="/login">Login</Link></li>
                             <li><Link to="/register">Register</Link></li>
                         </ul>

@@ -13,7 +13,7 @@ function AuthProvider({children}) {
     const isLoggedIn = !!accessToken; //posso derivare lo stato di login dal token
 
     const navigate = useNavigate();
-    const [isLoadingWithCookie, setIsLoadingWithCookie] = useState(() => !localStorage.getItem('accessToken')); //se c'è il token, isLoading = false, altrimenti true. è lo stato che ho dovuto aggiungere per il ProtectedRoute
+    const [isCheckingSession, setIsCheckingSession] = useState(() => !localStorage.getItem('accessToken')); //se c'è il token, isLoading = false, altrimenti true. è lo stato che ho dovuto aggiungere per il ProtectedRoute
 
 
     //LOGIN CON GOOGLE, FLUSSO:
@@ -56,7 +56,7 @@ function AuthProvider({children}) {
                     // L'utente non è loggato in alcun modo. Tutto normale.
                     console.log("errore: ", error);
                 } finally {
-                    setIsLoadingWithCookie(false); //fine controllo 
+                    setIsCheckingSession(false); //fine controllo 
                 }
             };
             
@@ -149,7 +149,7 @@ function AuthProvider({children}) {
     }
 
     return (
-        <AuthContext.Provider value={{isLoggedIn, accessToken, login, logout, utente, isLoading, isError, error, isLoadingWithCookie}}>
+        <AuthContext.Provider value={{isLoggedIn, accessToken, login, logout, utente, isLoading, isError, error, isCheckingSession}}>
             {children}
         </AuthContext.Provider>
     )

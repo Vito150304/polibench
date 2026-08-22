@@ -13,6 +13,7 @@ import EmailSentPage from './pages/EmailSentPage';
 import DatasetPage from './pages/DatasetPage';
 import ProfilePage from './pages/ProfilePage';
 import UsersPage from './pages/UsersPage';
+import LeaderboardDemoPage from './pages/LeaderBoardDemoPage';
 
 
 function App() {
@@ -23,9 +24,12 @@ function App() {
                 <Route path='/' element={<HomePage />} />
 
                 <Route path='/leaderboard' element={
-                    <ProtectedRoute>
+                    //<ProtectedRoute>
                         <LeaderBoardPage />
-                    </ProtectedRoute>} />
+                    //</ProtectedRoute>
+                } />
+
+                <Route path='/leaderboardDemo' element={<LeaderboardDemoPage />} />
 
                 <Route path='/experiment' element={
                     <ProtectedRoute>
