@@ -1,4 +1,4 @@
-import { useQuery } from '@tanstack/react-query';
+import {useQuery} from '@tanstack/react-query';
 
 function useLeaderboard({ dataset_uuid, metric, split }) {
     const {data: leaderboard, isLoading, error} = useQuery({

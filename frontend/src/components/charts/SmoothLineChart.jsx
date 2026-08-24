@@ -19,7 +19,7 @@ function SmoothLineChart() {
     if (isPending) return <div>Loading chart data...</div>;
     if (!chartData) return <div>No data available</div>;
 
-return (
+return ( //modificare i dati e le etichette
     <LineChart responsive data={chartData} style={{ width: '100%', aspectRatio: '16/9' }}>
         <CartesianGrid strokeDasharray="5 5" />
         <Line dataKey="uv" type="monotone" name="Vito"  />

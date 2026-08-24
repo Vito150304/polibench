@@ -5,7 +5,7 @@ import useLeaderboard from '../../hooks/useLeaderboard';
 
 function BarChartComponent() {
 
-  const { data, isLoading, error } = useLeaderboard({
+  const { data, isLoading, error } = useLeaderboard({ //dati passati in realtà tramite filtri, anche se dovrò definire dei valori di default 
     dataset_uuid: "test-uuid-123", 
     metric: "NDCG",
     split: "test"
