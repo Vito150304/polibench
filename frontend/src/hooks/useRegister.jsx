@@ -30,17 +30,17 @@ function useRegister() {
                 });
             } catch (networkError) {
                 console.error("Errore durante la fetch:", networkError);
-                throw new Error('Network error during registration', { cause: networkError }); //l'ultima parte è solo per esLint
+                throw new Error('Network error during registration', { cause: networkError }); 
             }
             if (!response.ok) {
-                const errorData = await response.json().catch(() => ({})); //serve anche se c'è errore perchè il backend spiega il motivo dell'errore e lo fa in JSON
-                throw new Error(errorData.detail || 'Registration failed'); //devo fare per forza throw new Error perchè altrimenti non si attiva onError (per la fetch il codice 400 o 422 è andato a buon fine)
-            } //il .detail è perchè il backend restituisce un JSON con la chiave "detail" che contiene il messaggio di errore
+                const errorData = await response.json().catch(() => ({})); 
+                throw new Error(errorData.detail || 'Registration failed');
+            }
             return await response.json();
         },
         onSuccess: () => {
             console.log('Registration successful');
-            navigate('/email-sent'); // lo farò navigare a una pagina che dice "" (credo)
+            navigate('/email-sent'); 
 
         },
         onError: (error) => {

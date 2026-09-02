@@ -20,20 +20,19 @@ function VerificationEmailPage() {
             }
             return await response.json();
         },
-        retry: false, //non riprovare in caso di errore
-        refetchOnWindowFocus: false, //non riprovare se l'utente cambia scheda
-        refetchOnMount: false, //non rifare al muont/unmount
-        enabled: !!token, //non fare la query se il token non è presente    
+        retry: false, 
+        refetchOnWindowFocus: false, 
+        refetchOnMount: false, 
+        enabled: !!token,    
     });
 
-    useEffect(() => { //solo perchè navigate non posso usarlo nel return insieme al messaggio da mostrare
+    useEffect(() => { 
         if (isSuccess) {
             // Aspetta 5 secondi per fargli leggere il messaggio, poi cambia pagina
             const timer = setTimeout(() => {
                 navigate('/login');
             }, 5000);
             
-            // Cleanup del timer
             return () => clearTimeout(timer); 
         }
     }, [isSuccess, navigate]);
@@ -45,7 +44,6 @@ function VerificationEmailPage() {
                 navigate('/login');
             }, 8000);
             
-            // Cleanup del timer
             return () => clearTimeout(timer); 
         }
     }, [isError, navigate]);

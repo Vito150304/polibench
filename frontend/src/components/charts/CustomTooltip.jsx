@@ -5,7 +5,7 @@ function CustomTooltip({ active, payload, label }) {
         const data = payload[0].payload;
         return (
             <div className="custom-tooltip">
-                <p className="label">{`${label} : ${data.uv}`}</p>
+                <p className="label">{`${label} : ${data.uv}`}</p> {/*aggiornare con i dati non mockuppati*/}
                 <p className="intro">{`PV: ${data.pv}`}</p>
                 <p className="desc">{`AMT: ${data.amt}`}</p>
             </div>

@@ -19,7 +19,7 @@ function RegisterPage() {
         registerMutation.mutate(formData);
     }
 
-    return (//Ci devo mettere l'interfaccia per registrazione con Google(?) non ricordo, controllare in futuro
+    return (
         <>
         <form onSubmit={handleSubmit}>
             <input type="text" ref={firstNameRef} placeholder="First name" required />

@@ -18,8 +18,8 @@ function useLeaderboard({ dataset_uuid, metric, split }) {
         throw new Error('Network error during leaderboard fetch', { cause: networkError });
       }
     },
-    staleTime: 5 * 60 * 1000, // 5 minuti
-    gcTime: 10 * 60 * 1000, // 10 minuti
+    staleTime: 5 * 60 * 1000, 
+    gcTime: 10 * 60 * 1000, 
     refetchOnWindowFocus: false,
     retry: 1, // riprova una volta in caso di errore
     enabled: !!dataset_uuid && !!metric && !!split, // esegui la query solo se tutti i parametri sono presenti

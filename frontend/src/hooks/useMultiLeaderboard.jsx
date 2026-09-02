@@ -24,11 +24,11 @@ function useMultiLeaderboard({ dataset_uuid, metric, split, sort_by }) {
         throw new Error('Network error during multi-leaderboard fetch', { cause: networkError });
       }
     },
-    staleTime: 5 * 60 * 1000, // 5 minuti
-    gcTime: 10 * 60 * 1000, // 10 minuti
+    staleTime: 5 * 60 * 1000, 
+    gcTime: 10 * 60 * 1000, 
     refetchOnWindowFocus: false,
-    retry: 1, // riprova una volta in caso di errore
-    enabled: !!dataset_uuid && !!metric && !!split, // esegui la query solo se i parametri base sono presenti
+    retry: 1, 
+    enabled: !!dataset_uuid && !!metric && !!split, 
   });
 
   return { // gli hooks non ritornano JSX, ma solo dati e funzioni

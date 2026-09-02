@@ -14,7 +14,7 @@ function RadarChartComponent() {
 
     return (
         <RadarChart responsive data={data} style={{ width: '100%', aspectRatio: '16/9' }}>
-            <PolarGrid /> {/*penso sia l'equivalente di CartesianGrid */}
+            <PolarGrid /> 
             <PolarAngleAxis dataKey="model_name" />
             <PolarRadiusAxis angle={30} domain={[0, 1]} />
             <Radar dataKey="uv"  stroke="#8884d8" fill="#8884d8" fillOpacity={0.6} /> 
