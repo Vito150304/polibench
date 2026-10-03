@@ -3,12 +3,13 @@ import CustomTooltip from './CustomTooltip';
 import useLeaderboard from '../../hooks/useLeaderboard';
 
 
-function BarChartComponent() {
+function BarChartComponent({filters, datasetId}) {
 
-  const { data, isLoading, error } = useLeaderboard({ //dati passati in realtà tramite filtri, anche se dovrò definire dei valori di default 
-    dataset_uuid: "test-uuid-123", 
-    metric: "NDCG",
-    split: "test"
+
+  const { data, isLoading, error } = useLeaderboard({ 
+    dataset_uuid: datasetId, 
+    metric: filters.metric,
+    split: filters.split
 });
 
 return (
