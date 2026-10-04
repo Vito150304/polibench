@@ -1,32 +1,42 @@
 import { LineChart, Line, CartesianGrid, XAxis, YAxis, Legend, Tooltip } from 'recharts';
 import useBestConfiguration from '../../hooks/useBestConfiguration';
 import {useEffect} from 'react';
+import CustomTooltip from './CustomTooltip';
 
-function SmoothLineChart() {
-    const {mutate, data: chartData, isPending} = useBestConfiguration();
+function SmoothLineChart({ datasetId, versionId, pipelineId, filters }) {
+    const { mutate, data: chartData, isPending } = useBestConfiguration();
 
     useEffect(() => {
-      mutate({
-        dataset_uuid: "uuid", 
-        dataset_version_uuid: "version-uuid",
-        pipeline_uuid: "pipeline-uuid",
-        split: "test",
-        target_metric: "NDCG",
-        direction: "max" 
-      })
-    }, [mutate])
+        if (datasetId && versionId && pipelineId) {
+            mutate({
+                dataset_uuid: datasetId, 
+                dataset_version_uuid: versionId,
+                pipeline_uuid: pipelineId,
+                split: filters.split,
+                target_metric: filters.metric, 
+                direction: 'max', 
+                metrics: [filters.metric], // Il backend vuole un array di stringhe qui
+                group_by_hyperparams: [] // Parametro richiesto dal backend, per ora vuoto
+            });
+        }
+    }, [mutate, datasetId, versionId, pipelineId, filters]);
+
+    const punti = chartData?.groups?.map((item) => ({
+        model_name: item.model_name, //asse x
+        value: item.best_value,
+    }));
 
     if (isPending) return <div>Loading chart data...</div>;
     if (!chartData) return <div>No data available</div>;
 
-return ( //sostituire con i dati non mockuppati e con le etichette giuste, per ora ho messo dei valori di esempio 
-    <LineChart responsive data={chartData} style={{ width: '100%', aspectRatio: '16/9' }}>
+return (  
+    <LineChart responsive data={punti} style={{ width: '100%', aspectRatio: '16/9' }}>
         <CartesianGrid strokeDasharray="5 5" />
-        <Line dataKey="uv" type="monotone" name="Vito"  />
-        <XAxis dataKey="name" />
-        <YAxis label={{ value: 'UV', position: 'insideLeft', angle: -90 }} />
+        <Line dataKey="value" type="monotone"  />
+        <XAxis dataKey="model_name" />
+        <YAxis label={{ value: 'Score', position: 'insideLeft', angle: -90 }} />
         <Legend />
-        <Tooltip />
+        <Tooltip content={<CustomTooltip />}/>
     </LineChart>
 )
 }
