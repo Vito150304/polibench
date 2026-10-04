@@ -19,7 +19,7 @@ return (
     {data && (
       <BarChart responsive data={data} style={{ width: '100%', aspectRatio: '16/9' }}>
         <CartesianGrid strokeDasharray="5 5" />
-        <Bar dataKey="value" fill="#8884d8" />
+        <Bar dataKey="value" fill="#8884d8" /> {/*verificare che "value" e "model_name" siano davvero i nomi presi dal backend */}
         <XAxis dataKey="model_name" />
         <YAxis />
         <Legend />
