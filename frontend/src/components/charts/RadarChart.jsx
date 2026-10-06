@@ -1,5 +1,7 @@
-import { Radar, RadarChart, PolarGrid, PolarAngleAxis, Legend, PolarRadiusAxis} from 'recharts';
+import { Radar, RadarChart, PolarGrid, PolarAngleAxis, Legend, PolarRadiusAxis, Tooltip} from 'recharts';
 import useMultiLeaderboard from '../../hooks/useMultiLeaderboard';
+import RadarTooltip from './RadarTooltip';
+
 
 function RadarChartComponent({ filters, datasetId}) {
     const { data, isLoading, error } = useMultiLeaderboard({
@@ -51,6 +53,7 @@ che potrebbe avere meno elementi (modelli) rispetto al numero di metriche. Quind
                 dall'opacità, non si capirà niente. Devo trovare una soluzione migliore*/}
             
             <Legend />
+            <Tooltip content={<RadarTooltip />} />
         </RadarChart>
     )
 }

@@ -4,7 +4,7 @@ import { BiMedal } from "react-icons/bi"; //terzo posto
 
 
 
-function CustomTooltip({ active, payload, label }) {
+function BarTooltip({ active, payload, label }) {
     if (active && payload && payload.length) {
         const data = payload[0].payload;
 
@@ -36,34 +36,29 @@ function CustomTooltip({ active, payload, label }) {
             }
         });
 
+        let icon = null;
+        if (data === payload[indexofMax].payload) {
+            icon = <Trophy className="trophy-icon" />;
+        } else if (data === payload[indexofSecondMax].payload) {
+            icon = <LiaMedalSolid className="medal-icon" />;
+        } else if (data === payload[indexofThirdMax].payload) {
+            icon = <BiMedal className="medal-icon" />;
+        }
+
 
         return (
             <div className="custom-tooltip">
-                {data === payload[indexofMax].payload && <Trophy className="trophy-icon" /> && (
-                    <>
-                        <p className="label">{data.model_name}</p>
-                        <p className="author">{`${label}: ${data.uv}`}</p>  {/*continuare a modificare dopo aver visto lo swagger*/}
-                    </>
-                )}
-                {data === payload[indexofSecondMax].payload && <LiaMedalSolid className="medal-icon" /> && (
-                    <>
-                        <p className="label">{data.model_name}</p>
-                    </>
-                )}
-                {data === payload[indexofThirdMax].payload && <BiMedal className="medal-icon" /> && (
-                    <>
-                        <p className="label">{data.model_name}</p>
-                    </>
-                )}
+                <p className="label">
+                    {icon}
+                    {`Modello: ${label}`}
+                </p> {/*label rappresenta il valore sull'asse x. Per il barChart, in Xaxis ho messo il model_name*/}
 
-
-                
-                <p className="label">{data.model_name}</p> 
-                <p className="intro">{`PV: ${data.pv}`}</p>
-                <p className="desc">{`AMT: ${data.amt}`}</p>
+                <p className="score">{`Punteggio: ${data.value}`}</p>
+                <p className="author">{`Avviato da: ${data.submitted_by_display_name}`}</p>
+                <p className="hyperparams">{`Iperparametri: ${JSON.stringify(data.training_config)}`}</p>
             </div>
         );
     }
     return null;
 }
-export default CustomTooltip;
+export default BarTooltip;

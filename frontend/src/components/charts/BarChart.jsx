@@ -1,5 +1,5 @@
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend } from 'recharts';
-import CustomTooltip from './CustomTooltip';
+import BarTooltip from './BarTooltip';
 import useLeaderboard from '../../hooks/useLeaderboard';
 
 
@@ -19,11 +19,11 @@ return (
     {data && (
       <BarChart responsive data={data} style={{ width: '100%', aspectRatio: '16/9' }}>
         <CartesianGrid strokeDasharray="5 5" />
-        <Bar dataKey="value" fill="#8884d8" /> {/*verificare che "value" e "model_name" siano davvero i nomi presi dal backend */}
+        <Bar dataKey="value" fill="#8884d8" /> 
         <XAxis dataKey="model_name" />
         <YAxis />
         <Legend />
-        <Tooltip content={<CustomTooltip />} />
+        <Tooltip content={<BarTooltip />} />
     </BarChart>)}
   </>
 )

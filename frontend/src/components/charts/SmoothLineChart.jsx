@@ -1,7 +1,7 @@
 import { LineChart, Line, CartesianGrid, XAxis, YAxis, Legend, Tooltip } from 'recharts';
 import useBestConfiguration from '../../hooks/useBestConfiguration';
 import {useEffect} from 'react';
-import CustomTooltip from './CustomTooltip';
+import LineTooltip from './LineTooltip';
 
 function SmoothLineChart({ datasetId, versionId, pipelineId, filters }) {
     const { mutate, data: chartData, isPending } = useBestConfiguration();
@@ -36,7 +36,7 @@ return (
         <XAxis dataKey="model_name" />
         <YAxis label={{ value: 'Score', position: 'insideLeft', angle: -90 }} />
         <Legend />
-        <Tooltip content={<CustomTooltip />}/>
+        <Tooltip content={<LineTooltip />} />
     </LineChart>
 )
 }
