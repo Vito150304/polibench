@@ -70,8 +70,8 @@ function LeaderBoardPage() {
             
         <section className="charts-container">
 
-            {chart === 'barChart' && <BarChartComponent filters={filters} datasetId={datasetId} versionId={versionId} pipelineId={pipelineId} />}
-            {chart === 'radarChart' && <RadarChartComponent filters={filters} datasetId={datasetId} versionId={versionId} pipelineId={pipelineId} />}
+            {chart === 'barChart' && <BarChartComponent filters={filters} datasetId={datasetId} />}
+            {chart === 'radarChart' && <RadarChartComponent filters={filters} datasetId={datasetId} />}
             {chart === 'lineChart' && <SmoothLineChart filters={filters} datasetId={datasetId} versionId={versionId} pipelineId={pipelineId} />}
 
         </section>
