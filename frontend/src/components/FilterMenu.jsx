@@ -18,11 +18,6 @@ function FilterMenu({ filters, setFilters }) {
                     <option value="asc">Ascendente</option>
                     <option value="desc">Discendente</option>
                 </select>
-
-                
-
-
-                {/* continuare */}
             
             </div>
         </>

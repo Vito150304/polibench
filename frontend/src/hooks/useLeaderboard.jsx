@@ -21,7 +21,7 @@ function useLeaderboard({ dataset_uuid, metric, split }) {
     staleTime: 5 * 60 * 1000, 
     gcTime: 10 * 60 * 1000, 
     refetchOnWindowFocus: false,
-    retry: 1, // riprova una volta in caso di errore
+    retry: 1, 
     enabled: !!dataset_uuid && !!metric && !!split, // esegui la query solo se tutti i parametri sono presenti
   });
   return { //gli hooks non ritornano JSX, ma solo dati e funzioni

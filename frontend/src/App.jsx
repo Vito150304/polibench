@@ -37,9 +37,10 @@ function App() {
                     </ProtectedRoute>} />
                     
                 <Route path='/model' element={
-                    <ProtectedRoute>
+                    //<ProtectedRoute>
                         <ModelPage />
-                    </ProtectedRoute>} />
+                    //</ProtectedRoute>} 
+                    }/>
 
                 <Route path='/datasets' element={
                     <ProtectedRoute>

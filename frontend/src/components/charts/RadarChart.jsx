@@ -14,21 +14,7 @@ function RadarChartComponent({ filters, datasetId}) {
     if (isLoading) return <div>Loading...</div>;
     if (error) return <div>Error: {error.message}</div>;
 
-/*Cosa ti manda il backend:
-[
-  { model_name: "Modello A", metrics: { "NDCG@10": 0.8, "Recall@10": 0.6 } },
-  { model_name: "Modello B", metrics: { "NDCG@10": 0.9, "Recall@10": 0.5 } }
-]
-Cosa vuole Recharts per tracciare il poligono:
 
-[
-  { metrica: "NDCG@10", "Modello A": 0.8, "Modello B": 0.9 },
-  { metrica: "Recall@10", "Modello A": 0.6, "Modello B": 0.5 }
-]
-
-Quindi devo convertire i dati nel formato idoneo. Non posso usare il map direttamente su data perché avrei un nuovo vettore
-che potrebbe avere meno elementi (modelli) rispetto al numero di metriche. Quindi, devo fare il map direttamente sulle metriche
-*/
 
     const radarData = filters.multiMetrics?.map((metric) => {
         //es: { metrica: "NDCG@10" }

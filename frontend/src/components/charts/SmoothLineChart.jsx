@@ -15,8 +15,8 @@ function SmoothLineChart({ datasetId, versionId, pipelineId, filters }) {
                 split: filters.split,
                 target_metric: filters.metric, 
                 direction: 'max', 
-                metrics: [filters.metric], // Il backend vuole un array di stringhe qui
-                group_by_hyperparams: [] // Parametro richiesto dal backend, per ora vuoto
+                metrics: [filters.metric], 
+                group_by_hyperparams: [] 
             });
         }
     }, [mutate, datasetId, versionId, pipelineId, filters]);
