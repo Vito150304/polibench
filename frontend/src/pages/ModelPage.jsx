@@ -1,9 +1,11 @@
 import useModels from "../hooks/useModels";
 import { useNavigate } from "react-router-dom";
+import { useState } from "react";
 
 function ModelPage() {
     
     const {models, isLoading, error} = useModels();
+    const [searchModel, setSearchModel] = useState(''); //barra di ricerca
     const navigate = useNavigate();
 
     if (isLoading) {
@@ -17,12 +19,20 @@ function ModelPage() {
     const RegisterModel = () => {
         navigate("/register-model"); //aggiungere la rotta e associarla al componente RegisterModelPage.jsx
     }
+
+    const modelliFiltrati =  models.filter((modello) => modello.name.toLowerCase().includes(searchModel.toLowerCase())); //barra di ricerca
     
-    return (
+    return ( //con i dati di mockup la GET funziona. Quindi dovrò verificare solo se funziona anche con le fetch. Per la post
+        //dovrò aggiungere la rotta. Possibile implementazione futura (anche backend) è aggiungere un endpoint DELETE
+        //per cancellare un modello registrato per sbaglio ad esempio
         <>
             <h1 className = "Models-title">MODELS</h1>
+            <input value = {searchModel} onChange = {(e) => setSearchModel(e.target.value)} placeholder = "Search for a model name" />
             <button onClick = {RegisterModel}>Register a new Model</button>
             <div className = "Models-container">
+                {modelliFiltrati.length === 0 ? (
+                    <p>No models registered.</p>
+                ) : (   
                 <table>
                     <thead>
                         <tr>
@@ -32,15 +42,15 @@ function ModelPage() {
                         </tr>
                     </thead>
                     <tbody>
-                        {models.map((modello) => (
-                            <tr key={modello.id}>
+                        {modelliFiltrati.map((modello) => (
+                            <tr key={modello.uuid}>
                                 <td>{modello.name}</td>
                                 <td>{modello.family}</td>
-                                <td>{modello.paper ? <a href={modello.paper}>View Paper</a> : "No Paper Available"}</td>
+                                <td>{modello.paper_url ? <a href={modello.paper_url}>View Paper</a> : "No Paper Available"}</td>
                             </tr>
                         ))}
                     </tbody>
-                </table>
+                </table>)}
             </div>
 
             
