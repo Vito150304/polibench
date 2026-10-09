@@ -137,3 +137,29 @@ export const useCreateDatasetVersion = (dataset_uuid) => {
     });
     return {newVersion, isPending, error};
 }
+
+export const useVersionParse = (dataset_uuid) => {
+    const {mutate: parseVersion, isPending, error} = useMutation({
+        mutationKey: ['parse-dataset-version', dataset_uuid],
+        mutationFn: async (versionData) => {
+            try {
+                const response = await fetch(`/api/v1/datasets/${dataset_uuid}/versions/preview`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(versionData)
+                });
+                if (!response.ok) {
+                    const errorData = await response.json().catch(() => ({}));
+                    throw new Error(errorData.detail || 'Failed to parse dataset version');
+                }
+                return response.json();
+            } catch (networkError) {
+                console.error("Network error during dataset version parsing:", networkError);
+                throw new Error('Failed to parse dataset version', {cause: networkError});
+            }
+        }
+    });
+    return {parseVersion, isPending, error};
+}

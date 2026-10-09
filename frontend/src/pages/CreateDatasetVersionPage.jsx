@@ -1,7 +1,7 @@
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import { useCreateDatasetVersion } from "../hooks/useDatasets";
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useVersionParse } from "../hooks/useDatasets";
 
 function CreateDatasetVersionPage() {
     const {dataset_uuid} = useParams();
@@ -12,6 +12,10 @@ function CreateDatasetVersionPage() {
     const [releaseNote, setReleaseNote] = useState('');
 
     const {newVersion, isPending, error} = useCreateDatasetVersion(dataset_uuid);
+
+    const [isOpenPreview, setIsOpenPreview] = useState(false);
+    const [parseInfo, setParseInfo] = useState(null);
+    const {parseVersion, isPending: isParsing, error: parseError} = useVersionParse(dataset_uuid);
 
 
     const [choice, setChoice] = useState('Modalità Upload'); 
@@ -58,6 +62,38 @@ function CreateDatasetVersionPage() {
         
     };
 
+    const handleParse = async (e) => {
+        e.preventDefault();
+        const payload = {
+            version: version,
+            status: status
+        };
+        if (releaseNote) payload.release_notes = releaseNote;
+        if (choice === 'Modalità Upload') {
+            if (datasetFile) payload.dataset_yaml_raw = await datasetFile.text();
+            if (versionFile) payload.version_yaml_raw = await versionFile.text();
+            if (pipelineFile) payload.pipeline_yaml_raw = await pipelineFile.text();
+            if (characteristicsFile) payload.characteristics_yaml_raw = await characteristicsFile.text();
+        } else {
+            if (datasetText) payload.dataset_yaml_raw = datasetText;
+            if (versionText) payload.version_yaml_raw = versionText;
+            if (pipelineText) payload.pipeline_yaml_raw = pipelineText;
+            if (characteristicsText) payload.characteristics_yaml_raw = characteristicsText;
+        }
+
+        parseVersion(payload, {
+            onSuccess: (data) => {
+                setParseInfo(data);
+                setIsOpenPreview(true);
+            },
+            onError: (error) => {
+                console.error('Error parsing version:', error);
+                alert(`Error parsing version: ${error.message}`);
+            }
+        });
+    };
+
+
 
     return (
         <>
@@ -72,16 +108,16 @@ function CreateDatasetVersionPage() {
                     Status:
                     <select value={status} onChange={(e) => setStatus(e.target.value)} required>
                         <option value="draft">Draft</option>
-                        <option value="released">Released</option>
+                        <option value="ready">Ready</option>
+                        <option value="processing">Processing</option>
+                        <option value="failed">Failed</option>
                     </select>
                 </label>
                 <label>
                     Release Notes:
                     <textarea value={releaseNote} onChange={(e) => setReleaseNote(e.target.value)} />
                 </label>
-                <button type="submit" disabled={isPending}>Create Version</button>
-                {error && <p>Error creating version: {error.message}</p>}
-            
+                
             <p>Choose configuration mode:</p>
             <select value={choice} onChange={(e) => setChoice(e.target.value)}>
                 <option value="Modalità Upload">Modalità Upload</option>
@@ -127,8 +163,31 @@ function CreateDatasetVersionPage() {
                     </label>
                 </div>
             )}
+            <div className="buttons">
+                    <button type = "button" onClick={() => navigate(`/datasets/${dataset_uuid}`)}>View Datasets</button>
+                    <button type = "button" onClick={handleParse} disabled={isParsing}>Preview Version</button>
+                    <button type="submit" disabled={isPending}>Create Version</button>
+                    {parseError && <p>Error parsing version: {parseError.message}</p>}
+                    {error && <p>Error creating version: {error.message}</p>}
+            </div>
             </form>
-            <p>*: Campo obbligatorio</p> 
+            
+            {isOpenPreview && parseInfo && (
+                <div className="preview">
+                    <h2>Preview of the new version</h2>
+                    <span>Version:</span> <p>{parseInfo.recognized_version}</p>
+                    <span>Parsed Sources:</span> <p>{parseInfo.source_count}</p>
+                    <span>Parsed Resources:</span> <p>{parseInfo.resource_count}</p>
+                    <span>Pipeline steps:</span> <p>{parseInfo.pipeline_steps_count}</p>
+                    <span>Characteristics:</span> 
+                    <p>{parseInfo.characteristics?.n_users}</p>
+                    <p>{parseInfo.characteristics?.n_items}</p>
+                    <p>{parseInfo.characteristics?.n_interactions}</p>
+                    <p>{parseInfo.characteristics?.density}</p>
+                    <button type="button" onClick={() => setIsOpenPreview(false)}>Close Preview</button>
+                </div>
+            )}
+            <p>*: Campo obbligatorio</p>
         </>
     )
 }
