@@ -32,50 +32,32 @@ function CreateDatasetVersionPage() {
 
 
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
 
-        
+        const payload = {
+            version: version,
+            status: status
+        };
+        if (releaseNote) payload.release_notes = releaseNote;
         if (choice === 'Modalità Upload') {
-            const formData = new FormData();
-            
-            formData.append('version', version);
-            formData.append('status', status);
-            if (releaseNote) formData.append('release_notes', releaseNote);
-
-
-            if (datasetFile) formData.append('dataset_yaml_file', datasetFile);
-            if (versionFile) formData.append('version_yaml_file', versionFile);
-            if (pipelineFile) formData.append('pipeline_yaml_file', pipelineFile);
-            if (characteristicsFile) formData.append('characteristics_yaml_file', characteristicsFile);
-
-            
-            newVersion(formData, {
-                onSuccess: () => navigate(`/datasets/${dataset_uuid}`) // Torna indietro se va a buon fine
-            });
-
+            if (datasetFile) payload.dataset_yaml_raw = await datasetFile.text();
+            if (versionFile) payload.version_yaml_raw = await versionFile.text();
+            if (pipelineFile) payload.pipeline_yaml_raw = await pipelineFile.text();
+            if (characteristicsFile) payload.characteristics_yaml_raw = await characteristicsFile.text();
         } else {
-
-            const payload = {
-                version: version,
-                status: status
-            };
-            if (releaseNote) payload.release_notes = releaseNote;
-
-
-            if (datasetText) payload.dataset_yaml = datasetText;
-            if (versionText) payload.version_yaml = versionText;
-            if (pipelineText) payload.pipeline_yaml = pipelineText;
-            if (characteristicsText) payload.characteristics_yaml = characteristicsText;
-
-            
-            newVersion(payload, {
-                onSuccess: () => navigate(`/datasets/${dataset_uuid}`)
-            });
+            if (datasetText) payload.dataset_yaml_raw = datasetText;
+            if (versionText) payload.version_yaml_raw = versionText;
+            if (pipelineText) payload.pipeline_yaml_raw = pipelineText;
+            if (characteristicsText) payload.characteristics_yaml_raw = characteristicsText;
         }
+
+        newVersion(payload, {
+            onSuccess: () => navigate(`/datasets/${dataset_uuid}`)
+        });
+        
     };
 
-    
 
     return (
         <>

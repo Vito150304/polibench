@@ -110,14 +110,13 @@ export const useCreateDatasetVersion = (dataset_uuid) => {
     const {mutate: newVersion, isPending, error} = useMutation({
         mutationKey: ['create-dataset-version', dataset_uuid],
         mutationFn: async (newDatasetVersion) => {
-            const isFormData = newDatasetVersion instanceof FormData;
-            const headers = isFormData ? {} : {'Content-Type': 'application/json'};
-            const body = isFormData ? newDatasetVersion : JSON.stringify(newDatasetVersion);
             try {
                 const response = await fetch(`/api/v1/datasets/${dataset_uuid}/versions`, {
                     method: 'POST',
-                    headers: headers,
-                    body: body
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(newDatasetVersion)
                 });
                 if (!response.ok) {
                     const errorData = await response.json().catch(() => ({}));
