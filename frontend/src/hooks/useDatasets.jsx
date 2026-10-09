@@ -103,3 +103,38 @@ export const useVersions = (dataset_uuid) => {
     });
     return { versions, isLoading, error };
 }
+
+
+export const useCreateDatasetVersion = (dataset_uuid) => {
+    const queryClient = useQueryClient();
+    const {mutate: newVersion, isPending, error} = useMutation({
+        mutationKey: ['create-dataset-version', dataset_uuid],
+        mutationFn: async (newDatasetVersion) => {
+            const isFormData = newDatasetVersion instanceof FormData;
+            const headers = isFormData ? {} : {'Content-Type': 'application/json'};
+            const body = isFormData ? newDatasetVersion : JSON.stringify(newDatasetVersion);
+            try {
+                const response = await fetch(`/api/v1/datasets/${dataset_uuid}/versions`, {
+                    method: 'POST',
+                    headers: headers,
+                    body: body
+                });
+                if (!response.ok) {
+                    const errorData = await response.json().catch(() => ({}));
+                    throw new Error(errorData.detail || 'Failed to create dataset version');
+                }
+                return response.json();
+            } catch (networkError) {
+                console.error("Network error during dataset version creation:", networkError);
+                throw new Error('Failed to create dataset version', {cause: networkError});
+            }
+        },
+        onSuccess: () => {
+            queryClient.invalidateQueries({queryKey: ['versions', dataset_uuid]});
+        },
+        onError: (error) => {
+            console.error('Error creating dataset version:', error);
+        }
+    });
+    return {newVersion, isPending, error};
+}

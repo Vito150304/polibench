@@ -1,12 +1,14 @@
 import { useParams } from "react-router-dom";
 import {useDatasetDetails} from "../hooks/useDatasetDetails";
 import {useVersions} from "../hooks/useVersions";
+import { useNavigate } from "react-router-dom";
 
 function DatasetDetailPage() {
 
     const {dataset_uuid} = useParams();
     const {datasetDetails, isLoading, error} = useDatasetDetails(dataset_uuid);
     const {versions, isLoading: versionsLoading, error: versionsError} = useVersions(dataset_uuid);
+    const navigate = useNavigate();
 
 
     const handleDownloadYaml = async (version_uuid, kind) => {
@@ -73,15 +75,21 @@ function DatasetDetailPage() {
                                     <button onClick={() => handleDownloadYaml(version.uuid, 'version')}>
                                         Version YAML
                                     </button>
+                                    <button onClick={() => handleDownloadYaml(version.uuid, 'metrics')}>
+                                        Metrics YAML
+                                    </button>
                                 </div>
                             </li>
                         ))}
                     </ul>
                 )}
-
+            </div>
+            <div className="version-buttons">
+                <button onClick={() => navigate(`/datasets/${dataset_uuid}/create-version`)}>Create New Version</button> {/* Aggiungi qui il pulsante per creare una nuova versione */}
+                <button onClick={() => navigate(`/datasets`)}>Go Back</button> {/*Controllare che l'endpoint con la lista di tutti i datasets sia corretto*/}
             </div>
         </>
-    )
+    );
 
 }
 export default DatasetDetailPage;

@@ -16,8 +16,10 @@ function RegisterDatasetPage() {
             name: name, 
             task: task, 
             visibility: visibility, 
-            description: description
         };
+        if (description) {
+            payload.description = description;
+        }
         newDataset(payload);
     }
 
@@ -26,7 +28,7 @@ function RegisterDatasetPage() {
             <h1>Register a new Dataset</h1>
             <form onSubmit={handleSubmit}>
                 <label>
-                    Name:
+                    Name*:
                     <input
                         type="text"
                         value={name}
@@ -35,7 +37,7 @@ function RegisterDatasetPage() {
                     />
                 </label>
                 <label>
-                    Task:
+                    Task*:
                     <input
                         type="text"
                         value={task}
@@ -65,6 +67,7 @@ function RegisterDatasetPage() {
                 </button>
                 {error && <p>{error}</p>}
                 {!error && !isPending && navigate("/datasets")} {/*aggiungere la rotta se non l'ho fatto*/}
+                <p>*: Campo obbligatorio</p>
             </form>
         </>
     )

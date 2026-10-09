@@ -28,7 +28,7 @@ function RegisterModelPage() {
             <h1>Register a new Model</h1>
             <form onSubmit={handleSubmit}>
                 <label>
-                    Name:
+                    Name*:
                     <input
                         type="text"
                         value={name}
@@ -59,6 +59,7 @@ function RegisterModelPage() {
                 {!error && !isPending && navigate("/models")} {/*aggiungere la rotta se non l'ho fatto*/}
             </form>
             <button onClick={() => navigate("/models")}>View Models</button>
+            <p>*: Campo obbligatorio</p>
         </>
     )
 }
