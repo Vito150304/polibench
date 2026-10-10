@@ -5,8 +5,8 @@ import { useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import FilterMenu from '../components/FilterMenu';
 import {useDatasets} from '../hooks/useDatasets';
-import useVersions from '../hooks/useVersions';
-import usePipelines from '../hooks/usePipelines';
+import {useVersions} from '../hooks/useVersions';
+import {usePipelines} from '../hooks/usePipelines';
 
 
 function LeaderBoardPage() {

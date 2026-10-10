@@ -80,6 +80,8 @@ function VersionDetailPage() {
             )}
             </div>
         )}
+        <button type="button" onClick={() => navigate(`/datasets`)}>Go Back</button> {/*Controllare che l'endpoint con la lista di tutti i datasets sia corretto. 
+        Controllare anche che abbia senso tornare ai dataset da qui perché mi sto perdendo*/}
     </>
     );
 }

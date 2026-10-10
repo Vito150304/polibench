@@ -123,7 +123,7 @@ function CreatePipelinePage() {
                 </div>
             )}
             <div className="buttons">
-                    <button type = "button" onClick={() => navigate(`/dataset-versions/${version_uuid}`)}>View Datasets</button>
+                    <button type = "button" onClick={() => navigate(`/dataset-versions/${version_uuid}`)}>View Version Details</button>
                     <button type = "button" onClick={handleParse} disabled={isPreviewing}>Preview Pipeline</button>
                     <button type="submit" disabled={isPending}>Create Pipeline</button>
                     {previewError && <p>Error parsing pipeline: {previewError.message}</p>}

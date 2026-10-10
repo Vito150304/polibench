@@ -69,13 +69,17 @@ function DatasetDetailPage() {
                                 <p>Density: {version.density}</p> {/*sarebbe?*/}
 
                                 <div className="version-actions">
-                                    <button onClick={() => handleDownloadYaml(version.uuid, 'dataset')}>
+                                    <button type="button" onClick={() => navigate(`/dataset-versions/${version.uuid}`)}>
+                                        View Version Details
+                                    </button>
+
+                                    <button type="button" onClick={() => handleDownloadYaml(version.uuid, 'dataset')}>
                                         Dataset YAML
                                     </button>
-                                    <button onClick={() => handleDownloadYaml(version.uuid, 'version')}>
+                                    <button type="button" onClick={() => handleDownloadYaml(version.uuid, 'version')}>
                                         Version YAML
                                     </button>
-                                    <button onClick={() => handleDownloadYaml(version.uuid, 'metrics')}>
+                                    <button type="button" onClick={() => handleDownloadYaml(version.uuid, 'metrics')}>
                                         Metrics YAML
                                     </button>
                                 </div>
@@ -85,8 +89,8 @@ function DatasetDetailPage() {
                 )}
             </div>
             <div className="version-buttons">
-                <button onClick={() => navigate(`/datasets/${dataset_uuid}/create-version`)}>Create New Version</button> {/* Aggiungi qui il pulsante per creare una nuova versione */}
-                <button onClick={() => navigate(`/datasets`)}>Go Back</button> {/*Controllare che l'endpoint con la lista di tutti i datasets sia corretto*/}
+                <button type="button" onClick={() => navigate(`/datasets/${dataset_uuid}/create-version`)}>Create New Version</button> {/* Aggiungi qui il pulsante per creare una nuova versione */}
+                <button type="button" onClick={() => navigate(`/datasets`)}>Go Back</button> {/*Controllare che l'endpoint con la lista di tutti i datasets sia corretto*/}
             </div>
         </>
     );
