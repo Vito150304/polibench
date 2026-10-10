@@ -43,9 +43,10 @@ function App() {
                     }/>
 
                 <Route path='/datasets' element={
-                    <ProtectedRoute>
+                    //<ProtectedRoute>
                         <DatasetPage />
-                    </ProtectedRoute>} />
+                    //</ProtectedRoute>} 
+                    }/>
 
                 <Route path='/profile' element={
                     <ProtectedRoute>
