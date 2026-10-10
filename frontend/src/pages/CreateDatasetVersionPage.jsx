@@ -187,7 +187,7 @@ function CreateDatasetVersionPage() {
                     <button type="button" onClick={() => setIsOpenPreview(false)}>Close Preview</button>
                 </div>
             )}
-            <p>*: Campo obbligatorio</p>
+            <p>*: Required fields</p>
         </>
     )
 }

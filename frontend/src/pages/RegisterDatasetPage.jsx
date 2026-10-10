@@ -67,7 +67,7 @@ function RegisterDatasetPage() {
                 </button>
                 {error && <p>{error}</p>}
                 {!error && !isPending && navigate("/datasets")} {/*aggiungere la rotta se non l'ho fatto*/}
-                <p>*: Campo obbligatorio</p>
+                <p>*: Required fields</p>
             </form>
         </>
     )
