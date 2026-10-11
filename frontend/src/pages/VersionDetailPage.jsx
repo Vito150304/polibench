@@ -5,6 +5,7 @@ import useState from 'react';
 import usePipelineDetails from '../hooks/usePipelineDetails';
 import useExperimentDetails from '../hooks/useExperimentDetails';
 import useExperimentVersions from '../hooks/useExperimentVersions';
+import useMetrics from '../hooks/useMetrics';
 
 
 function VersionDetailPage() {
@@ -20,6 +21,11 @@ function VersionDetailPage() {
     const {experimentList, isLoading: experimentListLoading, error: experimentListError} = useExperimentVersions(version_uuid);
     const [selectedExperimentUuid, setSelectedExperimentUuid] = useState(null);
     const {experimentDetails, isLoading: experimentDetailsLoading, error: experimentDetailsError} = useExperimentDetails(selectedExperimentUuid);
+
+    //metrics
+
+    const {metrics, isLoading: metricsLoading, error: metricsError} = useMetrics(selectedExperimentUuid)
+
 
     const navigate = useNavigate();
 
@@ -116,9 +122,9 @@ function VersionDetailPage() {
         {selectedExperimentUuid && (
             <div className="experiment-preview">
                 <h2>Experiment Details</h2>
-                {experimentDetailsLoading ? (
+                {(experimentDetailsLoading || metricsLoading) ? (
                     <p>Loading experiment details...</p>
-                ) : experimentDetailsError ? (
+                ) : (experimentDetailsError || metricsError) ? (
                     <p>Error loading experiment details</p>
                 ) : (
                     <>
@@ -128,6 +134,41 @@ function VersionDetailPage() {
                         <p>Model name: {experimentDetails.model_name} </p>
                         <p>Created: {experimentDetails.created_at}</p>
                         <p>Status: {experimentDetails.status}</p>
+                        <h2>Metrics</h2>
+                        {metrics && metrics.length > 0 ? (
+                            <>
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>Metric Name</th>
+                                        <th>Value</th>
+                                        <th>Split</th>
+                                        <th>Direction</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {metrics.map((metric, index) => (
+                                        <tr key={index}>
+                                            <td>
+                                                <span>{metric.metric}</span>
+                                            </td>
+                                            <td>
+                                                <span>{metric.value}</span>
+                                            </td>
+                                            <td>
+                                                <span>{metric.split}</span>
+                                            </td>
+                                            <td>
+                                                <span>{metric.direction}</span>
+                                            </td>
+                                        </tr>
+                                    ))}
+                                </tbody>
+                            </table>
+                        </>
+                        ) : (                           
+                            <p>No metric available</p>
+                        )}
                         <button type="button" onClick={() => setSelectedExperimentUuid(null)}>Close Preview</button>
                     </>
                 )}
