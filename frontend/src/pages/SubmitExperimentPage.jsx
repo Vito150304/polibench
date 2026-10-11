@@ -3,7 +3,7 @@ import { useState } from 'react';
 import { useDatasets } from '../hooks/useDatasets';
 import { useVersions } from '../hooks/useVersions';
 import { usePipelines } from '../hooks/usePipelines';
-import { useModels } from '../hooks/useModels';
+import useModels from '../hooks/useModels';
 
 
 function SubmitExperimentPage() {
