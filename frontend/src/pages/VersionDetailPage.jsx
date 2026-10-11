@@ -3,6 +3,8 @@ import {useParams, useNavigate} from 'react-router-dom';
 import usePipelines from '../hooks/usePipelines';
 import useState from 'react';
 import usePipelineDetails from '../hooks/usePipelineDetails';
+import useExperimentDetails from '../hooks/useExperimentDetails';
+import useExperimentVersions from '../hooks/useExperimentVersions';
 
 
 function VersionDetailPage() {
@@ -12,9 +14,16 @@ function VersionDetailPage() {
     const [selectedPipelineUuid, setSelectedPipelineUuid] = useState(null);
     const {pipelineDetails, isLoading: pipelineDetailsLoading, error: pipelineDetailsError} = usePipelineDetails(selectedPipelineUuid);
 
+
+    //experiment list
+
+    const {experimentList, isLoading: experimentListLoading, error: experimentListError} = useExperimentVersions(version_uuid);
+    const [selectedExperimentUuid, setSelectedExperimentUuid] = useState(null);
+    const {experimentDetails, isLoading: experimentDetailsLoading, error: experimentDetailsError} = useExperimentDetails(selectedExperimentUuid);
+
     const navigate = useNavigate();
 
-    if (isLoading || pipelinesLoading) {
+    if (isLoading || pipelinesLoading || experimentListLoading) {
         return <div>Loading...</div>;
     }
     if (error) {
@@ -25,6 +34,9 @@ function VersionDetailPage() {
     }
     if (pipelineDetailsError) {
         return <div>Error fetching pipeline details</div>;
+    }
+    if (experimentListError) {
+        return <div>Error fetching experiment list</div>;
     }
     return (
         <>
@@ -80,8 +92,50 @@ function VersionDetailPage() {
             )}
             </div>
         )}
-        <button type="button" onClick={() => navigate(`/datasets`)}>Go Back</button> {/*Controllare che l'endpoint con la lista di tutti i datasets sia corretto. 
-        Controllare anche che abbia senso tornare ai dataset da qui perché mi sto perdendo*/}
+
+{/*Experiment list related to this version*/}
+        <div className="Experiment-List">
+            <h3>Experiment List</h3>
+            {experimentList.length === 0 ? (
+                <p>No experiments available for this version.</p>
+            ) : (
+                <ul>
+                    {experimentList.map(experiment => (
+                        <li key={experiment.uuid}>
+                            <p>Experiment Id: {experiment.uuid}</p>
+                            <p>Created: {experiment.created_at}</p>
+                            <p>Status: {experiment.status}</p>
+                            <button type="button" onClick={() => setSelectedExperimentUuid(experiment.uuid)}>
+                                View Experiment Details
+                            </button>
+                        </li>
+                    ))}
+                </ul>
+            )}
+        </div>
+        {selectedExperimentUuid && (
+            <div className="experiment-preview">
+                <h2>Experiment Details</h2>
+                {experimentDetailsLoading ? (
+                    <p>Loading experiment details...</p>
+                ) : experimentDetailsError ? (
+                    <p>Error loading experiment details</p>
+                ) : (
+                    <>
+                        <p>Experiment Id: {experimentDetails.uuid}</p>
+                        <p>Dataset Id: {experimentDetails.dataset_uuid}</p>
+                        <p>Pipeline Id: {experimentDetails.pipeline_uuid}</p>
+                        <p>Model name: {experimentDetails.model_name} </p>
+                        <p>Created: {experimentDetails.created_at}</p>
+                        <p>Status: {experimentDetails.status}</p>
+                        <button type="button" onClick={() => setSelectedExperimentUuid(null)}>Close Preview</button>
+                    </>
+                )}
+            </div>
+        )}
+        <div className="version-buttons">
+            <button type="button" onClick={() => navigate(`/datasets`)}>Go Back to Dataset</button>
+        </div>
     </>
     );
 }

@@ -1,14 +1,14 @@
-import CreateExperiment from '../hooks/useCreateExperiment';
+import {useCreateExperiment} from '../hooks/useExperiment';
 import { useState } from 'react';
 import { useDatasets } from '../hooks/useDatasets';
 import { useVersions } from '../hooks/useVersions';
 import { usePipelines } from '../hooks/usePipelines';
 import { useModels } from '../hooks/useModels';
-import { useNavigate } from 'react-router-dom';
+
 
 function SubmitExperimentPage() {
 
-const {createExperiment, isCreating, createError} = CreateExperiment();
+const {createExperiment, isCreating, createError} = useCreateExperiment();
 const [datasetUuid, setDatasetUuid] = useState('');
 const [versionUuid, setVersionUuid] = useState('');
 const [pipelineUuid, setPipelineUuid] = useState('');
@@ -24,7 +24,7 @@ const {versions, isLoading: versionsLoading, error: versionsError} = useVersions
 const {pipelines, isLoading: pipelinesLoading, error: pipelinesError} = usePipelines(versionUuid);
 const {models, isLoading: modelsLoading, error: modelsError} = useModels();
 
-const navigate = useNavigate();
+
 
 const handleSubmit = async (e) => {
     e.preventDefault();
@@ -39,9 +39,9 @@ const handleSubmit = async (e) => {
     if (metrics) payload.metrics = metrics;
     if (notes) payload.notes = notes;
 
-    await createExperiment(payload, {
+    createExperiment(payload, {
         onSuccess: () => {
-            navigate('/experiments');
+            alert('Experiment created successfully! Go to the related specific version to see it.');
         },
         onError: (error) => {
             console.error('Error creating experiment:', error);
