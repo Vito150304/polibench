@@ -1,4 +1,4 @@
-import useCreateModel from "../hooks/useCreateModel";
+import useCreateModel from "../hooks/useCreateModels";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 function RegisterModelPage() {

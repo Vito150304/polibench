@@ -1,5 +1,5 @@
 import { useParams } from "react-router-dom";
-import {useDatasetDetails} from "../hooks/useDatasetDetails";
+import {useDatasetDetails} from "../hooks/useDatasets";
 import {useVersions} from "../hooks/useVersions";
 import { useNavigate } from "react-router-dom";
 

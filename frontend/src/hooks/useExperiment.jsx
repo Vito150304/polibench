@@ -47,3 +47,25 @@ export const useExperimentVersions = (version_uuid) => {
     });
     return { experimentList, isLoadingExperimentList, ExperimentListError };
 };
+
+
+export const useExperimentDetails = (experiment_uuid) => {
+    const { data: experimentDetails, isLoading: isLoadingExperimentDetails, error: experimentDetailsError } = useQuery({
+        queryKey: ['experiment-details', experiment_uuid],
+        queryFn: async () => {
+            try {
+                const response = await fetch(`/api/v1/experiments/${experiment_uuid}`);
+                if (!response.ok) {
+                    const errorData = await response.json().catch(() => ({}));
+                    throw new Error(errorData.detail || 'Failed to fetch experiment details');
+                }
+                return await response.json();
+            } catch (networkError) {
+                console.error('Error fetching experiment details:', networkError);
+                throw new Error('Failed to fetch experiment details', { cause: networkError });
+            }
+        },
+        enabled: !!experiment_uuid,
+    });
+    return { experimentDetails, isLoadingExperimentDetails, experimentDetailsError };
+};

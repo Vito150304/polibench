@@ -1,10 +1,10 @@
-import useVersionDetails from '../hooks/useVersionDetails';
+import {useVersionDetails} from '../hooks/useVersions';
 import {useParams, useNavigate} from 'react-router-dom';
-import usePipelines from '../hooks/usePipelines';
+import {usePipelines} from '../hooks/usePipelines';
 import useState from 'react';
-import usePipelineDetails from '../hooks/usePipelineDetails';
-import useExperimentDetails from '../hooks/useExperimentDetails';
-import useExperimentVersions from '../hooks/useExperimentVersions';
+import {usePipelineDetails} from '../hooks/usePipelines';
+import {useExperimentDetails} from '../hooks/useExperiment';
+import {useExperimentVersions} from '../hooks/useExperiment';
 import useMetrics from '../hooks/useMetrics';
 
 
