@@ -4,6 +4,7 @@ import { useDatasets } from '../hooks/useDatasets';
 import { useVersions } from '../hooks/useVersions';
 import { usePipelines } from '../hooks/usePipelines';
 import useModels from '../hooks/useModels';
+import toast from 'react-hot-toast';
 
 
 function SubmitExperimentPage() {
@@ -41,10 +42,11 @@ const handleSubmit = async (e) => {
 
     createExperiment(payload, {
         onSuccess: () => {
-            alert('Experiment created successfully! Go to the related specific version to see it.');
+            toast.success('Experiment created successfully! Go to the related specific version to see it.');
         },
         onError: (error) => {
             console.error('Error creating experiment:', error);
+            toast.error(`Error creating experiment: ${error.message}`);
         }
     });
 }

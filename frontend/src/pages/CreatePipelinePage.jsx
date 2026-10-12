@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { useCreatePipeline } from '../hooks/usePipelines';
 import { usePipelinePreview } from '../hooks/usePipelines';
+import toast from 'react-hot-toast';
 
 
 function CreatePipelinePage() {
@@ -74,7 +75,7 @@ function CreatePipelinePage() {
             },
             onError: (error) => {
                 console.error('Error parsing version:', error);
-                alert(`Error parsing version: ${error.message}`);
+                toast.error(`Error parsing version: ${error.message}`);
             }
         });
     };

@@ -2,6 +2,7 @@ import { useParams } from "react-router-dom";
 import {useDatasetDetails} from "../hooks/useDatasets";
 import {useVersions} from "../hooks/useVersions";
 import { useNavigate } from "react-router-dom";
+import toast from 'react-hot-toast';
 
 function DatasetDetailPage() {
 
@@ -27,7 +28,7 @@ function DatasetDetailPage() {
             window.URL.revokeObjectURL(downloadUrl);
         } catch (downloadErr) {
             console.error("Download fallito:", downloadErr);
-            alert(`Errore durante il download del file ${kind}.`);
+            toast.error(`Errore durante il download del file ${kind}.`);
         }
     };
 

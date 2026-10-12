@@ -1,4 +1,4 @@
-//import { useState } from 'react'
+import {Toaster} from 'react-hot-toast';
 import RegisterPage from './pages/RegisterPage';
 import LoginPage from './pages/LoginPage';
 import { Routes, Route } from 'react-router-dom';
@@ -25,6 +25,7 @@ import NotFoundPage from './pages/NotFoundPage';
 
 function App() {
     return (
+        <Toaster position = "bottom-right" reverseOrder = {false}>
         <Routes>
             <Route element={<Layout />}>
 
@@ -116,6 +117,7 @@ function App() {
             <Route path="*" element={<NotFoundPage />} />
             
         </Routes>
+        </Toaster>
     );
 }  
 

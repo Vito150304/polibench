@@ -2,6 +2,7 @@ import { useParams, useNavigate } from "react-router-dom";
 import { useCreateDatasetVersion } from "../hooks/useDatasets";
 import { useState } from "react";
 import { useVersionParse } from "../hooks/useDatasets";
+import toast from 'react-hot-toast';
 
 function CreateDatasetVersionPage() {
     const {dataset_uuid} = useParams();
@@ -88,7 +89,7 @@ function CreateDatasetVersionPage() {
             },
             onError: (error) => {
                 console.error('Error parsing version:', error);
-                alert(`Error parsing version: ${error.message}`);
+                toast.error(`Error parsing version: ${error.message}`);
             }
         });
     };

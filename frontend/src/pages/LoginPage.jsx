@@ -1,6 +1,7 @@
 import  {useAuth}  from '../contexts/AuthContext';
 import { useRef } from 'react';
 import { useMutation } from '@tanstack/react-query';
+import toast from 'react-hot-toast';
 
 function LoginPage() {
 
@@ -42,7 +43,7 @@ function LoginPage() {
         },
 
         onSuccess: () => {
-            alert('Email has been sent again');
+            toast.success('Email has been sent again');
         },
 
         onError: (error) => {
@@ -54,7 +55,7 @@ function LoginPage() {
         const currentEmail = emailRef.current.value;
         
         if (!currentEmail) {
-            alert("Per favore, inserisci la tua email nel form prima di richiedere un nuovo link.");
+            toast.error("Per favore, inserisci la tua email nel form prima di richiedere un nuovo link.");
             return; 
         }
         
