@@ -20,6 +20,7 @@ import VersionDetailPage from './pages/VersionDetailPage';
 import CreateDatasetVersionPage from './pages/CreateDatasetVersionPage';
 import CreatePipelinePage from './pages/CreatePipelinePage';
 import RegisterModelPage from './pages/RegisterModelPage';
+import NotFoundPage from './pages/NotFoundPage';
 
 
 function App() {
@@ -112,6 +113,7 @@ function App() {
             <Route path='/verify-email' element={<VerificationEmailPage />} />
             <Route path='/email-sent' element={<EmailSentPage />} />
             <Route path='/login' element={<LoginPage />} />
+            <Route path="*" element={<NotFoundPage />} />
             
         </Routes>
     );
