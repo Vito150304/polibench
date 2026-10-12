@@ -126,15 +126,15 @@ const handleSubmit = async (e) => {
             </label>
             <label>
                 Run Name:
-                <input type="text" value={runName} onChange={(e) => setRunName(e.target.value)} />
+                <input type="text" value={runName} onChange={(e) => setRunName(e.target.value)} placeholder="e.g. My Experiment" />
             </label>
             <label>
                 Seed:
-                <input type="number" value={seed} onChange={(e) => setSeed(e.target.value)} />
+                <input type="number" value={seed} onChange={(e) => setSeed(e.target.value)} placeholder="e.g. 15" />
             </label>
             <label>
                 Metrics:
-                <input type="text" value={metrics} onChange={(e) => setMetrics(e.target.value)} /> {/*capire modalità di inserimento*/}
+                <input type="text" value={metrics} onChange={(e) => setMetrics(e.target.value)} placeholder="e.g. NDCG@10..." /> {/*capire modalità di inserimento*/}
             </label>
             <label>
                 Notes:
