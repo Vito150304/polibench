@@ -25,7 +25,8 @@ import NotFoundPage from './pages/NotFoundPage';
 
 function App() {
     return (
-        <Toaster position = "bottom-right" reverseOrder = {false}>
+        <>
+        <Toaster position = "bottom-right" reverseOrder = {false} />
         <Routes>
             <Route element={<Layout />}>
 
@@ -117,7 +118,7 @@ function App() {
             <Route path="*" element={<NotFoundPage />} />
             
         </Routes>
-        </Toaster>
+        </>
     );
 }  
 
