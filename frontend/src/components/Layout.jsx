@@ -1,4 +1,4 @@
-import {Link, Outlet} from "react-router-dom";
+import {Link, Outlet, useNavigate} from "react-router-dom";
 import { useAuth } from "../contexts/AuthContext";
 import { useState } from "react";
 import { CircleUserRound, House, Podium, CirclePlus, Cpu, Database, UserRound } from 'lucide-react';
@@ -7,6 +7,7 @@ function Layout() {
 
     const {isLoggedIn, isCheckingSession, logout} = useAuth();
     const [isOpen, setIsOpen] = useState(false);
+    const navigate = useNavigate();
 
     const toggleMenu = () => {
         setIsOpen(!isOpen);
@@ -63,6 +64,7 @@ function Layout() {
                                     <li><button onClick={() => {
                                         logout();
                                         setIsOpen(false);
+                                        navigate("/login");
                                     }}>
                                         Logout</button></li>
                                 </ul>

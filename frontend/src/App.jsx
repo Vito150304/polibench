@@ -14,6 +14,12 @@ import DatasetPage from './pages/DatasetPage';
 import ProfilePage from './pages/ProfilePage';
 import UsersPage from './pages/UsersPage';
 import LeaderboardDemoPage from './pages/LeaderBoardDemoPage';
+import DatasetDetailPage from './pages/DatasetDetailPage';
+import RegisterDatasetPage from './pages/RegisterDatasetPage';
+import VersionDetailPage from './pages/VersionDetailPage';
+import CreateDatasetVersionPage from './pages/CreateDatasetVersionPage';
+import CreatePipelinePage from './pages/CreatePipelinePage';
+import RegisterModelPage from './pages/RegisterModelPage';
 
 
 function App() {
@@ -29,24 +35,67 @@ function App() {
                     //</ProtectedRoute>
                 } />
 
+                <Route path='/leaderboard/:datasetId/:versionId/:pipelineId' element={
+                    //<ProtectedRoute>
+                        <LeaderBoardPage />
+                    //</ProtectedRoute>
+                } />
+
                 <Route path='/leaderboardDemo' element={<LeaderboardDemoPage />} />
 
                 <Route path='/experiment' element={
-                    <ProtectedRoute>
+                    //<ProtectedRoute>
                         <SubmitExperimentPage />
-                    </ProtectedRoute>} />
-                    
-                <Route path='/model' element={
+                    //</ProtectedRoute>
+                } />
+
+                <Route path='/models' element={
                     //<ProtectedRoute>
                         <ModelPage />
-                    //</ProtectedRoute>} 
-                    }/>
+                    //</ProtectedRoute>
+                } />
+
+                <Route path='/register-model' element={
+                    //<ProtectedRoute>
+                        <RegisterModelPage />
+                    //</ProtectedRoute>
+                }/> 
+
+                <Route path='/datasets/:dataset_uuid' element={
+                    //<ProtectedRoute>
+                        <DatasetDetailPage />
+                    //</ProtectedRoute>
+                }/>
 
                 <Route path='/datasets' element={
                     //<ProtectedRoute>
                         <DatasetPage />
                     //</ProtectedRoute>} 
-                    }/>
+                }/>
+
+                <Route path='/register-dataset' element={
+                    //<ProtectedRoute>
+                        <RegisterDatasetPage />
+                    //</ProtectedRoute>
+                }/>
+
+                <Route path='/dataset-versions/:version_uuid' element={
+                    //<ProtectedRoute>
+                        <VersionDetailPage />
+                    //</ProtectedRoute>
+                }/>
+
+                <Route path='/datasets/:dataset_uuid/create-version' element={
+                    //<ProtectedRoute>
+                        <CreateDatasetVersionPage />
+                    //</ProtectedRoute>
+                }/>
+
+                <Route path='/dataset-versions/:version_uuid/create-pipeline' element={
+                    //<ProtectedRoute>
+                        <CreatePipelinePage />
+                    //</ProtectedRoute>
+                }/>
 
                 <Route path='/profile' element={
                     <ProtectedRoute>
