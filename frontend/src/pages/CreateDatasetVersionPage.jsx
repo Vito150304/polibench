@@ -2,7 +2,7 @@ import { useParams, useNavigate } from "react-router-dom";
 import { useCreateDatasetVersion } from "../hooks/useDatasets";
 import { useState } from "react";
 import { useVersionParse } from "../hooks/useDatasets";
-import toast from 'react-hot-toast';
+import { toast } from 'react-toastify';
 
 function CreateDatasetVersionPage() {
     const {dataset_uuid} = useParams();

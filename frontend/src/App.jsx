@@ -1,4 +1,5 @@
-import {Toaster} from 'react-hot-toast';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import RegisterPage from './pages/RegisterPage';
 import LoginPage from './pages/LoginPage';
 import { Routes, Route } from 'react-router-dom';
@@ -26,7 +27,7 @@ import NotFoundPage from './pages/NotFoundPage';
 function App() {
     return (
         <>
-        <Toaster position = "bottom-right" reverseOrder = {false} />
+        <ToastContainer position = "bottom-right" reverseOrder = {false} />
         <Routes>
             <Route element={<Layout />}>
 

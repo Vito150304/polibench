@@ -1,7 +1,7 @@
 import  {useAuth}  from '../contexts/AuthContext';
 import { useRef } from 'react';
 import { useMutation } from '@tanstack/react-query';
-import toast from 'react-hot-toast';
+import { toast } from 'react-toastify'; 
 
 function LoginPage() {
 

@@ -1,6 +1,6 @@
 import {useUpdateUserDetails} from '../hooks/useUsers';
 import { useState } from 'react';
-import { useAuth } from '../hooks/AuthProvider';
+import  {useAuth}  from '../contexts/AuthContext';
 import {useDeleteUser} from '../hooks/useUsers';
 
 

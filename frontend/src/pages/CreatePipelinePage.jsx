@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { useCreatePipeline } from '../hooks/usePipelines';
 import { usePipelinePreview } from '../hooks/usePipelines';
-import toast from 'react-hot-toast';
+import { toast } from 'react-toastify';
 
 
 function CreatePipelinePage() {

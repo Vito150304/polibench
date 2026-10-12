@@ -4,7 +4,7 @@ import { useDatasets } from '../hooks/useDatasets';
 import { useVersions } from '../hooks/useVersions';
 import { usePipelines } from '../hooks/usePipelines';
 import useModels from '../hooks/useModels';
-import toast from 'react-hot-toast';
+import { toast } from 'react-toastify'; 
 
 
 function SubmitExperimentPage() {

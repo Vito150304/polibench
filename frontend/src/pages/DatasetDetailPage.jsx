@@ -2,7 +2,7 @@ import { useParams } from "react-router-dom";
 import {useDatasetDetails} from "../hooks/useDatasets";
 import {useVersions} from "../hooks/useVersions";
 import { useNavigate } from "react-router-dom";
-import toast from 'react-hot-toast';
+import { toast } from 'react-toastify';
 
 function DatasetDetailPage() {
 
