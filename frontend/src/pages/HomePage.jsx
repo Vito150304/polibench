@@ -1,8 +1,49 @@
 function HomePage() {
     return (
-        <div>
-            <h2>Home Page</h2>
-        </div>
+        <>
+            <div className="Introduction">
+                <h1>Welcome to Polibench!</h1>
+                <h3>What is Polibench?</h3>
+                <p>Polibench is a benchmarking tool designed to evaluate the performance of various <span>models</span> applied to
+                datasets. Performance evaluation is influenced by multiple factors, including the choice of dataset, 
+                model architecture, and training procedure, as well as <span>hyperparameters</span>.</p>
+                <h3>How does it work?</h3>
+                <span>Six steps procedure.</span>
+                <ol>
+                    <li>Register a dataset</li>
+                    <li>Create a version</li>
+                    <li>Define the pipeline</li> 
+                    <li>Choose a model</li>
+                    <li>Submit experiment</li>
+                    <li>View, or compare, the results on the dashboard.</li>
+                </ol>
+            </div>
+            <div className="Features">
+                <div className="Feature">
+                    <h4>UUID-first API</h4>
+                    <p>Every entity is identified by a unique UUID (Universally Unique Identifier), ensuring consistent and reliable access to resources.</p>
+                </div>
+                <div className="Feature">
+                    <h4>Reproducibility</h4>
+                    <p>Polibench ensures that experiments can be reproduced consistently by tracking all relevant metadata.</p>
+                </div>
+                <div className="Feature">
+                    <h4>Live Leaderboard</h4>
+                    <p>Metrics are denormalised for fast queries - leaderboard results come from indexed reads, no aggregation.</p>
+                </div>
+            </div>
+            <div className="BuiltWith">
+                <h3>Built with</h3>
+                <ul>
+                    <li>FastAPI</li>
+                    <li>React</li>
+                    <li>MongoDB</li>
+                    <li>Docker</li>
+                    <li>Beanie</li>
+                    <li>Pydantic</li>
+                </ul>
+            </div>
+        </>
     );
 }
 export default HomePage;
