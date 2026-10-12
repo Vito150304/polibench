@@ -66,7 +66,7 @@ function RegisterDatasetPage() {
                     {isPending ? 'Creating...' : 'Create Dataset'}
                 </button>
                 {error && <p>{error}</p>}
-                {!error && !isPending && navigate("/datasets")} {/*aggiungere la rotta se non l'ho fatto*/}
+                {!error && !isPending && navigate("/datasets")} 
                 <p>*: Required fields</p>
             </form>
         </>

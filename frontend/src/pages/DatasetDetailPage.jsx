@@ -13,7 +13,6 @@ function DatasetDetailPage() {
 
     const handleDownloadYaml = async (version_uuid, kind) => {
         try {
-            // Usa l'endpoint corretto per il download raw
             const response = await fetch(`/api/v1/dataset-versions/${version_uuid}/yaml/${kind}/raw`);
             if (!response.ok) throw new Error(`Failed to download ${kind} YAML`);
 
@@ -21,7 +20,7 @@ function DatasetDetailPage() {
             const downloadUrl = window.URL.createObjectURL(blob);
             const link = document.createElement('a');
             link.href = downloadUrl;
-            link.download = `${datasetDetails.name || 'dataset'}_${kind}.yaml`; // Nome dinamico
+            link.download = `${datasetDetails.name || 'dataset'}_${kind}.yaml`; 
             document.body.appendChild(link);
             link.click();
             link.remove();
@@ -65,8 +64,8 @@ function DatasetDetailPage() {
                             <li key={version.uuid}>
                                 <p>Version: {version.version}</p>
                                 <p>Created: {version.created_at}</p>
-                                <p>Status: {version.status}</p> {/*ex: draft*/}
-                                <p>Density: {version.density}</p> {/*sarebbe?*/}
+                                <p>Status: {version.status}</p> 
+                                <p>Density: {version.density}</p> 
 
                                 <div className="version-actions">
                                     <button type="button" onClick={() => navigate(`/dataset-versions/${version.uuid}`)}>
@@ -89,8 +88,8 @@ function DatasetDetailPage() {
                 )}
             </div>
             <div className="version-buttons">
-                <button type="button" onClick={() => navigate(`/datasets/${dataset_uuid}/create-version`)}>Create New Version</button> {/* Aggiungi qui il pulsante per creare una nuova versione */}
-                <button type="button" onClick={() => navigate(`/datasets`)}>Go Back</button> {/*Controllare che l'endpoint con la lista di tutti i datasets sia corretto*/}
+                <button type="button" onClick={() => navigate(`/datasets/${dataset_uuid}/create-version`)}>Create New Version</button> 
+                <button type="button" onClick={() => navigate(`/datasets`)}>Go Back</button>
             </div>
         </>
     );

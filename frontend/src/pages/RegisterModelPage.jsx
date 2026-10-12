@@ -56,7 +56,7 @@ function RegisterModelPage() {
                     {isPending ? 'Creating...' : 'Create Model'}
                 </button>
                 {error && <p>Error creating model: {error.message}</p>}
-                {!error && !isPending && navigate("/models")} {/*aggiungere la rotta se non l'ho fatto*/}
+                {!error && !isPending && navigate("/models")} 
             </form>
             <button onClick={() => navigate("/models")}>View Models</button>
             <p>*: Required fields</p>

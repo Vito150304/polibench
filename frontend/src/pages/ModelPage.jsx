@@ -14,16 +14,14 @@ function ModelPage() {
     if (error) {
         return <div>Error loading models: {error.message}</div>;
     }
-    if (!models || models.length === 0) return <div>No models registered</div>;
 
     const RegisterModel = () => {
-        navigate("/register-model"); //aggiungere la rotta e associarla al componente RegisterModelPage.jsx
+        navigate("/register-model"); 
     }
 
     const modelliFiltrati =  models.filter((modello) => modello.name.toLowerCase().includes(searchModel.toLowerCase())); //barra di ricerca
     
-    return ( //con i dati di mockup la GET funziona. Quindi dovrò verificare solo se funziona anche con le fetch. Per la post
-        //dovrò aggiungere la rotta. Possibile implementazione futura (anche backend) è aggiungere un endpoint DELETE
+    return ( //Possibile implementazione futura (anche backend) è aggiungere un endpoint DELETE
         //per cancellare un modello registrato per sbaglio ad esempio
         <>
             <h1 className = "Models-title">MODELS</h1>

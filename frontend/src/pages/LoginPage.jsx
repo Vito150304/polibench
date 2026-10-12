@@ -4,7 +4,7 @@ import { useMutation } from '@tanstack/react-query';
 
 function LoginPage() {
 
-    const {login} = useAuth(); //dentro la parentesi ci dovrò mettere tutte le cose che mi possono servire
+    const {login} = useAuth(); 
     const emailRef = useRef();
     const passwordRef = useRef();
     
