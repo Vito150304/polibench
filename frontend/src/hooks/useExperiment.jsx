@@ -1,7 +1,11 @@
 import { useMutation } from '@tanstack/react-query';
 import { useQuery } from '@tanstack/react-query';
+import { useAuth } from '../contexts/AuthContext';
+import { useQueryClient } from '@tanstack/react-query';
 
 export const useCreateExperiment = () => {
+    const { accessToken } = useAuth();
+    const queryClient = useQueryClient();
     const {mutate: createExperiment, isPending: isCreating, error: createError} = useMutation({
         mutationKey: ['create-experiment'],
         mutationFn: async (experimentData) => {
@@ -10,6 +14,7 @@ export const useCreateExperiment = () => {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${accessToken}`,
                     },
                     body: JSON.stringify(experimentData),
                 });
@@ -22,7 +27,15 @@ export const useCreateExperiment = () => {
                 console.error('Error creating experiment:', networkError);
                 throw new Error('Failed to create experiment', { cause: networkError });
             }
-        },
+        }, //data è la risposta del backend, variables è il payload che ho mandato al backend
+        onSuccess: (data, variables) => {
+            //se la versione è nel payload, invalido la query delle versioni di quell'esperimento, altrimenti invalido la query di tutti gli esperimenti
+            if (variables.version) {
+                queryClient.invalidateQueries({ queryKey: ['experiment-versions', variables.version] });
+            } else {
+                queryClient.invalidateQueries({ queryKey: ['experiments'] });
+            }
+        }
     });
     return { createExperiment, isCreating, createError };
 };

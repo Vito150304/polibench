@@ -1,10 +1,12 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { toast } from 'react-toastify';
+import { useAuth } from '../contexts/AuthContext';
 
 function useCreateModel() {
     //POST
 
     const queryClient = useQueryClient();
+    const { accessToken } = useAuth();
 
     const {mutate: createModel, isPending, error} = useMutation({
         mutationKey: ['create-model'],
@@ -13,7 +15,8 @@ function useCreateModel() {
                 const response = await fetch(`/api/v1/ml-models`, {
                     method: 'POST',
                     headers: {
-                        'Content-Type': 'application/json'
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${accessToken}`
                     },
                     body: JSON.stringify(nuovoModello)
                 });

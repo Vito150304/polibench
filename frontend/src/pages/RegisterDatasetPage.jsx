@@ -70,7 +70,7 @@ function RegisterDatasetPage() {
                 </label>
                 <button type="submit" disabled={isPending}>
                     {isPending ? 'Creating...' : 'Create Dataset'}
-                </button>S
+                </button>
                 <p>*: Required fields</p>
             </form>
         </>

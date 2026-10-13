@@ -29,6 +29,7 @@ export const useUsers = () => {
 
 export const useUpdateUserDetails = () => {
     const queryClient = useQueryClient();
+    const { accessToken } = useAuth();
     const {mutate: updateUserDetails, isPending, error} = useMutation({
         mutationKey: ['update-user-details'],
         mutationFn: async (userData) => {
@@ -36,6 +37,7 @@ export const useUpdateUserDetails = () => {
                 method: 'PATCH',
                 headers: {
                     'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${accessToken}`
                 },
                 body: JSON.stringify(userData),
             });
@@ -58,7 +60,7 @@ export const useUpdateUserDetails = () => {
 }
 
 export const useDeleteUser = () => {
-    const { logout } = useAuth();
+    const { logout, accessToken } = useAuth();
     const queryClient = useQueryClient();
     const navigate = useNavigate();
     const {mutate: deleteUser, isPending, error} = useMutation({
@@ -66,6 +68,9 @@ export const useDeleteUser = () => {
         mutationFn: async () => {
             const response = await fetch(`/api/v1/users/me`, {
                 method: 'DELETE',
+                headers: {
+                    'Authorization': `Bearer ${accessToken}`
+                }
             });
             if (!response.ok) {
                 const errorData = await response.json().catch(() => ({}));

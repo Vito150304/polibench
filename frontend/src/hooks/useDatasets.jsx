@@ -1,6 +1,7 @@
 import {useQuery} from '@tanstack/react-query';
 import {useMutation, useQueryClient} from '@tanstack/react-query';
 import {toast} from 'react-toastify';
+import {useAuth} from '../contexts/AuthContext';
 
 export const useDatasets = () => {
     const {data: datasets, isLoading, error} = useQuery({
@@ -30,6 +31,7 @@ export const useDatasets = () => {
 
 export const useCreateDataset = () => {
     const queryClient = useQueryClient();
+    const {accessToken} = useAuth();
     const {mutate: newDataset, isPending, error} = useMutation({
         mutationKey: ['create-dataset'],
         mutationFn: async (newDataset) => {
@@ -37,7 +39,8 @@ export const useCreateDataset = () => {
                 const response = await fetch(`/api/v1/datasets`, {
                     method: 'POST',
                     headers: {
-                        'Content-Type': 'application/json'
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${accessToken}`
                     },
                     body: JSON.stringify(newDataset)
                 });

@@ -1,5 +1,7 @@
 import { useQuery } from '@tanstack/react-query';
 import { useMutation } from '@tanstack/react-query';
+import {useAuth} from '../contexts/AuthContext';
+import { useQueryClient } from '@tanstack/react-query';
 
 export const usePipelines = (versionId) => {
     const { data: pipelines, isLoading, error } = useQuery({
@@ -58,6 +60,8 @@ export const usePipelineDetails = (pipeline_uuid) => {
 }
 
 export const useCreatePipeline = (version_uuid) => {
+    const { accessToken } = useAuth();
+    const queryClient = useQueryClient();
     const {mutate: createPipeline, isPending, error} = useMutation({
         mutationKey: ['create-pipeline', version_uuid],
         mutationFn: async (payload) => {
@@ -65,7 +69,8 @@ export const useCreatePipeline = (version_uuid) => {
                 const response = await fetch(`/api/v1/datasets-versions/${version_uuid}/pipelines`, {
                     method: 'POST',
                     headers: {
-                        'Content-Type': 'application/json'
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${accessToken}`
                     },
                     body: JSON.stringify(payload)
                 });
@@ -78,6 +83,9 @@ export const useCreatePipeline = (version_uuid) => {
                 console.error("Network error during pipeline creation:", networkError);
                 throw new Error('Failed to create pipeline', { cause: networkError });
             }
+        },
+        onSuccess: () => {
+            queryClient.invalidateQueries({ queryKey: ['pipelines', version_uuid] });
         }
     });
 
