@@ -97,6 +97,7 @@ export const useCreatePipeline = (version_uuid) => {
 }
 
 export const usePipelinePreview = (version_uuid) => {
+    const { accessToken } = useAuth();
     const {mutate: previewPipeline, isPending, error} = useMutation({
         mutationKey: ['preview-pipeline', version_uuid],
         mutationFn: async (payload) => {
@@ -104,7 +105,8 @@ export const usePipelinePreview = (version_uuid) => {
                 const response = await fetch(`/api/v1/datasets-versions/${version_uuid}/pipelines/preview`, {
                     method: 'POST',
                     headers: {
-                        'Content-Type': 'application/json'
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${accessToken}`
                     },
                     body: JSON.stringify(payload)
                 });

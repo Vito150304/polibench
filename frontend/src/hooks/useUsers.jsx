@@ -5,12 +5,16 @@ import { useAuth } from "../contexts/AuthContext";
 import { useNavigate } from "react-router-dom";
 
 export const useUsers = () => {
+    const { accessToken } = useAuth();
     const { data: users, isLoading, error } = useQuery({
         queryKey: ['users'],
         queryFn: async ({signal}) => {
             try {
                 const response = await fetch('/api/v1/users', {
                     signal,
+                    headers: {
+                        'Authorization': `Bearer ${accessToken}`
+                    }
                 });
                 if (!response.ok) {
                     const errorData = await response.json().catch(() => ({}));

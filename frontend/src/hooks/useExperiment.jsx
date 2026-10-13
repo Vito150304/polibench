@@ -63,11 +63,16 @@ export const useExperimentVersions = (version_uuid) => {
 
 
 export const useExperimentDetails = (experiment_uuid) => {
+    const { accessToken } = useAuth();
     const { data: experimentDetails, isLoading: isLoadingExperimentDetails, error: experimentDetailsError } = useQuery({
         queryKey: ['experiment-details', experiment_uuid],
         queryFn: async () => {
             try {
-                const response = await fetch(`/api/v1/experiments/${experiment_uuid}`);
+                const response = await fetch(`/api/v1/experiments/${experiment_uuid}`, {
+                    headers: {
+                        'Authorization': `Bearer ${accessToken}`
+                    }
+                });
                 if (!response.ok) {
                     const errorData = await response.json().catch(() => ({}));
                     throw new Error(errorData.detail || 'Failed to fetch experiment details');

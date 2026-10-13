@@ -112,6 +112,7 @@ export const useVersions = (dataset_uuid) => {
 
 export const useCreateDatasetVersion = (dataset_uuid) => {
     const queryClient = useQueryClient();
+    const {accessToken} = useAuth();
     const {mutate: newVersion, isPending, error} = useMutation({
         mutationKey: ['create-dataset-version', dataset_uuid],
         mutationFn: async (newDatasetVersion) => {
@@ -119,7 +120,8 @@ export const useCreateDatasetVersion = (dataset_uuid) => {
                 const response = await fetch(`/api/v1/datasets/${dataset_uuid}/versions`, {
                     method: 'POST',
                     headers: {
-                        'Content-Type': 'application/json'
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${accessToken}`
                     },
                     body: JSON.stringify(newDatasetVersion)
                 });
@@ -144,6 +146,7 @@ export const useCreateDatasetVersion = (dataset_uuid) => {
 }
 
 export const useVersionParse = (dataset_uuid) => {
+    const { accessToken } = useAuth();
     const {mutate: parseVersion, isPending, error} = useMutation({
         mutationKey: ['parse-dataset-version', dataset_uuid],
         mutationFn: async (versionData) => {
@@ -151,7 +154,8 @@ export const useVersionParse = (dataset_uuid) => {
                 const response = await fetch(`/api/v1/datasets/${dataset_uuid}/versions/preview`, {
                     method: 'POST',
                     headers: {
-                        'Content-Type': 'application/json'
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${accessToken}`
                     },
                     body: JSON.stringify(versionData)
                 });
