@@ -37,7 +37,6 @@ function Layout() {
                         <li><Link to="/experiment"><CirclePlus /> Submit Experiment</Link></li>
                         <li><Link to="/models"><Cpu /> Model</Link></li>
                         <li><Link to="/datasets"><Database /> Datasets</Link></li>
-                        <li><Link to="/leaderboardDemo"><Podium /> Leaderboard Demo</Link></li>
                     </ul>
                     {isLoggedIn && (
                         <>

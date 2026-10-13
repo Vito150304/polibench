@@ -87,7 +87,7 @@ function AuthProvider({children}) {
                 
             });
         } catch (networkError) {
-            console.error("Errore durante la fetch:", networkError);
+            console.error("Errore during the fetch:", networkError);
             throw new Error('Network error during login', { cause: networkError });
         }
 
@@ -107,7 +107,7 @@ function AuthProvider({children}) {
             
         },
         onError: (error) => {
-            console.error("Errore durante il login:", error);
+            console.error("Errore during the login:", error);
             toast.error(error.message);
         }
     });

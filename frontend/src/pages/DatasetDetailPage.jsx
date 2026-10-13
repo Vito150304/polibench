@@ -27,8 +27,8 @@ function DatasetDetailPage() {
             link.remove();
             window.URL.revokeObjectURL(downloadUrl);
         } catch (downloadErr) {
-            console.error("Download fallito:", downloadErr);
-            toast.error(`Errore durante il download del file ${kind}.`);
+            console.error("Download failed:", downloadErr);
+            toast.error(`Error while downloading the file ${kind}.`);
         }
     };
 

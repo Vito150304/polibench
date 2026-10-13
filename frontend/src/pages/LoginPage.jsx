@@ -30,8 +30,8 @@ function LoginPage() {
                     body: JSON.stringify({ email })
                 });
             } catch (networkError) {
-                console.error("Errore durante la fetch:", networkError);
-                throw new Error('Network error during resend verification email', { cause: networkError });
+                console.error("Error during the fetch:", networkError);
+                throw new Error('Network error:', { cause: networkError });
             }
 
             if (!response.ok) {
@@ -47,7 +47,7 @@ function LoginPage() {
         },
 
         onError: (error) => {
-            console.error("Errore durante l'invio della email di verifica:", error);
+            console.error("Error while sending verification email:", error);
         }
     });
 
@@ -55,7 +55,7 @@ function LoginPage() {
         const currentEmail = emailRef.current.value;
         
         if (!currentEmail) {
-            toast.error("Per favore, inserisci la tua email nel form prima di richiedere un nuovo link.");
+            toast.error("Please, write your email before requesting a new link.");
             return; 
         }
         

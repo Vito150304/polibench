@@ -14,7 +14,6 @@ import EmailSentPage from './pages/EmailSentPage';
 import DatasetPage from './pages/DatasetPage';
 import ProfilePage from './pages/ProfilePage';
 import UsersPage from './pages/UsersPage';
-import LeaderboardDemoPage from './pages/LeaderBoardDemoPage';
 import DatasetDetailPage from './pages/DatasetDetailPage';
 import RegisterDatasetPage from './pages/RegisterDatasetPage';
 import VersionDetailPage from './pages/VersionDetailPage';
@@ -45,7 +44,6 @@ function App() {
                     //</ProtectedRoute>
                 } />
 
-                <Route path='/leaderboardDemo' element={<LeaderboardDemoPage />} />
 
                 <Route path='/experiment' element={
                     //<ProtectedRoute>

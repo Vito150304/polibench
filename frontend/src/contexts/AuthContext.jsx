@@ -5,7 +5,7 @@ export const AuthContext = createContext(null);
 export function useAuth() {
     const context = useContext(AuthContext);
     if (!context) {
-        throw new Error("il contesto non è stato trovato.");
+        throw new Error("Context not found.");
     }
     return context;
 }

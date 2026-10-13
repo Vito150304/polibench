@@ -50,12 +50,12 @@ function BarTooltip({ active, payload, label }) {
             <div className="custom-tooltip">
                 <p className="label">
                     {icon}
-                    {`Modello: ${label}`}
+                    {`Model: ${label}`}
                 </p> {/*label rappresenta il valore sull'asse x. Per il barChart, in Xaxis ho messo il model_name*/}
 
-                <p className="score">{`Punteggio: ${data.value}`}</p>
-                <p className="author">{`Avviato da: ${data.submitted_by_display_name}`}</p>
-                <p className="hyperparams">{`Iperparametri: ${JSON.stringify(data.training_config)}`}</p>
+                <p className="score">{`Score: ${data.value}`}</p>
+                <p className="author">{`Initiated by: ${data.submitted_by_display_name}`}</p>
+                <p className="hyperparams">{`Hyperparameters: ${JSON.stringify(data.training_config)}`}</p>
             </div>
         );
     }

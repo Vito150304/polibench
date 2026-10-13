@@ -5,7 +5,7 @@ function RadarTooltip({ active, payload }) {
 
         return (
             <div className="custom-tooltip">
-                <p className="label">{`Metrica: ${metrics}`}</p>
+                <p className="label">{`Metric: ${metrics}`}</p>
                 {/*se usassi JSON.stringify(pairModelValue) avrei LETTERALMENTE 
                 Punteggio per ogni modello: {"Modello A":0.9, "Modello B":0.8, "Modello C":0.75}. 
                 Funziona, ma è inguardabile e non posso formattare le cose singolarmente se mi serve.
