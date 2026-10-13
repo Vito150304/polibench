@@ -29,6 +29,10 @@ function SmoothLineChart({ datasetId, versionId, pipelineId, filters }) {
     if (isPending) return <div>Loading chart data...</div>;
     if (!chartData) return <div>No data available</div>;
 
+    if (chartData && chartData.length === 0) {
+    return <div>No data available for the selected filters. Please, submit a new experiment.</div>;
+   }
+
 return (  
     <LineChart responsive data={punti} style={{ width: '100%', aspectRatio: '16/9' }}>
         <CartesianGrid strokeDasharray="5 5" />

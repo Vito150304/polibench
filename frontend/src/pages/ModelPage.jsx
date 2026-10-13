@@ -1,6 +1,7 @@
 import useModels from "../hooks/useModels";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
+import EmptyState from "../components/EmptyState";
 
 function ModelPage() {
     
@@ -29,7 +30,12 @@ function ModelPage() {
             <button onClick = {RegisterModel}>Register a new Model</button>
             <div className = "Models-container">
                 {modelliFiltrati.length === 0 ? (
-                    <p>No models registered.</p>
+                    <EmptyState
+                        title="No Models Found"
+                        description="There are no models matching your search or registered."
+                        action="Register a new Model"
+                        route="/register-model"
+                    />
                 ) : (   
                 <table>
                     <thead>

@@ -62,15 +62,23 @@ const handleSubmit = async (e) => {
                     setVersionUuid(''); // Reset version, pipeline e model quando cambia il dataset 
                     setPipelineUuid(''); 
                     setModelUuid(''); 
-                }} disabled={datasetsLoading || datasetsError}>
-                    <option value="">Select a dataset</option>
-                    {datasetsLoading && <option value="" disabled>Loading datasets...</option>}
-                    {datasetsError && <option value="" disabled>Error loading datasets</option>}
-                    {datasets?.map(dataset => (
-                        <option key={dataset.uuid} value={dataset.uuid}>
-                            {dataset.name}
-                        </option>
-                    ))}
+                }} disabled={datasetsLoading || datasetsError || !datasets?.length === 0}>
+                    {datasetsLoading ? (
+                        <option value="" disabled>Loading datasets...</option>
+                    ) : datasetsError ? (
+                        <option value="" disabled>Error loading datasets</option>
+                    ) : datasets?.length === 0 ? (
+                        <option value="" disabled>No datasets registered. Register a dataset to submit an experiment.</option>
+                    ) : (
+                        <>
+                            <option value="">Select a dataset</option>
+                            {datasets?.map(dataset => (
+                                <option key={dataset.uuid} value={dataset.uuid}>
+                                    {dataset.name}
+                                </option>
+                            ))}
+                        </>
+                    )}
                 </select>
             </label>
             <label>
@@ -79,15 +87,23 @@ const handleSubmit = async (e) => {
                     setVersionUuid(e.target.value);
                     setPipelineUuid('');
                     setModelUuid('');
-                }} disabled={versionsLoading || versionsError || !datasetUuid}>
-                    <option value="">Select a version</option>
-                    {versionsLoading && <option value="" disabled>Loading versions...</option>}
-                    {versionsError && <option value="" disabled>Error loading versions</option>}
-                    {versions?.map(version => (
-                        <option key={version.uuid} value={version.uuid}>
+                }} disabled={versionsLoading || versionsError || !datasetUuid || versions?.length === 0}>
+                    {versionsLoading ? (
+                        <option value="" disabled>Loading versions...</option>
+                    ) : versionsError ? (
+                        <option value="" disabled>Error loading versions</option>
+                    ) : versions?.length === 0 ? (
+                        <option value="" disabled>No versions available</option>
+                    ) : (
+                        <>
+                            <option value="">Select a version</option>
+                            {versions?.map(version => (
+                                <option key={version.uuid} value={version.uuid}>
                             {version.version}
                         </option>
                     ))}
+                    </>
+                    )}
                 </select>
             </label>
             <label>
@@ -95,35 +111,50 @@ const handleSubmit = async (e) => {
                 <select value={pipelineUuid} onChange={(e) => {
                     setPipelineUuid(e.target.value);
                     setModelUuid('');
-                }} disabled={pipelinesLoading || pipelinesError || !versionUuid}>
-                    <option value="">Select a pipeline</option>
-                    {pipelinesLoading && <option value="" disabled>Loading pipelines...</option>}
-                    {pipelinesError && <option value="" disabled>Error loading pipelines</option>}
-                    {pipelines?.map(pipeline => {  {/*la pipeline non ha un name, o version, quindi ho solo uuid e code.
-                    Mostrare l'intero uuid non è sicuramente una buona pratica, quindi mostro solo i primi 6 caratteri e la data di creazione. 
-                    Se c'è il code lo mostro, altrimenti mostro "Pipeline"*/}
-                        const formattedDate = new Date(pipeline.created_at).toLocaleDateString();
-                        const shortUuid = pipeline.uuid.substring(0, 6); 
-                        const label = pipeline.code ? `${pipeline.code} (${shortUuid})` : `Pipeline (${shortUuid}) - ${formattedDate} (${pipeline.steps_count} steps)`;
-                        return (
-                            <option key={pipeline.uuid} value={pipeline.uuid}>
-                                {label}
-                            </option>
-                        );
-                    })}
+                }} disabled={pipelinesLoading || pipelinesError || !versionUuid || pipelines?.length === 0}>
+                    {pipelinesLoading ? (
+                        <option value="" disabled>Loading pipelines...</option>
+                    ) : pipelinesError ? (
+                        <option value="" disabled>Error loading pipelines</option>
+                    ) : pipelines?.length === 0 ? (
+                        <option value="" disabled>No pipelines available</option>
+                    ) : (
+                        <>
+                            <option value="">Select a pipeline</option>
+                    {/*Se c'è il code lo mostro, altrimenti mostro "Pipeline"*/}
+                            {pipelines?.map(pipeline => {
+                             const formattedDate = new Date(pipeline.created_at).toLocaleDateString();
+                                const shortUuid = pipeline.uuid.substring(0, 6);
+                                const label = pipeline.code ? `${pipeline.code} (${shortUuid})` : `Pipeline (${shortUuid}) - ${formattedDate} (${pipeline.steps_count} steps)`;
+                                return (
+                                    <option key={pipeline.uuid} value={pipeline.uuid}>
+                                        {label}
+                                    </option>
+                                );
+                            })}
+                        </>
+                    )}
                 </select>
             </label>
             <label>
                 Model*:
-                <select value={modelUuid} onChange={(e) => setModelUuid(e.target.value)} disabled={modelsLoading || modelsError} required>
-                    <option value="">Select a model</option>
-                    {modelsLoading && <option value="" disabled>Loading models...</option>}
-                    {modelsError && <option value="" disabled>Error loading models</option>}
-                    {models?.map(model => (
-                        <option key={model.uuid} value={model.uuid}>
+                <select value={modelUuid} onChange={(e) => setModelUuid(e.target.value)} disabled={modelsLoading || modelsError || !models?.length === 0} required>
+                    {modelsLoading ? (
+                        <option value="" disabled>Loading models...</option>
+                    ) : modelsError ? (
+                        <option value="" disabled>Error loading models</option>
+                    ) : models?.length === 0 ? (
+                        <option value="" disabled>No models available</option>
+                    ) : (
+                        <>
+                            <option value="">Select a model</option>
+                            {models?.map(model => (
+                                <option key={model.uuid} value={model.uuid}>
                             {model.name}
                         </option>
                     ))}
+                    </>
+                    )}
                 </select>
             </label>
             <label>

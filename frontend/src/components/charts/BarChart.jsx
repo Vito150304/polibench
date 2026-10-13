@@ -12,6 +12,10 @@ function BarChartComponent({filters, datasetId}) {
     split: filters.split
 });
 
+  if (data && data.length === 0) {
+    return <div>No data available for the selected filters. Please, submit a new experiment.</div>;
+  }
+
 return (
   <>
     {isLoading && <div>Loading leaderboard...</div>}

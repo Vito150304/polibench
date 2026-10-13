@@ -28,6 +28,9 @@ function RadarChartComponent({ filters, datasetId}) {
 
     const colors = ['#8884d8', '#82ca9d', '#ffc658', '#ff7300', '#0088FE', '#00C49F', '#FFBB28', '#FF8042'];
 
+    if (data && data.length === 0) {
+    return <div>No data available for the selected filters. Please, submit a new experiment.</div>;
+   }
     return (
         <RadarChart responsive data={radarData} style={{ width: '100%', aspectRatio: '16/9' }}>
             <PolarGrid /> 

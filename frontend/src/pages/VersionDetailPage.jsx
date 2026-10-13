@@ -6,6 +6,7 @@ import {usePipelineDetails} from '../hooks/usePipelines';
 import {useExperimentDetails} from '../hooks/useExperiment';
 import {useExperimentVersions} from '../hooks/useExperiment';
 import useMetrics from '../hooks/useMetrics';
+import {EmptyState} from '../components/EmptyState';
 
 
 function VersionDetailPage() {
@@ -55,7 +56,12 @@ function VersionDetailPage() {
                 <h3>Pipeline Registry</h3>
                 <button type="button" onClick={() => navigate(`/dataset-versions/${version_uuid}/create-pipeline`)}>Create New Pipeline</button> {/* Aggiungi qui il pulsante per creare una nuova pipeline */}
                 {pipelines.length === 0 ? (
-                    <p>No pipelines available for this version.</p>
+                    <EmptyState
+                        title="No Pipelines Found"
+                        description="There are no pipelines registered for this version."
+                        action="Create a New Pipeline"
+                        route={`/dataset-versions/${version_uuid}/create-pipeline`}
+                    />
                 ) : (
                     <ul>
                         {pipelines.map(pipeline => (
@@ -103,7 +109,12 @@ function VersionDetailPage() {
         <div className="Experiment-List">
             <h3>Experiment List</h3>
             {experimentList.length === 0 ? (
-                <p>No experiments available for this version.</p>
+                <EmptyState
+                    title="No Experiments Found"
+                    description="There are no experiments registered for this version."
+                    action="Register a new Experiment"
+                    route={`/experiment`}
+                />
             ) : (
                 <ul>
                     {experimentList.map(experiment => (

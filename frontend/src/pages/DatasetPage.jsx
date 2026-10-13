@@ -1,5 +1,6 @@
 import {useDatasets} from "../hooks/useDatasets";
 import { useNavigate } from "react-router-dom";
+import EmptyState from "../components/EmptyState";
 function DatasetPage() {
 
     const {datasets, isLoading, error} = useDatasets();
@@ -18,7 +19,12 @@ function DatasetPage() {
             <button onClick ={() => navigate("/register-dataset")}>Register a new Dataset</button> 
             <div className="Datasets-container">
                 {datasets.length === 0 ? (
-                    <p>No datasets available.</p>
+                    <EmptyState
+                        title="No Datasets Found"
+                        description="There are no datasets registered."
+                        action="Register a new Dataset"
+                        route="/register-dataset"
+                    />
                 ) : (
                     <ul className="Datasets-list">
                         {datasets.map((dataset) => (
