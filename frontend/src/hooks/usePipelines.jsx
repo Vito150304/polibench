@@ -8,7 +8,7 @@ export const usePipelines = (versionId) => {
     queryKey: ['pipelines', versionId], 
     queryFn: async ({signal}) => {
             try {
-                const response = await fetch(`/api/v1/datasets-versions/${versionId}/pipelines`, {
+                const response = await fetch(`/api/v1/dataset-versions/${versionId}/pipelines`, {
                     signal
                 });
                 if (!response.ok) {
@@ -66,7 +66,7 @@ export const useCreatePipeline = (version_uuid) => {
         mutationKey: ['create-pipeline', version_uuid],
         mutationFn: async (payload) => {
             try {
-                const response = await fetch(`/api/v1/datasets-versions/${version_uuid}/pipelines`, {
+                const response = await fetch(`/api/v1/dataset-versions/${version_uuid}/pipelines`, {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',

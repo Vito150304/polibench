@@ -52,8 +52,9 @@ function DatasetDetailPage() {
             <h3>Dataset Metadata</h3>
             <div className="DatasetDetails-container">
                 <p>Task: {datasetDetails.task}</p>
-                <p>Created: {datasetDetails.created_at}</p>
-                <p>Latest Version: {datasetDetails.latest_version}</p>
+                {datasetDetails.description && <p>Description: {datasetDetails.description}</p>}
+                {datasetDetails.created_at && <p>Created: {datasetDetails.created_at}</p>}
+                {datasetDetails.latest_version && <p>Latest Version: {datasetDetails.latest_version}</p>}
             </div>
             <div className="Version-Registry">
                 <h3>Version Registry</h3>

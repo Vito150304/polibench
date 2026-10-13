@@ -7,7 +7,7 @@ function RegisterDatasetPage() {
     const {newDataset, isPending} = useCreateDataset();
     const navigate = useNavigate();
     const [name, setName] = useState('');
-    const [task, setTask] = useState('');
+    const [task, setTask] = useState('ranking');
     const [visibility, setVisibility] = useState('private');
     const [description, setDescription] = useState('');
 
@@ -44,12 +44,11 @@ function RegisterDatasetPage() {
                 </label>
                 <label>
                     Task*:
-                    <input
-                        type="text"
-                        value={task}
-                        onChange={(e) => setTask(e.target.value)}
-                        required
-                    />
+                    <select value={task} onChange={(e) => setTask(e.target.value)} required>
+                        <option value="ranking">Ranking</option>
+                        <option value="rating_prediction">Rating Prediction</option>
+                        <option value="ctr">CTR (Click-Through Rate)</option>
+                    </select>
                 </label>
                 <label>
                     Visibility:

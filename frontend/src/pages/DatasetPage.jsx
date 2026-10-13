@@ -16,7 +16,9 @@ function DatasetPage() {
     return (
         <>
             <h1 className="Datasets-title">DATASETS</h1>
-            <button onClick ={() => navigate("/register-dataset")}>Register a new Dataset</button> 
+            {datasets.length > 0 && (
+                <button onClick={() => navigate("/register-dataset")}>Register a new Dataset</button>
+            )}
             <div className="Datasets-container">
                 {datasets.length === 0 ? (
                     <EmptyState

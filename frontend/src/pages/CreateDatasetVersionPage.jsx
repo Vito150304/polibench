@@ -16,7 +16,7 @@ function CreateDatasetVersionPage() {
 
     const [isOpenPreview, setIsOpenPreview] = useState(false);
     const [parseInfo, setParseInfo] = useState(null);
-    const {parseVersion, isPending: isParsing, error: parseError} = useVersionParse(dataset_uuid);
+    const {parseVersion, isPending: isParsing} = useVersionParse(dataset_uuid);
 
 
     const [choice, setChoice] = useState('Modalità Upload'); 
@@ -171,7 +171,6 @@ function CreateDatasetVersionPage() {
                     <button type = "button" onClick={() => navigate(`/datasets/${dataset_uuid}`)}>View Datasets</button>
                     <button type = "button" onClick={handleParse} disabled={isParsing}>Preview Version</button>
                     <button type="submit" disabled={isPending}>Create Version</button>
-                    {parseError && <p>Error parsing version: {parseError.message}</p>}
                     {error && <p>Error creating version: {error.message}</p>}
             </div>
             </form>
