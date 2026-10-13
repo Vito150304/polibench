@@ -6,7 +6,7 @@ import {usePipelineDetails} from '../hooks/usePipelines';
 import {useExperimentDetails} from '../hooks/useExperiment';
 import {useExperimentVersions} from '../hooks/useExperiment';
 import useMetrics from '../hooks/useMetrics';
-import {EmptyState} from '../components/EmptyState';
+import EmptyState from '../components/EmptyState';
 
 
 function VersionDetailPage() {
