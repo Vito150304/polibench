@@ -7,8 +7,8 @@ import {useDeleteUser} from '../hooks/useUsers';
 function ProfilePage() {
 
     const { utente, isLoading, error } = useAuth();
-    const {updateUserDetails, isPending, error: updateError} = useUpdateUserDetails();
-    const {deleteUser, isPending: isDeleting, error: deleteError} = useDeleteUser();
+    const {updateUserDetails, isPending} = useUpdateUserDetails();
+    const {deleteUser, isPending: isDeleting} = useDeleteUser();
     const [name, setName] = useState('');
     const [lastName, setLastName] = useState('');
     const [email, setEmail] = useState('');
@@ -63,13 +63,11 @@ function ProfilePage() {
                     <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} />
                 </label>
                 <button type="submit" disabled={isPending || (!name && !lastName && !email)}>Update Profile</button>
-                {updateError && <p>Error updating user: {updateError.message}</p>}
             </form>
 
             {/*chiedere a raffaele se solo il superuser può cambiare la password perché altrimenti non troverei l'endpoint*/}
 
             <button onClick={handleDeleteUser} disabled={isDeleting}>Delete Account</button>
-            {deleteError && <p>Error deleting user: {deleteError.message}</p>}
         </>
 
     );

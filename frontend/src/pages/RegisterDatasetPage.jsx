@@ -1,9 +1,10 @@
 import { useCreateDataset } from "../hooks/useDatasets";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
+import {toast} from 'react-toastify';
 
 function RegisterDatasetPage() {
-    const {newDataset, isPending, error} = useCreateDataset();
+    const {newDataset, isPending} = useCreateDataset();
     const navigate = useNavigate();
     const [name, setName] = useState('');
     const [task, setTask] = useState('');
@@ -20,7 +21,12 @@ function RegisterDatasetPage() {
         if (description) {
             payload.description = description;
         }
-        newDataset(payload);
+        newDataset(payload, {
+            onSuccess: () => {
+                toast.success('Dataset Registered');
+                navigate("/datasets");
+            }
+        });
     }
 
     return (
@@ -64,9 +70,7 @@ function RegisterDatasetPage() {
                 </label>
                 <button type="submit" disabled={isPending}>
                     {isPending ? 'Creating...' : 'Create Dataset'}
-                </button>
-                {error && <p>{error}</p>}
-                {!error && !isPending && navigate("/datasets")} 
+                </button>S
                 <p>*: Required fields</p>
             </form>
         </>

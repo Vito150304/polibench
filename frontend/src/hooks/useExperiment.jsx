@@ -2,7 +2,7 @@ import { useMutation } from '@tanstack/react-query';
 import { useQuery } from '@tanstack/react-query';
 
 export const useCreateExperiment = () => {
-    const {mutate: createExperiment, isLoading: isCreating, error: createError} = useMutation({
+    const {mutate: createExperiment, isPending: isCreating, error: createError} = useMutation({
         mutationKey: ['create-experiment'],
         mutationFn: async (experimentData) => {
             try {

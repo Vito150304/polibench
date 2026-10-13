@@ -1,8 +1,7 @@
 
 import { useMutation } from '@tanstack/react-query';
 import { useNavigate } from 'react-router-dom';
-
-
+import {toast} from 'react-toastify';
 
 
 function useRegister() {
@@ -44,7 +43,8 @@ function useRegister() {
 
         },
         onError: (error) => {
-            console.error("Errore durante la registrazione:", error);
+            console.error("Error during the registration:", error);
+            toast.error(error.message || 'Failed to register user');
         }
     })
 

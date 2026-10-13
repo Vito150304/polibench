@@ -1,7 +1,7 @@
 import {useVersionDetails} from '../hooks/useVersions';
 import {useParams, useNavigate} from 'react-router-dom';
 import {usePipelines} from '../hooks/usePipelines';
-import useState from 'react';
+import {useState} from 'react';
 import {usePipelineDetails} from '../hooks/usePipelines';
 import {useExperimentDetails} from '../hooks/useExperiment';
 import {useExperimentVersions} from '../hooks/useExperiment';
@@ -150,16 +150,16 @@ function VersionDetailPage() {
                                     {metrics.map((metric, index) => (
                                         <tr key={index}>
                                             <td>
-                                                <span>{metric.metric}</span>
+                                                {metric.metric}
                                             </td>
                                             <td>
-                                                <span>{metric.value}</span>
+                                                {metric.value}
                                             </td>
                                             <td>
-                                                <span>{metric.split}</span>
+                                                {metric.split}
                                             </td>
                                             <td>
-                                                <span>{metric.direction}</span>
+                                                {metric.direction}
                                             </td>
                                         </tr>
                                     ))}

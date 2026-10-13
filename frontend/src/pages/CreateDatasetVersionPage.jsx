@@ -58,7 +58,10 @@ function CreateDatasetVersionPage() {
         }
 
         newVersion(payload, {
-            onSuccess: () => navigate(`/datasets/${dataset_uuid}`)
+            onSuccess: () => {
+                toast.success('Version created successfully');
+                navigate(`/datasets/${dataset_uuid}`);
+            }
         });
         
     };

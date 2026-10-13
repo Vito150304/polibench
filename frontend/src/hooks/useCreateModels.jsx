@@ -1,11 +1,12 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { toast } from 'react-toastify';
 
 function useCreateModel() {
     //POST
 
     const queryClient = useQueryClient();
 
-    const {mutate: createModel, isLoading, error} = useMutation({
+    const {mutate: createModel, isPending, error} = useMutation({
         mutationKey: ['create-model'],
         mutationFn: async (nuovoModello) => {
             try {
@@ -34,10 +35,11 @@ function useCreateModel() {
         },
         onError: (error) => {
             console.error('Error creating model:', error);
+            toast.error(error.message || 'Failed to create model');
         }
     });
 
-    return { createModel, isLoading, error };
+    return { createModel, isPending, error };
 }
 
 export default useCreateModel;

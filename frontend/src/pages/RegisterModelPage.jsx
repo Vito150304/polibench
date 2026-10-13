@@ -1,10 +1,11 @@
 import useCreateModel from "../hooks/useCreateModels";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import {toast} from 'react-toastify';
 function RegisterModelPage() {
 
 
-    const {createModel, isPending, error} = useCreateModel();
+    const {createModel, isPending} = useCreateModel();
     const [name, setName] = useState('');
     const [family, setFamily] = useState('');
     const [paper, setPaper] = useState('');
@@ -20,7 +21,12 @@ function RegisterModelPage() {
         payload.paper = paper;
     }
 
-        createModel(payload);
+        createModel(payload, {
+            onSuccess: () => {
+                toast.success('Model Registered correctly');
+                navigate("/models");
+            }
+        });
     }
 
     return (
@@ -55,8 +61,6 @@ function RegisterModelPage() {
                 <button type="submit" disabled={isPending}>
                     {isPending ? 'Creating...' : 'Create Model'}
                 </button>
-                {error && <p>Error creating model: {error.message}</p>}
-                {!error && !isPending && navigate("/models")} 
             </form>
             <button onClick={() => navigate("/models")}>View Models</button>
             <p>*: Required fields</p>

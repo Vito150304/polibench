@@ -1,5 +1,8 @@
 import { useQuery } from '@tanstack/react-query';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { toast } from 'react-toastify';
+import { useAuth } from "../contexts/AuthContext";
+import { useNavigate } from "react-router-dom";
 
 export const useUsers = () => {
     const { data: users, isLoading, error } = useQuery({
@@ -44,13 +47,20 @@ export const useUpdateUserDetails = () => {
         },
         onSuccess: () => {
             queryClient.invalidateQueries({ queryKey: ['user'] });
+            toast.success('User details updated successfully');
+        },
+        onError: (error) => {
+            console.error('Error updating user details:', error);
+            toast.error(error.message || 'Failed to update user details');
         }
     });
     return { updateUserDetails, isPending, error };
 }
 
 export const useDeleteUser = () => {
+    const { logout } = useAuth();
     const queryClient = useQueryClient();
+    const navigate = useNavigate();
     const {mutate: deleteUser, isPending, error} = useMutation({
         mutationKey: ['delete-user'],
         mutationFn: async () => {
@@ -65,6 +75,13 @@ export const useDeleteUser = () => {
         },
         onSuccess: () => {
             queryClient.invalidateQueries({ queryKey: ['user'] });
+            toast.success('User deleted successfully');
+            logout(); 
+            navigate('/login');
+        },
+        onError: (error) => {
+            console.error('Error deleting user:', error);
+            toast.error(error.message || 'Failed to delete user');
         }
     });
     return { deleteUser, isPending, error };

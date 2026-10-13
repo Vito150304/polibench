@@ -30,7 +30,6 @@ function RegisterPage() {
         </form>
 
         {registerMutation.isPending && <p>Loading...</p>}
-        {registerMutation.isError && <p>Error: {registerMutation.error.message}</p>}
         </>
     )
 }

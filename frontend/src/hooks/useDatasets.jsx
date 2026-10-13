@@ -1,5 +1,6 @@
 import {useQuery} from '@tanstack/react-query';
 import {useMutation, useQueryClient} from '@tanstack/react-query';
+import {toast} from 'react-toastify';
 
 export const useDatasets = () => {
     const {data: datasets, isLoading, error} = useQuery({
@@ -55,6 +56,7 @@ export const useCreateDataset = () => {
         },
         onError: (error) => {
             console.error('Error creating dataset:', error);
+            toast.error(error.message || 'Failed to create dataset');
         }
     });
     return {newDataset, isPending, error};

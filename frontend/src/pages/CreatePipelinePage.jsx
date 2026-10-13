@@ -49,7 +49,10 @@ function CreatePipelinePage() {
         }
 
         createPipeline(payload, {
-            onSuccess: () => navigate(`/dataset-versions/${version_uuid}`)
+            onSuccess: () => {
+                toast.success('Pipeline created successfully');
+                navigate(`/dataset-versions/${version_uuid}`);
+            }
         });
         
     };

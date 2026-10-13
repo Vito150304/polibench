@@ -2,9 +2,13 @@ import {useState, useEffect} from "react";
 import {AuthContext} from "./AuthContext";
 import {useMutation, useQuery} from "@tanstack/react-query";
 import {useNavigate} from "react-router-dom";
+import {useQueryClient} from "@tanstack/react-query";
+import { toast } from 'react-toastify';
 
 
 function AuthProvider({children}) {
+
+    const queryClient = useQueryClient();
 
     const [accessToken, setAccessToken] = useState(() => {
         return localStorage.getItem('accessToken') || '';
@@ -44,7 +48,7 @@ function AuthProvider({children}) {
             
             TokenPresoDalCookie();
         } 
-    });  
+    }, [accessToken]);  
 
     const {data: utente, isLoading, isError, error} = useQuery({ //principalmente questa chiamata mi serve per prendere le info sugli utenti che mi serviranno per essere stampate nei componenti, ma non è strettamente legata al login
                 queryKey: ['user'],
@@ -104,6 +108,7 @@ function AuthProvider({children}) {
         },
         onError: (error) => {
             console.error("Errore durante il login:", error);
+            toast.error(error.message);
         }
     });
 
@@ -123,6 +128,8 @@ function AuthProvider({children}) {
         }
         setAccessToken('');
         localStorage.removeItem('accessToken');
+        queryClient.removeQueries({ queryKey: ['user'] }); //pulisce la cache per rimuovere i dati dell'utente loggato
+
     }
 
     return (
