@@ -139,12 +139,12 @@ function VersionDetailPage() {
                     <p>Error loading experiment details</p>
                 ) : (
                     <>
-                        <p>Experiment Id: {experimentDetails.uuid}</p>
-                        <p>Dataset Id: {experimentDetails.dataset_uuid}</p>
-                        <p>Pipeline Id: {experimentDetails.pipeline_uuid}</p>
-                        <p>Model name: {experimentDetails.model_name} </p>
-                        <p>Created: {experimentDetails.created_at}</p>
-                        <p>Status: {experimentDetails.status}</p>
+                        <p>Experiment Id: {experimentDetails?.uuid}</p>
+                        <p>Dataset Id: {experimentDetails?.dataset_uuid}</p>
+                        <p>Pipeline Id: {experimentDetails?.pipeline_uuid}</p>
+                        <p>Model name: {experimentDetails?.model_name} </p>
+                        <p>Created: {experimentDetails?.created_at}</p>
+                        <p>Status: {experimentDetails?.status}</p>
                         <h2>Metrics</h2>
                         {metrics && metrics.length > 0 ? (
                             <>

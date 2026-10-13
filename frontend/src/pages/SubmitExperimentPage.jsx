@@ -32,9 +32,9 @@ const handleSubmit = async (e) => {
     const payload = {
         model_uuid: modelUuid, //il model_uuid obbligatorio dal backend
     }
-    if (datasetUuid) payload.dataset = datasetUuid;
-    if (versionUuid) payload.version = versionUuid;
-    if (pipelineUuid) payload.pipeline = pipelineUuid;
+    if (datasetUuid) payload.dataset_uuid = datasetUuid;
+    if (versionUuid) payload.version_uuid = versionUuid;
+    if (pipelineUuid) payload.pipeline_uuid = pipelineUuid;
     if (runName) payload.run_name = runName;
     if (seed) payload.seed = Number(seed);
     if (metrics) payload.metrics = metrics;

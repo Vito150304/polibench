@@ -102,7 +102,7 @@ export const usePipelinePreview = (version_uuid) => {
         mutationKey: ['preview-pipeline', version_uuid],
         mutationFn: async (payload) => {
             try {
-                const response = await fetch(`/api/v1/datasets-versions/${version_uuid}/pipelines/preview`, {
+                const response = await fetch(`/api/v1/dataset-versions/${version_uuid}/pipelines/preview`, {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
