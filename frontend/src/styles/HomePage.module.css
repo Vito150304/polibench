@@ -1,0 +1,114 @@
+h1 {
+    text-align: center;
+}
+
+ol {
+    border-radius: 8 px;
+}
+
+.features {
+    display: grid;
+    grid-template-rows: 1fr 1fr;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px; 
+}
+
+.feature {
+    padding: 8px;
+    background-color: #ffffff;
+    border-radius: 16px;
+    border: 1px solid #e9f2f2;
+}
+
+.feature h4 {
+    text-align: center;
+}
+
+.feature:nth-child(3) {
+    grid-area: 2/1/3/3;
+}
+
+.builtWith {
+    margin-top: 64px;
+}
+
+.builtWith h3 {
+    text-align: center;
+}
+
+.builtWith ul {
+    list-style: none;
+    display: grid;
+    grid-template-rows: 1fr 1fr;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 16px;
+}
+
+.builtWith ul :nth-child(4) {
+    grid-area: 2/1/3/2;
+}
+
+.builtWith ul :nth-child(5) {
+    grid-area: 2/2/3/3;
+}
+
+.builtWith ul :nth-child(6) {
+    grid-area: 2/3/3/4;
+}
+
+
+.builtWith ul li {
+    border-radius: 16px;
+    border: 1px solid #3749ec;
+    text-align:center;
+    padding: 8px 16px;
+}
+
+.howItWorks ol {
+    list-style: none;
+    counter-reset: step; /*per inizializzare un contatore. quello della ordered list non va bene perché ha il "." finale*/
+    padding: 0;
+    margin-left: 16px; /*spostiamo tutto leggermente a destra*/
+    position: relative;
+
+}
+
+.howItWorks li {
+    counter-increment: step;
+    margin-bottom: 24px; /*distanza tra gli step*/
+    padding-left: 48px; /*per non far sovrapporre testo e cerchi*/
+    position: relative;
+    align-items: center;
+    display: flex;
+    
+}
+
+.howItWorks li::before {
+    content: counter(step);
+    left: 0; /*blocca il cerchio a sinistra*/
+    width: 32px;
+    height: 32px; /*uguale a width per avere cerchi perfetti*/
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50%;
+    color: #3749ec;
+    border: 1px solid;
+    z-index: 2; /*tieni il cerchio sopra la linea*/
+    position: absolute;
+    background-color: #ffffff;
+}
+
+.howItWorks ol::before {
+    content: ''; /*disegna la linea tra i cerchi*/
+    position: absolute;
+    top: 0; /*parte dal primo elemento*/
+    bottom: 0; /*arriva fino all'ultimo*/
+    left: 15px; /*per passare esattamente al centro dei cerchi*/
+    width: 2px; /*spessore linea*/
+    z-index: 1;
+    background-color: #3749ec;
+}
+
+
+
