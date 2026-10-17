@@ -2,6 +2,7 @@ import useCreateModel from "../hooks/useCreateModels";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import {toast} from 'react-toastify';
+import styles from "../styles/RegisterModelPage.module.css";
 function RegisterModelPage() {
 
 
@@ -58,11 +59,15 @@ function RegisterModelPage() {
                         onChange={(e) => setPaper(e.target.value)}
                     />
                 </label>
-                <button type="submit" disabled={isPending}>
-                    {isPending ? 'Creating...' : 'Create Model'}
-                </button>
+                <div className={styles.createButton}>
+                    <button type="submit" disabled={isPending}>
+                        {isPending ? 'Creating...' : 'Create Model'}
+                    </button>
+                </div>
             </form>
-            <button onClick={() => navigate("/models")}>View Models</button>
+            <div className={styles.navigation}>
+                <button onClick={() => navigate("/models")}>View Models</button>
+            </div>
             <p>*: Required fields</p>
         </>
     )

@@ -38,7 +38,9 @@ function DatasetPage() {
                 )}
             </div>
             {datasets.length > 0 && (
-                <button onClick={() => navigate("/register-dataset")}>Register a new Dataset</button>
+                <div className={styles.register}>
+                    <button onClick={() => navigate("/register-dataset")}>Register a new Dataset</button>
+                </div>
             )}
     </>
     );

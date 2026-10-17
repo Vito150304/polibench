@@ -2,6 +2,8 @@ import useModels from "../hooks/useModels";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import EmptyState from "../components/EmptyState";
+import {Search} from 'lucide-react';
+import styles from "../styles/ModelPage.module.css";
 
 function ModelPage() {
     
@@ -25,10 +27,12 @@ function ModelPage() {
     return ( //Possibile implementazione futura (anche backend) è aggiungere un endpoint DELETE
         //per cancellare un modello registrato per sbaglio ad esempio
         <>
-            <h1 className = "Models-title">MODELS</h1>
-            <input value = {searchModel} onChange = {(e) => setSearchModel(e.target.value)} placeholder = "Search for a model name" />
-            <button onClick = {RegisterModel}>Register a new Model</button>
-            <div className = "Models-container">
+            <h1 className = {styles.title}>MODELS</h1>
+            <div className = {styles.search}>
+                <Search size={27} />
+                <input value = {searchModel} onChange = {(e) => setSearchModel(e.target.value)} placeholder = "Search for a model name" />
+            </div>
+            <div className = {styles.container}>
                 {modelliFiltrati.length === 0 ? (
                     <EmptyState
                         title="No Models Found"
@@ -37,6 +41,7 @@ function ModelPage() {
                         route="/register-model"
                     />
                 ) : (   
+                
                 <table>
                     <thead>
                         <tr>
@@ -49,15 +54,18 @@ function ModelPage() {
                         {modelliFiltrati.map((modello) => (
                             <tr key={modello.uuid}>
                                 <td>{modello.name}</td>
-                                <td>{modello.family}</td>
+                                <td>{modello.family ? modello.family : (
+                                    <span>-</span>
+                                    )}</td>
                                 <td>{modello.paper_url ? <a href={modello.paper_url}>View Paper</a> : "No Paper Available"}</td>
                             </tr>
                         ))}
                     </tbody>
                 </table>)}
             </div>
-
-            
+            <div className = {styles.register}>
+            <button onClick = {RegisterModel}>Register a new Model</button>
+            </div>
         </>
     );
 }

@@ -1,0 +1,10 @@
+form {
+    border: 1px solid var(--bordo-blu);
+    border-radius: 16px;
+}
+
+form input {
+    border-radius: 14px;
+    border: 0.5px solid;
+    width: 100%;
+}
