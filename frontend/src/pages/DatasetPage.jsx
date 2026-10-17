@@ -1,6 +1,7 @@
 import {useDatasets} from "../hooks/useDatasets";
 import { useNavigate } from "react-router-dom";
 import EmptyState from "../components/EmptyState";
+import styles from "../styles/DatasetPage.module.css";
 function DatasetPage() {
 
     const {datasets, isLoading, error} = useDatasets();
@@ -15,11 +16,8 @@ function DatasetPage() {
 
     return (
         <>
-            <h1 className="Datasets-title">DATASETS</h1>
-            {datasets.length > 0 && (
-                <button onClick={() => navigate("/register-dataset")}>Register a new Dataset</button>
-            )}
-            <div className="Datasets-container">
+            <h1 className={styles.title}>DATASETS</h1>
+            <div className={styles.container}>
                 {datasets.length === 0 ? (
                     <EmptyState
                         title="No Datasets Found"
@@ -28,17 +26,20 @@ function DatasetPage() {
                         route="/register-dataset"
                     />
                 ) : (
-                    <ul className="Datasets-list">
+                    <ul className={styles.list}>
                         {datasets.map((dataset) => (
                             <li key={dataset.uuid} onClick = {() => navigate(`/datasets/${dataset.uuid}`)}> 
-                                <p>Name: {dataset.name}</p>
-                                <p>Task: {dataset.task}</p>
-                                <p>Visibility: {dataset.visibility}</p>
+                                <p><strong>Name:</strong> {dataset.name}</p>
+                                <p><strong>Task:</strong> {dataset.task}</p>
+                                <p><strong>Visibility:</strong> {dataset.visibility}</p>
                             </li>
                         ))}
                     </ul>
                 )}
             </div>
+            {datasets.length > 0 && (
+                <button onClick={() => navigate("/register-dataset")}>Register a new Dataset</button>
+            )}
     </>
     );
 }

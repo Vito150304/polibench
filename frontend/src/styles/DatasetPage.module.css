@@ -1,0 +1,22 @@
+/*div, eventuale EmptyState component o 
+ul (con li cliccabili e tag p). bottone. */
+
+.container li {
+    padding-bottom: 1em; /*giusto per avere chiara visivamente la struttura, forse da eliminare*/
+    /*lavoro vero*/
+    width: 100%;
+    border: 1px solid var(--bordo-blu);
+    border-radius: 16px;
+}
+
+.container {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+strong {
+    font-style: italic;
+    font-size: 1.7rem; 
+}
+
+/*tag p ha un margine sopra e sotto*/
