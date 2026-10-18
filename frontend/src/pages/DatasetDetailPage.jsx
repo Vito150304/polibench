@@ -3,6 +3,7 @@ import {useDatasetDetails} from "../hooks/useDatasets";
 import {useVersions} from "../hooks/useVersions";
 import { useNavigate } from "react-router-dom";
 import { toast } from 'react-toastify';
+import styles from "../styles/DatasetDetailPage.module.css";
 
 function DatasetDetailPage() {
 
@@ -50,13 +51,13 @@ function DatasetDetailPage() {
     return (
         <>
             <h3>Dataset Metadata</h3>
-            <div className="DatasetDetails-container">
+            <div className={styles.detailsContainer}>
                 <p>Task: {datasetDetails.task}</p>
                 {datasetDetails.description && <p>Description: {datasetDetails.description}</p>}
                 {datasetDetails.created_at && <p>Created: {datasetDetails.created_at}</p>}
                 {datasetDetails.latest_version && <p>Latest Version: {datasetDetails.latest_version}</p>}
             </div>
-            <div className="Version-Registry">
+            <div className={styles.versionRegistry}>
                 <h3>Version Registry</h3>
                 {versions.length === 0 ? (
                     <p>No versions available for this dataset.</p>
@@ -69,7 +70,7 @@ function DatasetDetailPage() {
                                 <p>Status: {version.status}</p> 
                                 <p>Density: {version.density}</p> 
 
-                                <div className="version-actions">
+                                <div className={styles.versionActions}>
                                     <button type="button" onClick={() => navigate(`/dataset-versions/${version.uuid}`)}>
                                         View Version Details
                                     </button>
@@ -89,7 +90,7 @@ function DatasetDetailPage() {
                     </ul>
                 )}
             </div>
-            <div className="version-buttons">
+            <div className={styles.navigation}>
                 <button type="button" onClick={() => navigate(`/datasets/${dataset_uuid}/create-version`)}>Create New Version</button> 
                 <button type="button" onClick={() => navigate(`/datasets`)}>Go Back</button>
             </div>

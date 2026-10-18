@@ -2,6 +2,7 @@ import { useCreateDataset } from "../hooks/useDatasets";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import {toast} from 'react-toastify';
+import styles from "../styles/RegisterDatasetPage.module.css";
 
 function RegisterDatasetPage() {
     const {newDataset, isPending} = useCreateDataset();
@@ -32,9 +33,11 @@ function RegisterDatasetPage() {
     return (
         <>
             <h1>Register a new Dataset</h1>
+            <div className={styles.page}>
             <form onSubmit={handleSubmit}>
+                <div className={styles.inputContainer}>
                 <label>
-                    Name*:
+                    Name:*
                     <input
                         type="text"
                         value={name}
@@ -43,7 +46,7 @@ function RegisterDatasetPage() {
                     />
                 </label>
                 <label>
-                    Task*:
+                    Task:*
                     <select value={task} onChange={(e) => setTask(e.target.value)} required>
                         <option value="ranking">Ranking</option>
                         <option value="rating_prediction">Rating Prediction</option>
@@ -70,8 +73,13 @@ function RegisterDatasetPage() {
                 <button type="submit" disabled={isPending}>
                     {isPending ? 'Creating...' : 'Create Dataset'}
                 </button>
-                <p>*: Required fields</p>
+                </div>
             </form>
+            <div className={styles.navigation}>
+                <button onClick={() => navigate("/datasets")}>View Datasets</button>
+            </div>
+            </div>
+            <p className={styles.required}>*: Required fields</p>
         </>
     )
 }

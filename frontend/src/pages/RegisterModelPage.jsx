@@ -33,9 +33,11 @@ function RegisterModelPage() {
     return (
         <>
             <h1>Register a new Model</h1>
+            <div className={styles.page}>
             <form onSubmit={handleSubmit}>
+               <div className={styles.inputContainer}> 
                 <label>
-                    Name*:
+                    Name:*
                     <input
                         type="text"
                         value={name}
@@ -59,16 +61,18 @@ function RegisterModelPage() {
                         onChange={(e) => setPaper(e.target.value)}
                     />
                 </label>
-                <div className={styles.createButton}>
-                    <button type="submit" disabled={isPending}>
-                        {isPending ? 'Creating...' : 'Create Model'}
-                    </button>
+                
+                <button type="submit" disabled={isPending}>
+                    {isPending ? 'Creating...' : 'Create Model'}
+                </button>
                 </div>
             </form>
             <div className={styles.navigation}>
                 <button onClick={() => navigate("/models")}>View Models</button>
             </div>
-            <p>*: Required fields</p>
+            </div>
+            <p className={styles.required}>*: Required fields</p>
+            
         </>
     )
 }
