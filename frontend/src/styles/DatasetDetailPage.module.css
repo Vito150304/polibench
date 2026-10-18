@@ -1,0 +1,47 @@
+h3 {
+    border: 1px solid;
+    border-radius: 14px;
+    padding: 0.8rem;
+    text-align: center;
+    width: 100%;
+}
+
+.detailsContainer span, .versionRegistry span {
+    font-weight: bold;
+    font-style: italic;
+}
+
+.versionRegistry ul {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(27rem, 100%), 32rem)); /*stessa cosa di sopra, ma pensato per telefoni vecchi (<270px)*/
+    gap: 2rem;
+}
+
+.versionRegistry li {
+    border: 1px solid;
+    border-radius: 14px;
+    text-align: center;
+}
+
+.versionActions button {
+    width: 100%;
+    border-bottom: 1px solid;
+    cursor: pointer;
+    background-color: var(--sfondo-app);
+}
+
+.versionActions :first-child {
+    color: #cf2d48;
+    padding-bottom: 2rem;
+    border-bottom: 1px solid black;
+}
+
+.navigation {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
+    padding-top: 4rem;
+}
+

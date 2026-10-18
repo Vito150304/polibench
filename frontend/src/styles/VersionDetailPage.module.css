@@ -1,0 +1,70 @@
+/*DARE LO STILE ALLA TABELLA CHE CONTIENE LE METRICHE*/
+
+h3 {
+    border: 1px solid;
+    border-radius: 14px;
+    padding: 0.8rem;
+    text-align: center;
+    width: 100%;
+}
+
+button {
+    cursor: pointer;
+    background-color: var(--sfondo-app);
+    border: none;
+}
+
+
+.detailsContainer span, .pipelineRegistry span, .experimentList span, 
+.pipelinePreview span, .experimentPreview span {
+    font-weight: bold;
+    font-style: italic;
+}
+
+.pipelineButton {
+    right: 0;
+    position: absolute;
+    padding-right: 2rem;
+    text-decoration: underline;
+    cursor: pointer;
+    z-index: 2;
+    
+}
+
+.pipelineRegistry ul {
+    position: relative;
+}
+
+.pipelineDetails, .experimentDetails {
+    color: red;
+    width: 100%;
+    text-align: center;
+}
+
+
+.versionButton {
+    display: flex;
+    cursor: pointer;
+    align-items: center;
+    justify-content: center;
+    padding-top: 4rem;
+    font-weight: bold;
+}
+
+.pipelinePreview, .experimentPreview {
+    background-color: #a9b2d6;
+    border-radius: 14px;
+    border: 1px solid;
+
+}
+
+.pipelinePreview button, .experimentPreview button {
+    font-weight: bold;
+    width: 100%;
+    text-align: center;
+    background-color: #a9b2d6;
+    border-top: 1px solid;
+}
+
+
+ 

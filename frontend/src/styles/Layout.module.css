@@ -27,7 +27,7 @@ a svg {
     right: 0;
 }
 
-button {
+.header button {
     cursor: pointer;
     background-color: var(--sfondo-app);
     border: none;

@@ -7,6 +7,7 @@ import {useExperimentDetails} from '../hooks/useExperiment';
 import {useExperimentVersions} from '../hooks/useExperiment';
 import useMetrics from '../hooks/useMetrics';
 import EmptyState from '../components/EmptyState';
+import styles from "../styles/VersionDetailPage.module.css";
 
 
 function VersionDetailPage() {
@@ -47,14 +48,14 @@ function VersionDetailPage() {
     }
     return (
         <>
-            <div className="VersionDetails-container">
-                <span>Version</span> <p>{versionDetails.version}</p>
-                <p>Status: {versionDetails.status}</p>
-                <p>Release Notes: {versionDetails.release_notes}</p>
+            <div className={styles.detailsContainer}>
+                <p><span>Version</span> {versionDetails.version}</p>
+                <p><span>Status:</span> {versionDetails.status}</p>
+                {versionDetails.release_notes && <p><span>Release Notes:</span> {versionDetails.release_notes}</p>}
             </div>
-            <div className="Pipeline-Registry">
+            <div className={styles.pipelineRegistry}>
                 <h3>Pipeline Registry</h3>
-                <button type="button" onClick={() => navigate(`/dataset-versions/${version_uuid}/create-pipeline`)}>Create New Pipeline</button> {/* Aggiungi qui il pulsante per creare una nuova pipeline */}
+                <button className={styles.pipelineButton} type="button" onClick={() => navigate(`/dataset-versions/${version_uuid}/create-pipeline`)}>Create New Pipeline</button> {/* Aggiungi qui il pulsante per creare una nuova pipeline */}
                 {pipelines.length === 0 ? (
                     <EmptyState
                         title="No Pipelines Found"
@@ -66,11 +67,11 @@ function VersionDetailPage() {
                     <ul>
                         {pipelines.map(pipeline => (
                             <li key={pipeline.uuid}>
-                                <p>Pipeline Id: {pipeline.uuid}</p>
-                                <p>Created: {pipeline.created_at}</p>
-                                <p>Status: {pipeline.status}</p> 
-                                <p>Pipeline steps count: {pipeline.steps_count}</p> 
-                                <button type="button" onClick={() => setSelectedPipelineUuid(pipeline.uuid)}>
+                                <p><span>Pipeline Id:</span> {pipeline.uuid}</p>
+                                <p><span>Created:</span> {pipeline.created_at}</p>
+                                <p><span>Status:</span> {pipeline.status}</p> 
+                                <p><span>Pipeline steps count:</span> {pipeline.steps_count}</p> 
+                                <button className={styles.pipelineDetails} type="button" onClick={() => setSelectedPipelineUuid(pipeline.uuid)}>
                                     View Pipeline Details
                                 </button>
                             </li>
@@ -79,7 +80,7 @@ function VersionDetailPage() {
                 )}
             </div>
             {selectedPipelineUuid && (
-                <div className="pipeline-preview">
+                <div className={styles.pipelinePreview}>
                     <h2>Pipeline Details</h2>
                     {pipelineDetailsLoading ? (
                         <p>Loading pipeline details...</p>
@@ -87,14 +88,14 @@ function VersionDetailPage() {
                     <p>Error loading pipeline details</p>
                 ) : (
                 <>
-                    <p>Pipeline Id: {pipelineDetails.uuid}</p>
-                    <p>Created: {pipelineDetails.created_at}</p>
-                    <p>Status: {pipelineDetails.status}</p>
+                    <p><span>Pipeline Id:</span> {pipelineDetails.uuid}</p>
+                    <p><span>Created:</span> {pipelineDetails.created_at}</p>
+                    <p><span>Status:</span> {pipelineDetails.status}</p>
                     {pipelineDetails?.blocks?.length > 0 ? ( 
                         <>
-                            <p>Pipeline name: {pipelineDetails.blocks[0].name}</p>
-                            <p>Pipeline operation: {pipelineDetails.blocks[0].operation}</p>
-                            <p>Pipeline hyperparameters: {JSON.stringify(pipelineDetails.blocks[0].params)}</p>
+                            <p><span>Pipeline name:</span> {pipelineDetails.blocks[0].name}</p>
+                            <p><span>Pipeline operation:</span> {pipelineDetails.blocks[0].operation}</p>
+                            <p><span>Pipeline hyperparameters:</span> {JSON.stringify(pipelineDetails.blocks[0].params)}</p>
                         </>
                         ) : (
                         <p>No pipeline blocks available.</p>
@@ -106,7 +107,7 @@ function VersionDetailPage() {
         )}
 
 {/*Experiment list related to this version*/}
-        <div className="Experiment-List">
+        <div className={styles.experimentList}>
             <h3>Experiment List</h3>
             {experimentList.length === 0 ? (
                 <EmptyState
@@ -119,10 +120,10 @@ function VersionDetailPage() {
                 <ul>
                     {experimentList.map(experiment => (
                         <li key={experiment.uuid}>
-                            <p>Experiment Id: {experiment.uuid}</p>
-                            <p>Created: {experiment.created_at}</p>
-                            <p>Status: {experiment.status}</p>
-                            <button type="button" onClick={() => setSelectedExperimentUuid(experiment.uuid)}>
+                            <p><span>Experiment Id:</span> {experiment.uuid}</p>
+                            <p><span>Created:</span> {experiment.created_at}</p>
+                            <p><span>Status:</span> {experiment.status}</p>
+                            <button className={styles.experimentDetails} type="button" onClick={() => setSelectedExperimentUuid(experiment.uuid)}>
                                 View Experiment Details
                             </button>
                         </li>
@@ -131,7 +132,7 @@ function VersionDetailPage() {
             )}
         </div>
         {selectedExperimentUuid && (
-            <div className="experiment-preview">
+            <div className={styles.experimentPreview}>
                 <h2>Experiment Details</h2>
                 {(experimentDetailsLoading || metricsLoading) ? (
                     <p>Loading experiment details...</p>
@@ -139,12 +140,12 @@ function VersionDetailPage() {
                     <p>Error loading experiment details</p>
                 ) : (
                     <>
-                        <p>Experiment Id: {experimentDetails?.uuid}</p>
-                        <p>Dataset Id: {experimentDetails?.dataset_uuid}</p>
-                        <p>Pipeline Id: {experimentDetails?.pipeline_uuid}</p>
-                        <p>Model name: {experimentDetails?.model_name} </p>
-                        <p>Created: {experimentDetails?.created_at}</p>
-                        <p>Status: {experimentDetails?.status}</p>
+                        <p><span>Experiment Id:</span> {experimentDetails?.uuid}</p>
+                        <p><span>Dataset Id:</span> {experimentDetails?.dataset_uuid}</p>
+                        <p><span>Pipeline Id:</span> {experimentDetails?.pipeline_uuid}</p>
+                        <p><span>Model name:</span> {experimentDetails?.model_name} </p>
+                        <p><span>Created:</span> {experimentDetails?.created_at}</p>
+                        <p><span>Status:</span> {experimentDetails?.status}</p>
                         <h2>Metrics</h2>
                         {metrics && metrics.length > 0 ? (
                             <>
@@ -185,7 +186,7 @@ function VersionDetailPage() {
                 )}
             </div>
         )}
-        <div className="version-buttons">
+        <div className={styles.versionButton}>
             <button type="button" onClick={() => navigate(`/datasets`)}>Go Back to Dataset</button>
         </div>
     </>

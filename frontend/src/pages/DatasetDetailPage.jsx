@@ -51,45 +51,45 @@ function DatasetDetailPage() {
     return (
         <>
             <h3>Dataset Metadata</h3>
-            <div className={styles.detailsContainer}>
-                <p>Task: {datasetDetails.task}</p>
-                {datasetDetails.description && <p>Description: {datasetDetails.description}</p>}
-                {datasetDetails.created_at && <p>Created: {datasetDetails.created_at}</p>}
-                {datasetDetails.latest_version && <p>Latest Version: {datasetDetails.latest_version}</p>}
-            </div>
-            <div className={styles.versionRegistry}>
-                <h3>Version Registry</h3>
-                {versions.length === 0 ? (
-                    <p>No versions available for this dataset.</p>
-                ) : (
-                    <ul>
-                        {versions.map(version => (
-                            <li key={version.uuid}>
-                                <p>Version: {version.version}</p>
-                                <p>Created: {version.created_at}</p>
-                                <p>Status: {version.status}</p> 
-                                <p>Density: {version.density}</p> 
+                <div className={styles.detailsContainer}>
+                    <p><span>Task:</span> {datasetDetails.task}</p>
+                    {datasetDetails.description && <p><span>Description:</span> {datasetDetails.description}</p>}
+                    {datasetDetails.created_at && <p><span>Created:</span> {datasetDetails.created_at}</p>}
+                    {datasetDetails.latest_version && <p><span>Latest Version:</span> {datasetDetails.latest_version}</p>}
+                </div>
+                <div className={styles.versionRegistry}>
+                    <h3>Version Registry</h3>
+                    {versions.length === 0 ? (
+                        <p>No versions available for this dataset.</p>
+                    ) : (
+                        <ul>
+                            {versions.map(version => (
+                                <li key={version.uuid}>
+                                    <p><span>Version:</span> {version.version}</p>
+                                    <p><span>Created:</span> {version.created_at}</p>
+                                    <p><span>Status:</span> {version.status}</p> 
+                                    <p><span>Density:</span> {version.density}</p> 
 
-                                <div className={styles.versionActions}>
-                                    <button type="button" onClick={() => navigate(`/dataset-versions/${version.uuid}`)}>
-                                        View Version Details
-                                    </button>
+                                    <div className={styles.versionActions}>
+                                        <button type="button" onClick={() => navigate(`/dataset-versions/${version.uuid}`)}>
+                                            View Version Details
+                                        </button>
 
-                                    <button type="button" onClick={() => handleDownloadYaml(version.uuid, 'dataset')}>
-                                        Dataset YAML
-                                    </button>
-                                    <button type="button" onClick={() => handleDownloadYaml(version.uuid, 'version')}>
-                                        Version YAML
-                                    </button>
-                                    <button type="button" onClick={() => handleDownloadYaml(version.uuid, 'metrics')}>
-                                        Metrics YAML
-                                    </button>
-                                </div>
-                            </li>
-                        ))}
-                    </ul>
-                )}
-            </div>
+                                        <button type="button" onClick={() => handleDownloadYaml(version.uuid, 'dataset')}>
+                                            Dataset YAML
+                                        </button>
+                                        <button type="button" onClick={() => handleDownloadYaml(version.uuid, 'version')}>
+                                            Version YAML
+                                        </button>
+                                        <button type="button" onClick={() => handleDownloadYaml(version.uuid, 'metrics')}>
+                                            Metrics YAML
+                                        </button>
+                                    </div>
+                                </li>
+                            ))}
+                        </ul>
+                    )}
+                </div>
             <div className={styles.navigation}>
                 <button type="button" onClick={() => navigate(`/datasets/${dataset_uuid}/create-version`)}>Create New Version</button> 
                 <button type="button" onClick={() => navigate(`/datasets`)}>Go Back</button>
