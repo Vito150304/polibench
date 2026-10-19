@@ -3,6 +3,7 @@ import { useCreateDatasetVersion } from "../hooks/useDatasets";
 import { useState } from "react";
 import { useVersionParse } from "../hooks/useDatasets";
 import { toast } from 'react-toastify';
+import styles from '../styles/CreateDatasetVersionPage.module.css';
 
 function CreateDatasetVersionPage() {
     const {dataset_uuid} = useParams();
@@ -102,33 +103,37 @@ function CreateDatasetVersionPage() {
     return (
         <>
             <h1>Create a new Dataset Version</h1>
-            <p>Enter the details for the new version:</p>
+            <p className={styles.description}>Enter the details for the new version:</p>
             <form onSubmit={handleSubmit}>
-                <label>
-                    Version*:
-                    <input type="text" value={version} onChange={(e) => setVersion(e.target.value)} required placeholder="e.g. 2.0" />
-                </label>
-                <label>
-                    Status:
-                    <select value={status} onChange={(e) => setStatus(e.target.value)} required>
-                        <option value="draft">Draft</option>
-                        <option value="ready">Ready</option>
-                        <option value="processing">Processing</option>
-                        <option value="failed">Failed</option>
-                    </select>
-                </label>
-                <label>
-                    Release Notes:
-                    <textarea value={releaseNote} onChange={(e) => setReleaseNote(e.target.value)} />
-                </label>
-                
-            <p>Choose configuration mode:</p>
-            <select value={choice} onChange={(e) => setChoice(e.target.value)}>
+                <div className={styles.inputContainer}>
+                    <div className={styles.datasetInfo}>
+                        <label>
+                            Version:* <span className={styles.required}>(required)</span>
+                            <input type="text" value={version} onChange={(e) => setVersion(e.target.value)} required placeholder="e.g. 2.0" />
+                        </label>
+                        <label>
+                            Status:
+                            <select value={status} onChange={(e) => setStatus(e.target.value)} required>
+                                <option value="draft">Draft</option>
+                                <option value="ready">Ready</option>
+                                <option value="processing">Processing</option>
+                                <option value="failed">Failed</option>
+                            </select>
+                        </label>
+                    </div>
+                    <label>
+                        Release Notes:
+                        <textarea value={releaseNote} onChange={(e) => setReleaseNote(e.target.value)} />
+                    </label>
+                </div>
+
+            <p className={styles.description}>Choose configuration mode:</p>
+            <select className={styles.select} value={choice} onChange={(e) => setChoice(e.target.value)}>
                 <option value="Modalità Upload">Modalità Upload</option>
                 <option value="Modalità Testuale">Modalità Testuale</option>
             </select>
             {choice === 'Modalità Upload' ? (
-                <div className="upload-mode">
+                <div className={styles.uploadMode}>
                     <label>
                         Dataset YAML File: 
                         <input type="file" accept=".yaml,.yml" onChange={(e) => setDatasetFile(e.target.files[0])} />
@@ -148,7 +153,7 @@ function CreateDatasetVersionPage() {
                     </label>
                 </div>
             ) : (
-                <div className="text-mode">
+                <div className={styles.textMode}>
                     <label>
                         Dataset YAML:
                         <textarea value={datasetText} onChange={(e) => setDatasetText(e.target.value)} />
@@ -167,7 +172,7 @@ function CreateDatasetVersionPage() {
                     </label>
                 </div>
             )}
-            <div className="buttons">
+            <div className={styles.buttons}>
                     <button type = "button" onClick={() => navigate(`/datasets/${dataset_uuid}`)}>View Datasets</button>
                     <button type = "button" onClick={handleParse} disabled={isParsing}>Preview Version</button>
                     <button type="submit" disabled={isPending}>Create Version</button>
@@ -176,21 +181,24 @@ function CreateDatasetVersionPage() {
             </form>
             
             {isOpenPreview && parseInfo && (
-                <div className="preview">
-                    <h2>Preview of the new version</h2>
-                    <span>Version:</span> <p>{parseInfo.recognized_version}</p>
-                    <span>Parsed Sources:</span> <p>{parseInfo.source_count}</p>
-                    <span>Parsed Resources:</span> <p>{parseInfo.resource_count}</p>
-                    <span>Pipeline steps:</span> <p>{parseInfo.pipeline_steps_count}</p>
-                    <span>Characteristics:</span> 
-                    <p>{parseInfo.characteristics?.n_users}</p>
-                    <p>{parseInfo.characteristics?.n_items}</p>
-                    <p>{parseInfo.characteristics?.n_interactions}</p>
-                    <p>{parseInfo.characteristics?.density}</p>
+                <div className={styles.preview}>
+                    <h2>Preview</h2>
+                    {parseInfo.recognized_version && <p><span>Version:</span> {parseInfo.recognized_version}</p>}
+                    <p><span>Parsed Sources:</span> {parseInfo.source_count}</p>
+                    <p><span>Parsed Resources:</span> {parseInfo.resource_count}</p>
+                    {parseInfo.pipeline_steps_count && <p><span>Pipeline steps:</span> {parseInfo.pipeline_steps_count}</p>}
+                    <div className={styles.previewCharacteristics}>
+                    {parseInfo.characteristics && <p><span>Characteristics:</span></p>}
+                    {parseInfo.characteristics?.n_users && <p><span>n_users: </span>{parseInfo.characteristics?.n_users}</p>}
+                    {parseInfo.characteristics?.n_items && <p><span>n_items: </span>{parseInfo.characteristics?.n_items}</p>}
+                    {parseInfo.characteristics?.n_interactions && <p><span>n_interactions: </span>{parseInfo.characteristics?.n_interactions}</p>}
+                    {parseInfo.characteristics?.density && <p><span>density: </span>{parseInfo.characteristics?.density}</p>}
+                    </div>
+                    <div className={styles.previewButton}>
                     <button type="button" onClick={() => setIsOpenPreview(false)}>Close Preview</button>
+                    </div>
                 </div>
             )}
-            <p>*: Required fields</p>
         </>
     )
 }

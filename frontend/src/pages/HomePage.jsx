@@ -3,7 +3,7 @@ import styles from '../styles/HomePage.module.css';
 function HomePage() {
     return (
         <>
-                <div className={styles.introduction}>
+            <div className={styles.introduction}>
                 <h1>Welcome to Polibench!</h1>
                 <h3>What is Polibench?</h3>
                 <p>Polibench is a benchmarking tool designed to evaluate the performance of various <span>models</span> applied to
