@@ -1,0 +1,56 @@
+
+.page {
+    min-height: 50dvh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+form {
+    width: min(100%, 40rem);
+}
+
+.inputContainer { 
+    display: grid;
+    grid-template-columns: minmax(0, 1fr); /*la colonna non cresce col contenuto*/
+    margin-inline: auto;
+    gap: 2.5rem; 
+}
+
+.inputContainer select {
+    border-radius: 14px;
+    border: 0.5px solid;
+    cursor: pointer;
+}
+
+.inputContainer label {
+    display: grid; /*implicitamente, trasforma label in un elemento block, facendogli occupare tutta la riga e costringendo l'input, select ecc ad andare a capo*/
+    grid-template-columns: minmax(0, 1fr);
+    gap: 0.6rem;
+}
+
+ .inputContainer select, .inputContainer textarea {
+    width: 100%;
+}
+
+.button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+
+.required {
+    color: red;
+    font-style: italic;
+    position: absolute;
+    z-index: 2;
+    margin-left: 6.5rem;
+}
+
+.inputContainer textarea {
+    margin-bottom: 5rem;
+    resize: vertical; /*si può allungare, non allargare*/
+    max-width: 100%;
+}

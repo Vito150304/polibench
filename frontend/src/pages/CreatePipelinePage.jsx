@@ -3,7 +3,7 @@ import { useParams, useNavigate } from 'react-router-dom';
 import { useCreatePipeline } from '../hooks/usePipelines';
 import { usePipelinePreview } from '../hooks/usePipelines';
 import { toast } from 'react-toastify';
-
+import styles from '../styles/CreatePipelinePage.module.css';
 
 function CreatePipelinePage() {
 
@@ -88,37 +88,38 @@ function CreatePipelinePage() {
     return (
         <>
             <h1>Create a new Pipeline</h1>
-            <p>Enter the details for the new pipeline:</p>
+            <p className={styles.description}>Enter the details for the new pipeline:</p>
             <form onSubmit={handleSubmit}>
+                <div className={styles.inputContainer}>
+                    <label>
+                        Code:
+                        <input type="text" value={code} onChange={(e) => setCode(e.target.value)} />
+                    </label>
+                    <label>
+                        Status:
+                        <select value={status} onChange={(e) => setStatus(e.target.value)} required>
+                            <option value="draft">Draft</option>
+                            <option value="ready">Ready</option>
+                            <option value="processing">Processing</option>
+                            <option value="failed">Failed</option>
+                        </select>
+                    </label>
+                </div>
 
-                <label>
-                    Code:
-                    <input type="text" value={code} onChange={(e) => setCode(e.target.value)} />
-                </label>
-                <label>
-                    Status:
-                    <select value={status} onChange={(e) => setStatus(e.target.value)} required>
-                        <option value="draft">Draft</option>
-                        <option value="ready">Ready</option>
-                        <option value="processing">Processing</option>
-                        <option value="failed">Failed</option>
-                    </select>
-                </label>
-                
-            <p>Choose configuration mode:</p>
-            <select value={choice} onChange={(e) => setChoice(e.target.value)}>
+            <p className={styles.description}>Choose configuration mode:</p>
+            <select className={styles.select} value={choice} onChange={(e) => setChoice(e.target.value)}>
                 <option value="Modalità Upload">Modalità Upload</option>
                 <option value="Modalità Testuale">Modalità Testuale</option>
             </select>
             {choice === 'Modalità Upload' ? (
-                <div className="upload-mode">
+                <div className={styles.uploadMode}>
                     <label>
                         Pipeline YAML File: 
                         <input type="file" accept=".yaml,.yml" onChange={(e) => setPipelineFile(e.target.files[0])} />
                     </label>
                 </div>
             ) : (
-                <div className="text-mode">
+                <div className={styles.textMode}>
     
                     <label>
                         Pipeline YAML:
@@ -126,7 +127,7 @@ function CreatePipelinePage() {
                     </label>
                 </div>
             )}
-            <div className="buttons">
+            <div className={styles.buttons}>
                     <button type = "button" onClick={() => navigate(`/dataset-versions/${version_uuid}`)}>View Version Details</button>
                     <button type = "button" onClick={handleParse} disabled={isPreviewing}>Preview Pipeline</button>
                     <button type="submit" disabled={isPending}>Create Pipeline</button>
@@ -136,12 +137,14 @@ function CreatePipelinePage() {
             </form>
             
             {isOpenPreview && parseInfo && (
-                <div className="preview-pipeline">
+                <div className={styles.preview}>
                     <h2>Preview of the new pipeline</h2>
-                    <span>Version:</span> <p>{parseInfo.recognized_version}</p>
-                    <span>Requested code:</span> <p>{parseInfo.requested_code}</p>
-                    <span>Pipeline steps:</span> <p>{parseInfo.pipeline_steps_count}</p>
-                    <button type="button" onClick={() => setIsOpenPreview(false)}>Close Preview</button>
+                    <p><span>Version:</span> <span>{parseInfo.recognized_version}</span></p>
+                    <p><span>Requested code:</span> <span>{parseInfo.requested_code}</span></p>
+                    <p><span>Pipeline steps:</span> <span>{parseInfo.pipeline_steps_count}</span></p>
+                    <div className={styles.previewButton}>
+                        <button type="button" onClick={() => setIsOpenPreview(false)}>Close Preview</button>
+                    </div>
                 </div>
             )}
         </>

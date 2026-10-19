@@ -8,15 +8,12 @@
 }
 
 form {
-    width: fit-content;
+    width: min(100%, 40rem);
 }
 
 .inputContainer { 
-    /*di default, senza grid-template-columns,
-     crea una sola colonna larga quanto il 
-     contenitore (le colonne auto si allargano 
-     per riempirlo)*/
     display: grid;
+    grid-template-columns: minmax(0, 1fr); /*la colonna non cresce col contenuto*/
     margin-inline: auto;
     gap: 2.5rem; 
 }
@@ -26,12 +23,21 @@ form {
     border: 0.5px solid;
 }
 
+.inputContainer input, .inputContainer select, .inputContainer textarea {
+    width: 100%;
+}
+
+.inputContainer select {
+    cursor: pointer;
+}
+
 .inputContainer label {
     display: grid; /*implicitamente, trasforma label in un elemento block, facendogli occupare tutta la riga e costringendo l'input, select ecc ad andare a capo*/
+    grid-template-columns: minmax(0, 1fr);
     gap: 0.6rem;
 }
 
-.navigation {
+.navigation, .button {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -41,4 +47,9 @@ form {
 .required {
     color: red;
     font-style: italic;
+}
+
+.inputContainer textarea {
+    resize: vertical; /*si può allungare, non allargare*/
+    max-width: 100%;
 }

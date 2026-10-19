@@ -70,9 +70,11 @@ function RegisterDatasetPage() {
                         onChange={(e) => setDescription(e.target.value)}
                     />
                 </label>
+                <div className={styles.button}>
                 <button type="submit" disabled={isPending}>
                     {isPending ? 'Creating...' : 'Create Dataset'}
                 </button>
+                </div>
                 </div>
             </form>
             <div className={styles.navigation}>

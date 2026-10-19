@@ -1,0 +1,48 @@
+
+
+.userName {
+    text-align: center;
+    font-weight: bold;
+}
+
+.userEmail {
+    text-align: center;
+    font-style: italic;
+}
+
+.inputContainer {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 2.5rem;
+    place-items: center;
+    margin-top: 4rem;
+    margin-bottom: 1.5rem;
+}
+
+
+
+/*dato che i label sono diventati elementi block, nonostante la lunghezza diversa dei label si va a capo,
+ quindi i campi di input sono allineati*/
+.inputContainer label {
+    display: grid; 
+    gap: 0.6rem;
+}
+
+
+.inputContainer input {
+    border-radius: 14px;
+    border: 0.5px solid;
+    margin-left: 1rem;
+}
+
+
+.button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.button button {
+    color: red;
+    font-weight: bold;
+}

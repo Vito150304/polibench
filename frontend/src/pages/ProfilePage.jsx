@@ -2,6 +2,7 @@ import {useUpdateUserDetails} from '../hooks/useUsers';
 import { useState } from 'react';
 import  {useAuth}  from '../contexts/AuthContext';
 import {useDeleteUser} from '../hooks/useUsers';
+import styles from '../styles/ProfilePage.module.css';
 
 
 function ProfilePage() {
@@ -42,14 +43,14 @@ function ProfilePage() {
 
     return (
         <>  
-            <div className="User-details">
-                <h3>User Details</h3>
-                <p>{utente.first_name} {utente.last_name}</p>
-                <p>Email: {utente.email}</p>
-                <p>{utente.isActive}</p>
-                <p>{utente.isVerified}</p>
-            </div>
+            <h3>User Details</h3>
+            <p className={styles.userName}>{utente.first_name} {utente.last_name}</p>
+            <p className={styles.userEmail}>Email: {utente.email}</p>
+            <p>{utente.isActive}</p>
+            <p>{utente.isVerified}</p>
             <form onSubmit={handleUpdateUser}>
+                <h3>Update Profile</h3>
+                <div className={styles.inputContainer}>
                 <label>
                     First Name:
                     <input type="text" value={name} onChange={(e) => setName(e.target.value)} />
@@ -62,12 +63,16 @@ function ProfilePage() {
                     Email:
                     <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} />
                 </label>
+                <div className={styles.buttonUpdate}>
                 <button type="submit" disabled={isPending || (!name && !lastName && !email)}>Update Profile</button>
+                </div>
+                </div>
             </form>
 
             {/*chiedere a raffaele se solo il superuser può cambiare la password perché altrimenti non troverei l'endpoint*/}
-
-            <button onClick={handleDeleteUser} disabled={isDeleting}>Delete Account</button>
+            <div className={styles.button}>
+                <button onClick={handleDeleteUser} disabled={isDeleting}>Delete Account</button>
+            </div>
         </>
 
     );
