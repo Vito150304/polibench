@@ -45,13 +45,13 @@
     padding: 0.8rem 1.6rem;
     margin-right: 1.2rem;
     border: 1px solid;
-    background: var(--sfondo-bianco);
+    background: var(--bg-sfondo);
     cursor: pointer;
     margin-bottom: 1rem;
 }
 
 .uploadMode input::file-selector-button:hover {
-    background: var(--bordo-bianco);
+    background: var(--color-border);
 }
 
 .buttons {

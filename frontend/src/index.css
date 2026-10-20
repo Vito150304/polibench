@@ -21,18 +21,101 @@ img, svg {
 
 
 :root {
-  --sfondo-bianco: #fff;
-  --bordo-bianco: #e9f2f2;
-  --bordo-blu: #3749ec;
-  --colore-testo: #1e293b;
-  --sfondo-app: #f8fafc;
-  --colore-icone: #5a6c73;
+
+/*Colore di BRAND*/
+
+--hue-brand: 180;
+--brand-primary: hsl(var(--hue-brand), 75%, 32%); /*colore che ho cercato di ottenere dal sito del poliba e dal suo logo*/
+
+
+/*Background (dark mode) */
+
+--bg-sfondo: hsl(var(--hue-brand), 12%, 7%);
+--bg-card: hsl(var(--hue-brand), 12%, 11%);
+--bg-nav: hsl(var(--hue-brand), 12%, 16%);
+
+/*Testi (dark mode)*/
+
+--text-primary: hsl(var(--hue-brand), 15%, 87%);
+--text-secondary: hsl(var(--hue-brand), 10%, 72%);
+
+/*Colori di SUPPORTO (dark mode)*/
+
+--color-success: hsl(145, 75%, 32%);
+--color-danger: hsl(355, 75%, 32%);
+--color-warning: hsl(35, 75%, 32%);
+--color-info: hsl(200, 75%, 32%);
+
+/*Bottoni*/
+
+--btn-primary-bg: hsl(var(--hue-brand), 50%, 22%);
+--btn-primary-hover: hsl(var(--hue-brand), 55%, 28%);
+--btn-primary-text: hsl(var(--hue-brand), 60%, 90%);
+
+/*bordi*/
+
+  --color-border: hsl(180, 12%, 22%);
+
+/*input*/
+
+--input-bg: hsl(var(--hue-brand), 12%, 9%);  
+--input-text: var(--text-primary);
+--input-placeholder: hsl(var(--hue-brand), 10%, 50%);
+--input-border: var(--color-border);
+
+
+/*icone*/
+
+--color-icon: hsl(var(--hue-brand), 20%, 60%);
+
+}
+
+@media (prefers-color-scheme: light) {
+  :root {
+
+    /*Background (light mode) */
+
+    --bg-sfondo: hsl(var(--hue-brand), 12%, 93%);
+    --bg-card: hsl(var(--hue-brand), 12%, 89%);
+    --bg-nav: hsl(var(--hue-brand), 12%, 84%);
+
+    /*Testi (light mode)*/
+
+    --text-primary: hsl(var(--hue-brand), 15%, 5%); 
+    --text-secondary: hsl(var(--hue-brand), 10%, 28%);
+
+    /*Colori di SUPPORTO (light mode)*/
+
+    --color-success: hsl(145, 75%, 36%);
+    --color-danger: hsl(355, 75%, 36%);
+    --color-warning: hsl(35, 75%, 36%);
+    --color-info: hsl(200, 75%, 36%);
+
+
+    /*bottoni*/
+    --btn-primary-bg: var(--brand-primary); /* hsl(180, 75%, 32%) */
+    --btn-primary-hover: hsl(var(--hue-brand), 75%, 24%);
+    --btn-primary-text: #fff;
+
+    /*bordi*/
+
+    --color-border: hsl(180, 12%, 86%);
+
+    /*input*/
+
+    --input-bg: #fff;  
+    --input-text: var(--text-primary);
+    --input-placeholder: hsl(var(--hue-brand), 10%, 60%);
+    --input-border: var(--color-border);
+
+    /*icone*/
+    --color-icon: hsl(var(--hue-brand), 25%, 45%);
+  }
 }
 
 body {
   font-family: 'Inter', sans-serif;
-  background-color: var(--sfondo-app); 
-  color: var(--colore-testo);            
+  background-color: var(--bg-sfondo);           
   margin: 0;
   padding: 0;
   font-size: clamp(1.4rem, 1.2rem + 0.5vw ,1.8rem);
@@ -43,7 +126,8 @@ button {
   font: inherit;
   padding: 0;
   cursor: pointer;
-  background-color: var(--sfondo-app);
+  background-color: var(--btn-primary-bg);
+  color: var(--btn-primary-text);
   border: none;
 }
 
@@ -51,15 +135,16 @@ ul, ol {
   list-style: none;
   padding: 0;
   margin: 0;
+  color: var(--text-secondary);
 }
 
 a {
   text-decoration: none;
-  color: black;
+  color: var(--text-secondary);
 }
 
 svg {
-  color: var(--colore-icone);
+  color: var(--color-icon);
 }
 
 input {
@@ -67,9 +152,28 @@ input {
 }
 
 h3 {
-    border: 1px solid;
+    border: 1px solid var(--color-border);
     border-radius: 14px;
     padding: 0.8rem;
     text-align: center;
     width: 100%;
+}
+
+h1, h2, h3, h4 {
+  color: var(--text-primary);
+}
+
+p, span, label {
+  color: var(--text-secondary);
+}
+
+nav {
+background-color: var(--bg-nav);
+}
+
+
+input, select, textarea {
+  background-color: var(--input-bg);
+  color: var(--input-text);
+  border: 1px solid var(--input-border)
 }

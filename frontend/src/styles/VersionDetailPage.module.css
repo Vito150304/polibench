@@ -12,8 +12,7 @@
 .pipelineButton {
     right: 0;
     position: absolute;
-    padding-right: 2rem;
-    text-decoration: underline;
+    margin-right: 2rem;
     cursor: pointer;
     z-index: 2;
     
@@ -24,9 +23,10 @@
 }
 
 .pipelineDetails, .experimentDetails {
-    color: red;
+    color: var(--color-info);
     width: 100%;
     text-align: center;
+    background-color: var(--bg-sfondo);
 }
 
 
@@ -40,9 +40,9 @@
 }
 
 .pipelinePreview, .experimentPreview {
-    background-color: #a9b2d6;
+    background-color: var(--bg-card);
     border-radius: 14px;
-    border: 1px solid;
+    border: 1px solid var(--color-border);
 
 }
 
@@ -50,8 +50,8 @@
     font-weight: bold;
     width: 100%;
     text-align: center;
-    background-color: #a9b2d6;
-    border-top: 1px solid;
+    border-radius: 14px;
+    border-top: 1px solid var(--border-color);
 }
 
 

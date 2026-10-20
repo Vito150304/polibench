@@ -50,7 +50,7 @@ function Layout() {
                         )}
                         </>
                     ) : (
-                        <button onClick={toggleMenu}>
+                        <button onClick={toggleMenu} className={styles.iconButton}>
                             <ChevronDown size={38} />
                         </button>
                     )}

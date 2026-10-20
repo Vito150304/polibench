@@ -32,7 +32,7 @@
     position: absolute;
     z-index: 2;
     left: 10.5rem;
-    color: red;
+    color: var(--color-danger);
 }
 
 .selection, .input, .select {
@@ -56,13 +56,13 @@
     padding: 0.8rem 1.6rem;
     margin-right: 1.2rem;
     border: 1px solid;
-    background: var(--sfondo-bianco);
+    background: var(--bg-sfondo);
     cursor: pointer;
     margin-bottom: 1rem;
 }
 
 .uploadMode input::file-selector-button:hover {
-    background: var(--bordo-bianco);
+    background: var(--color-border);
 }
 
 .buttons {
@@ -71,6 +71,13 @@
     align-items: center;
     justify-content: center;
     gap: 6rem;
+}
+
+.preview {
+    border: 1px solid var(--color-border);
+    background-color: var(--bg-card);
+    margin-top: 2rem;
+    border-radius: 14px;
 }
 
 
@@ -92,4 +99,6 @@
     align-items: center;
     justify-content: center;
     font-weight: bold;
+    background-color: var(--brand-primary);
+    border-radius: 14px;
 }

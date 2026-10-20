@@ -3,7 +3,6 @@
 
 a {
     display: flex;
-    /*background-color: pink;*/
     align-items: center;
 
 }
@@ -20,7 +19,7 @@ a svg {
 
 
 .userMenu {
-    background-color: var(--sfondo-app);
+    background-color: var(--bg-sfondo);
     position: absolute;
     z-index: 10;
     top: 0;
@@ -29,7 +28,6 @@ a svg {
 
 .header button {
     cursor: pointer;
-    background-color: var(--sfondo-app);
     border: none;
     display:flex;
     align-items: center;
@@ -52,6 +50,11 @@ a svg {
     margin: 0 auto;
     width: min(100%, 18em);
     font-size: calc(1.6rem + 0.8vw);
+    
+}
+
+.nav ul:hover {
+    background-color: var(--bg-nav);
 }
 
 
@@ -59,6 +62,10 @@ a svg {
     display: flex;
     gap: 1.8rem;
     padding-right: 1.5rem;
+}
+
+.iconButton {
+    background-color: var(--bg-sfondo);
 }
 
 

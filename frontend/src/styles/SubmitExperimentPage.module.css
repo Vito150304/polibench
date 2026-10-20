@@ -42,7 +42,7 @@
 
 
 .required {
-    color: red;
+    color: var(--color-danger);
     font-style: italic;
     position: absolute;
     z-index: 2;

@@ -43,9 +43,13 @@
     align-items: center;
 }
 
+.button {
+    margin-bottom: 1rem;
+}
+
 
 .required {
-    color: red;
+    color: var(--color-danger);
     font-style: italic;
 }
 

@@ -37,12 +37,13 @@
     margin-inline: auto;
     border-collapse: collapse;
     margin-bottom: 5rem;
+    background-color: var(--bg-card)
 }
 
 .table th, .table td {
     padding: 0.4rem 2.5rem;
     text-align: left;
-    border: 1px solid;
+    border: 1px solid var(--color-border);
 }
 
 .table td {
@@ -56,6 +57,6 @@
 }
 
 .register button {
-    border: 1px solid var(--bordo-blu);
+    border: 1px solid var(--color-border);
     text-align: center;
 }
