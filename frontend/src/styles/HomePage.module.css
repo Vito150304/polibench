@@ -1,11 +1,11 @@
 
 
-h1 {
+.title {
     text-align: center;
     padding: 0;
 }
 
-ol {
+.steps {
     border-radius: 8 px;
 }
 

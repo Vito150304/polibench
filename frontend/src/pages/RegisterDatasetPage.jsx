@@ -34,7 +34,7 @@ function RegisterDatasetPage() {
         <>
             <h1>Register a new Dataset</h1>
             <div className={styles.page}>
-            <form onSubmit={handleSubmit}>
+            <form onSubmit={handleSubmit} className={styles.form}>
                 <div className={styles.inputContainer}>
                 <label>
                     Name:*

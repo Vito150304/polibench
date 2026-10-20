@@ -104,16 +104,16 @@ function CreateDatasetVersionPage() {
         <>
             <h1>Create a new Dataset Version</h1>
             <p className={styles.description}>Enter the details for the new version:</p>
-            <form onSubmit={handleSubmit}>
+            <form className={styles.form} onSubmit={handleSubmit}>
                 <div className={styles.inputContainer}>
                     <div className={styles.datasetInfo}>
                         <label>
                             Version:* <span className={styles.required}>(required)</span>
-                            <input type="text" value={version} onChange={(e) => setVersion(e.target.value)} required placeholder="e.g. 2.0" />
+                            <input className={styles.input} type="text" value={version} onChange={(e) => setVersion(e.target.value)} required placeholder="e.g. 2.0" />
                         </label>
                         <label>
                             Status:
-                            <select value={status} onChange={(e) => setStatus(e.target.value)} required>
+                            <select className={styles.selection} value={status} onChange={(e) => setStatus(e.target.value)} required>
                                 <option value="draft">Draft</option>
                                 <option value="ready">Ready</option>
                                 <option value="processing">Processing</option>
@@ -123,7 +123,7 @@ function CreateDatasetVersionPage() {
                     </div>
                     <label>
                         Release Notes:
-                        <textarea value={releaseNote} onChange={(e) => setReleaseNote(e.target.value)} />
+                        <textarea className={styles.textarea} value={releaseNote} onChange={(e) => setReleaseNote(e.target.value)} />
                     </label>
                 </div>
 
@@ -149,7 +149,7 @@ function CreateDatasetVersionPage() {
                     </label>
                     <label>
                         Characteristics YAML File:
-                        <input type="file" accept=".yaml,.yml" onChange={(e) => setCharacteristicsFile(e.target.files[0])} />
+                        <input className={styles.input} type="file" accept=".yaml,.yml" onChange={(e) => setCharacteristicsFile(e.target.files[0])} />
                     </label>
                 </div>
             ) : (

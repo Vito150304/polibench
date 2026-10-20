@@ -24,7 +24,7 @@ ul (con li cliccabili e tag p). bottone. */
     margin-bottom: 5rem;
 }
 
-strong {
+.bold {
     font-style: italic;
     font-size: 1.7rem; 
 }
@@ -40,8 +40,6 @@ strong {
     background-color: rgb(17, 77, 17);
     text-align: center;
     color: white;
-
-    
 }
 
 /*tag p ha un margine sopra e sotto*/

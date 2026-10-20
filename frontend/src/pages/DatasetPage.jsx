@@ -29,9 +29,9 @@ function DatasetPage() {
                     <ul className={styles.list}>
                         {datasets.map((dataset) => (
                             <li key={dataset.uuid} onClick = {() => navigate(`/datasets/${dataset.uuid}`)}> 
-                                <p><strong>Name:</strong> {dataset.name}</p>
-                                <p><strong>Task:</strong> {dataset.task}</p>
-                                <p><strong>Visibility:</strong> {dataset.visibility}</p>
+                                <p><strong className={styles.bold}>Name:</strong> {dataset.name}</p>
+                                <p><strong className={styles.bold}>Task:</strong> {dataset.task}</p>
+                                <p><strong className={styles.bold}>Visibility:</strong> {dataset.visibility}</p>
                             </li>
                         ))}
                     </ul>

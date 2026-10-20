@@ -89,15 +89,15 @@ function CreatePipelinePage() {
         <>
             <h1>Create a new Pipeline</h1>
             <p className={styles.description}>Enter the details for the new pipeline:</p>
-            <form onSubmit={handleSubmit}>
+            <form onSubmit={handleSubmit} className={styles.form}>
                 <div className={styles.inputContainer}>
                     <label>
                         Code:
-                        <input type="text" value={code} onChange={(e) => setCode(e.target.value)} />
+                        <input className={styles.input} type="text" value={code} onChange={(e) => setCode(e.target.value)} />
                     </label>
                     <label>
                         Status:
-                        <select value={status} onChange={(e) => setStatus(e.target.value)} required>
+                        <select className={styles.selection} value={status} onChange={(e) => setStatus(e.target.value)} required>
                             <option value="draft">Draft</option>
                             <option value="ready">Ready</option>
                             <option value="processing">Processing</option>
@@ -115,7 +115,7 @@ function CreatePipelinePage() {
                 <div className={styles.uploadMode}>
                     <label>
                         Pipeline YAML File: 
-                        <input type="file" accept=".yaml,.yml" onChange={(e) => setPipelineFile(e.target.files[0])} />
+                        <input className={styles.input} type="file" accept=".yaml,.yml" onChange={(e) => setPipelineFile(e.target.files[0])} />
                     </label>
                 </div>
             ) : (
@@ -123,7 +123,7 @@ function CreatePipelinePage() {
     
                     <label>
                         Pipeline YAML:
-                        <textarea value={pipelineText} onChange={(e) => setPipelineText(e.target.value)} />
+                        <textarea className={styles.textarea} value={pipelineText} onChange={(e) => setPipelineText(e.target.value)} />
                     </label>
                 </div>
             )}

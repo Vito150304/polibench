@@ -56,7 +56,7 @@ const handleSubmit = async (e) => {
         <>
         <h2>Submit Experiment</h2>
         <div className={styles.page}>
-        <form onSubmit={handleSubmit}>
+        <form onSubmit={handleSubmit} className={styles.form}>
             <div className={styles.inputContainer}>
                 <label>
                     Dataset:

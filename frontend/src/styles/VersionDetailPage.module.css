@@ -1,18 +1,6 @@
 /*DARE LO STILE ALLA TABELLA CHE CONTIENE LE METRICHE*/
 
-h3 {
-    border: 1px solid;
-    border-radius: 14px;
-    padding: 0.8rem;
-    text-align: center;
-    width: 100%;
-}
 
-button {
-    cursor: pointer;
-    background-color: var(--sfondo-app);
-    border: none;
-}
 
 
 .detailsContainer span, .pipelineRegistry span, .experimentList span, 

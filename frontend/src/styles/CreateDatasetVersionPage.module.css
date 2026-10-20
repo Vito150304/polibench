@@ -2,11 +2,11 @@
     font-style: italic;
 }
 
-form { 
+.form { 
     width: 100%;
 }
 
-textarea {
+.textarea {
     min-height: 10rem;
     max-width: 147.8rem;
 }
@@ -35,7 +35,7 @@ textarea {
     color: red;
 }
 
-select, input {
+.selection, .input, .select {
     height: 3.3rem;
 }
 

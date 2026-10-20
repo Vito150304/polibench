@@ -42,7 +42,7 @@ function ModelPage() {
                     />
                 ) : (   
                 
-                <table>
+                <table className = {styles.table}>
                     <thead>
                         <tr>
                             <th>Name</th>

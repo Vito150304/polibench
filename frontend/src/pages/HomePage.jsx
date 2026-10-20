@@ -4,7 +4,7 @@ function HomePage() {
     return (
         <>
             <div className={styles.introduction}>
-                <h1>Welcome to Polibench!</h1>
+                <h1 className={styles.title}>Welcome to Polibench!</h1>
                 <h3>What is Polibench?</h3>
                 <p>Polibench is a benchmarking tool designed to evaluate the performance of various <span>models</span> applied to
                 datasets. Performance evaluation is influenced by multiple factors, including the choice of dataset, 
@@ -13,7 +13,7 @@ function HomePage() {
             <div className={styles.howItWorks}>
                 <h3>How does it work?</h3>
                 <span>Six steps procedure.</span>
-                <ol>
+                <ol className={styles.steps}>
                     <li>Register a dataset</li>
                     <li>Create a version</li>
                     <li>Define the pipeline</li> 
