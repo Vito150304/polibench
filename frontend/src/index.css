@@ -20,9 +20,6 @@ img, svg {
 }
 
 :root {
-  
-
-
 
 /*Colore di BRAND*/
 
@@ -63,6 +60,7 @@ img, svg {
 --bg-card: hsl(var(--hue-brand), 12%, 11%);
 --bg-nav: hsl(var(--hue-brand), 12%, 16%);
 
+
 /*Testi (dark mode)*/
 
 --text-primary: hsl(var(--hue-brand), 15%, 87%);
@@ -91,6 +89,7 @@ img, svg {
 --input-text: var(--text-primary);
 --input-placeholder: hsl(var(--hue-brand), 10%, 50%);
 --input-border: var(--color-border);
+--input-focus-ring: hsla(var(--hue-brand), 75%, 32%, 0.35);
 
 
 /*icone*/
@@ -107,6 +106,7 @@ img, svg {
     --bg-sfondo: hsl(var(--hue-brand), 12%, 93%);
     --bg-card: hsl(var(--hue-brand), 12%, 89%);
     --bg-nav: hsl(var(--hue-brand), 12%, 84%);
+
 
     /*Testi (light mode)*/
 
@@ -136,6 +136,7 @@ img, svg {
     --input-text: var(--text-primary);
     --input-placeholder: hsl(var(--hue-brand), 10%, 60%);
     --input-border: var(--color-border);
+    --input-focus-ring: hsla(var(--hue-brand), 75%, 32%, 0.2);
 
     /*icone*/
     --color-icon: hsl(var(--hue-brand), 25%, 45%);
@@ -185,6 +186,15 @@ button {
   background-color: var(--btn-primary-bg);
   color: var(--btn-primary-text);
   border: none;
+  transition: background-color 0.2s ease, transform 0.1s ease;
+}
+
+button:hover {
+  background-color: var(--btn-primary-hover);
+}
+
+button:active {
+  transform: scale(0.98); /* Effetto pressione quando clicchi */
 }
 
 ul, ol {
@@ -227,7 +237,20 @@ p, span, label {
 input, select, textarea {
   background-color: var(--input-bg);
   color: var(--input-text);
-  border: 1px solid var(--input-border)
+  border: 1px solid var(--input-border);
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+
+}
+
+input::placeholder, textarea::placeholder {
+  color: var(--input-placeholder);
+}
+
+/* Stato Focus (Quando clicchi dentro per scrivere) */
+input:focus, select:focus, textarea:focus {
+  outline: none;
+  border-color: var(--brand-primary);
+  box-shadow: 0 0 0 3px var(--input-focus-ring);
 }
 
 select, input {
@@ -241,3 +264,4 @@ h1 {
 table {
   color: var(--text-secondary);
 }
+

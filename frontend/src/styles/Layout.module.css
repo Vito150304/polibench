@@ -76,6 +76,11 @@ a svg {
 
 .iconButton {
     background-color: var(--bg-sfondo);
+    color: var(--color-icon);
 }
 
+
+.iconButton:hover {
+    background-color: var(--bg-sfondo);
+}
 
