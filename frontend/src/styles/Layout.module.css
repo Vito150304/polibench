@@ -7,6 +7,16 @@ a {
 
 }
 
+nav a {
+    transition: transform 0.2s ease, box-shadow 0.2 ease;
+}
+
+nav a:hover {
+  background-color: var(--bg-nav);
+  transform: scale(1.02);
+  box-shadow: var(--shadow-elevation-medium);
+}
+
 a svg {
     margin-right: 1.3rem;
 }
@@ -34,6 +44,11 @@ a svg {
     justify-content: center;
 }
 
+.logoutButton {
+    box-shadow: var(--shadow-elevation-low);
+    padding: 0 1rem;
+}
+
 .nav {
     flex: 1;
 }
@@ -52,11 +67,6 @@ a svg {
     font-size: calc(1.6rem + 0.8vw);
     
 }
-
-.nav ul:hover {
-    background-color: var(--bg-nav);
-}
-
 
 .dropdownMenu {
     display: flex;

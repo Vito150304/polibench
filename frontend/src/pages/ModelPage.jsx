@@ -37,8 +37,6 @@ function ModelPage() {
                     <EmptyState
                         title="No Models Found"
                         description="There are no models matching your search or registered."
-                        action="Register a new Model"
-                        route="/register-model"
                     />
                 ) : (   
                 

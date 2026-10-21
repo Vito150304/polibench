@@ -13,6 +13,7 @@
     border: 1px solid var(--color-border);
     border-radius: 14px;
     text-align: center;
+    box-shadow: var(--shadow-elevation-low);
 }
 
 .versionActions button {
@@ -37,5 +38,10 @@
     gap: 1rem;
     padding-top: 4rem;
     font-weight: bold;
+}
+
+.navigation button {
+    padding: 1rem;
+    border-radius: 20px;
 }
 

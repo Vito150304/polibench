@@ -19,6 +19,7 @@
     width: 100%;
     text-align: center;
     margin-bottom: 7rem;
+    box-shadow: var(--shadow-elevation-medium);
 }
 
 
@@ -37,7 +38,8 @@
     margin-inline: auto;
     border-collapse: collapse;
     margin-bottom: 5rem;
-    background-color: var(--bg-card)
+    background-color: var(--bg-card);
+    box-shadow: var(--shadow-elevation-low);
 }
 
 .table th, .table td {
@@ -59,4 +61,6 @@
 .register button {
     border: 1px solid var(--color-border);
     text-align: center;
+    padding: 1rem;
+    margin-bottom: 2rem;
 }

@@ -78,7 +78,7 @@ function RegisterDatasetPage() {
                 </div>
             </form>
             <div className={styles.navigation}>
-                <button onClick={() => navigate("/datasets")}>View Datasets</button>
+                <button className={styles.viewDatasets} onClick={() => navigate("/datasets")}>View Datasets</button>
             </div>
             </div>
             <p className={styles.required}>*: Required fields</p>

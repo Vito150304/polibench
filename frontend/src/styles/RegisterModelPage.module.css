@@ -18,6 +18,8 @@
     border-radius: 14px;
     border: 0.5px solid;
     margin-left: 1rem;
+    width: 30rem;
+    box-shadow: var(--shadow-elevation-low);
 }
 
 
@@ -31,4 +33,10 @@
 .required {
     color: red;
     font-style: italic;
+}
+
+.inputContainer button, .navigation button {
+    padding: 1rem 2rem;
+    margin-top: 2rem;
+    box-shadow: var(--shadow-elevation-low);
 }

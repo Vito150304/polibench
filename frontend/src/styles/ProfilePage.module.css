@@ -33,6 +33,12 @@
     border-radius: 14px;
     border: 0.5px solid;
     margin-left: 1rem;
+    width: 30rem;
+    box-shadow: var(--shadow-elevation-low);
+}
+
+.inputContainer button {
+    padding: 1rem;
 }
 
 
@@ -45,4 +51,5 @@
 .button button {
     color: var(--color-danger);
     font-weight: bold;
+    padding: 1rem;
 }

@@ -32,12 +32,33 @@
 
  .inputContainer select, .inputContainer textarea {
     width: 100%;
+    box-shadow: var(--shadow-elevation-low);
+}
+
+.input {
+    width: 30rem;
+    box-shadow: var(--shadow-elevation-low);
+}
+
+.seed {
+    width: 10rem;
+    box-shadow: var(--shadow-elevation-low);
+}
+
+.metrics {
+    width: 30rem;
+    box-shadow: var(--shadow-elevation-low);
 }
 
 .button {
     display: flex;
     justify-content: center;
     align-items: center;
+}
+
+.button button {
+    padding: 1rem;
+    margin-bottom: 3rem;
 }
 
 
@@ -53,4 +74,5 @@
     margin-bottom: 5rem;
     resize: vertical; /*si può allungare, non allargare*/
     max-width: 100%;
+    min-height: 8rem;
 }

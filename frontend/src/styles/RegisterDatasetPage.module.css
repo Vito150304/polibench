@@ -23,8 +23,15 @@
     border: 0.5px solid;
 }
 
-.inputContainer input, .inputContainer select, .inputContainer textarea {
+.inputContainer input {
+    width: 30rem;
+    box-shadow: var(--shadow-elevation-low);
+}
+
+
+.inputContainer select, .inputContainer textarea {
     width: 100%;
+    box-shadow: var(--shadow-elevation-low);
 }
 
 .inputContainer select {
@@ -48,6 +55,10 @@
 }
 
 
+.button button, .viewDatasets {
+    padding: 1rem;
+}
+
 .required {
     color: var(--color-danger);
     font-style: italic;
@@ -56,4 +67,5 @@
 .inputContainer textarea {
     resize: vertical; /*si può allungare, non allargare*/
     max-width: 100%;
+    min-height: 8rem;
 }

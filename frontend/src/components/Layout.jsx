@@ -62,7 +62,7 @@ function Layout() {
                                 
                             <ul className={styles.dropdownMenu}>
                                 <li><Link to="/profile">Profile</Link></li>
-                                <li><button onClick={() => {
+                                <li><button className={styles.logoutButton} onClick={() => {
                                     logout();
                                     navigate("/login");
                                 }}>

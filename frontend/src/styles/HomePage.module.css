@@ -22,6 +22,7 @@
     background-color: var(--bg-card);
     border-radius: 16px;
     border: 1px solid var(--color-border);
+    box-shadow: var(--shadow-elevation-low);
 }
 
 .feature h4 {
@@ -36,6 +37,7 @@
 .builtWith {
     margin-top: 64px;
     padding-bottom: 3rem;
+    
 }
 
 .builtWith h3 {
@@ -68,6 +70,7 @@
     border: 1px solid var(--color-border);
     text-align:center;
     padding: 8px 16px;
+    box-shadow: var(--shadow-elevation-low);
 }
 
 .howItWorks ol {
@@ -102,6 +105,7 @@
     z-index: 2; /*tieni il cerchio sopra la linea*/
     position: absolute; /*per non fargli subire il padding-left: 48px*/
     background-color: var(--bg-card);
+    box-shadow: var(--shadow-elevation-medium);
     
 }
 
@@ -115,6 +119,7 @@
     width: 2px; /*spessore linea*/
     z-index: 1;
     background-color: var(--color-border);
+    box-shadow: var(--shadow-elevation-low);
 }
 
 

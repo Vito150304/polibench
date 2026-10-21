@@ -54,7 +54,7 @@ const handleSubmit = async (e) => {
 
     return (
         <>
-        <h2>Submit Experiment</h2>
+        <h1>Submit Experiment</h1>
         <div className={styles.page}>
         <form onSubmit={handleSubmit} className={styles.form}>
             <div className={styles.inputContainer}>
@@ -162,15 +162,15 @@ const handleSubmit = async (e) => {
                 </label>
                 <label>
                     Run Name:
-                    <input type="text" value={runName} onChange={(e) => setRunName(e.target.value)} placeholder="e.g. My Experiment" />
+                    <input className={styles.input} type="text" value={runName} onChange={(e) => setRunName(e.target.value)} placeholder="e.g. My Experiment" />
                 </label>
                 <label>
                     Seed:
-                    <input type="number" value={seed} onChange={(e) => setSeed(e.target.value)} placeholder="e.g. 15" />
+                    <input className={styles.seed} type="number" value={seed} onChange={(e) => setSeed(e.target.value)} placeholder="e.g. 15" />
                 </label>
                 <label>
                     Metrics:
-                    <input type="text" value={metrics} onChange={(e) => setMetrics(e.target.value)} placeholder="e.g. NDCG@10..." /> {/*capire modalità di inserimento*/}
+                    <input className={styles.metrics} type="text" value={metrics} onChange={(e) => setMetrics(e.target.value)} placeholder="e.g. NDCG@10..." /> {/*capire modalità di inserimento*/}
                 </label>
                 <label>
                     Notes:

@@ -156,26 +156,26 @@ function CreateDatasetVersionPage() {
                 <div className={styles.textMode}>
                     <label>
                         Dataset YAML:
-                        <textarea value={datasetText} onChange={(e) => setDatasetText(e.target.value)} />
+                        <textarea className={styles.textarea} value={datasetText} onChange={(e) => setDatasetText(e.target.value)} />
                     </label>
                     <label>
                         Version YAML:
-                        <textarea value={versionText} onChange={(e) => setVersionText(e.target.value)} />
+                        <textarea className={styles.textarea} value={versionText} onChange={(e) => setVersionText(e.target.value)} />
                     </label>
                     <label>
                         Pipeline YAML:
-                        <textarea value={pipelineText} onChange={(e) => setPipelineText(e.target.value)} />
+                        <textarea className={styles.textarea} value={pipelineText} onChange={(e) => setPipelineText(e.target.value)} />
                     </label>
                     <label>
                         Characteristics YAML:
-                        <textarea value={characteristicsText} onChange={(e) => setCharacteristicsText(e.target.value)} />
+                        <textarea className={styles.textarea} value={characteristicsText} onChange={(e) => setCharacteristicsText(e.target.value)} />
                     </label>
                 </div>
             )}
             <div className={styles.buttons}>
                     <button type = "button" onClick={() => navigate(`/datasets/${dataset_uuid}`)}>View Datasets</button>
                     <button type = "button" onClick={handleParse} disabled={isParsing}>Preview Version</button>
-                    <button type="submit" disabled={isPending}>Create Version</button>
+                    <button className={styles.createButton} type="submit" disabled={isPending}>Create Version</button>
                     {error && <p>Error creating version: {error.message}</p>}
             </div>
             </form>

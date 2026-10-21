@@ -15,7 +15,8 @@
     margin-right: 2rem;
     cursor: pointer;
     z-index: 2;
-    
+    padding: 0 1rem;
+    box-shadow: var(--shadow-elevation-low);
 }
 
 .pipelineRegistry ul {
@@ -37,6 +38,10 @@
     justify-content: center;
     padding-top: 4rem;
     font-weight: bold;
+}
+
+.versionButton button {
+    padding: 1rem;
 }
 
 .pipelinePreview, .experimentPreview {

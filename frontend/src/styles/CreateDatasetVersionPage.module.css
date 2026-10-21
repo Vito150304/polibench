@@ -9,6 +9,7 @@
 .textarea {
     min-height: 10rem;
     max-width: 147.8rem;
+    box-shadow: var(--shadow-elevation-low);
 }
 
 .datasetInfo {
@@ -37,6 +38,7 @@
 
 .selection, .input, .select {
     height: 3.3rem;
+    box-shadow: var(--shadow-elevation-low);
 }
 
 .uploadMode label, .textMode label {
@@ -72,6 +74,19 @@
     justify-content: center;
     gap: 6rem;
 }
+
+.buttons button {
+    padding: 0 1rem;
+    box-shadow: var(--shadow-elevation-low);
+    margin-bottom: 2rem;
+    transition: transform 0.2s ease, box-shadow 0.2 ease;
+}
+
+.buttons button:hover {
+    transform: scale(1.02);
+    box-shadow: var(--shadow-elevation-medium);
+}
+
 
 .preview {
     border: 1px solid var(--color-border);
