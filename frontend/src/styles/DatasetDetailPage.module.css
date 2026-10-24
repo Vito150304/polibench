@@ -24,6 +24,10 @@
     color: var(--brand-primary);
 }
 
+.versionActions button:hover {
+    background-color: var(--bg-sfondo);
+}
+
 .versionActions :first-child {
     color: var(--color-info);
     padding-bottom: 2rem;

@@ -2,45 +2,55 @@ import { Radar, RadarChart, PolarGrid, PolarAngleAxis, Legend, PolarRadiusAxis, 
 import useMultiLeaderboard from '../../hooks/useMultiLeaderboard';
 import RadarTooltip from './RadarTooltip';
 
+const colors = ['#8884d8', '#82ca9d', '#ffc658', '#ff7300', '#0088FE', '#00C49F', '#FFBB28', '#FF8042'];
 
-function RadarChartComponent({ filters, datasetId}) {
-    const { data, isLoading, error } = useMultiLeaderboard({
+function RadarChartComponent({ filters, datasetId, versionId, pipelineId }) {
+    const { multiLeaderboard: data, isLoading, error } = useMultiLeaderboard({
         dataset_uuid: datasetId,
-        metric: filters.multiMetrics, //fare attenzione e verificare che sia coerente con gli altri componenti e il backend
+        dataset_version_uuid: versionId,
+        pipeline_uuid: pipelineId,
+        metrics: filters.multiMetrics,
         split: filters.split,
-        sort_by: filters.sortBy,
+        sort_by: filters.metric,
     });
 
     if (isLoading) return <div>Loading...</div>;
     if (error) return <div>Error: {error.message}</div>;
+    if (!data || data.length === 0) {
+        return <p>No results for these filters. Possible reasons: the dataset has no experiments yet, 
+      or its experiments have no "{filters.metric}" values in the "{filters.split}" split.</p>;
+    }
 
+    const label = (m) => `${m.model_name} · ${m.pipeline_code} · #${m.rank}`;
 
-
-    const radarData = filters.multiMetrics?.map((metric) => {
-        //es: { metrica: "NDCG@10" }
-        let vertice = { metrica: metric };
-
-        data?.forEach((modello) => {
-            vertice[modello.model_name] = modello[metric];
+    // 1) prima costruisco radarData...
+    const radarData = filters.multiMetrics.map((metric) => {
+        const vertice = { metrica: metric };
+        data.forEach((modello) => {
+            vertice[label(modello)] = modello.metrics?.[metric];
         });
         return vertice;
     });
 
-    const colors = ['#8884d8', '#82ca9d', '#ffc658', '#ff7300', '#0088FE', '#00C49F', '#FFBB28', '#FF8042'];
+    // 2) ...poi lo uso per trovare il valore più alto
+    const maxValue = Math.max(
+        ...radarData.flatMap((r) =>
+            Object.entries(r)
+                .filter(([k]) => k !== 'metrica')
+                .map(([, v]) => v ?? 0)
+        )
+    ) || 1;
+    const radiusMax = Math.ceil(maxValue * 20) / 20;   // arrotonda a multipli di 0.05
 
-    if (data && data.length === 0) {
-    return <div>No data available for the selected filters. Please, submit a new experiment.</div>;
-   }
     return (
         <RadarChart responsive data={radarData} style={{ width: '100%', aspectRatio: '16/9' }}>
-            <PolarGrid /> 
+            <PolarGrid />
             <PolarAngleAxis dataKey="metrica" />
-            <PolarRadiusAxis angle={30} domain={[0, 1]} />
+            <PolarRadiusAxis angle={30} domain={[0, radiusMax]} />
             {data.map((modello, index) => (
-                <Radar key={index} name={modello.model_name} dataKey={modello.model_name} stroke={colors[index]} fill={colors[index]} fillOpacity={0.3} />
-            ))} {/*da migliorare assolutamente la questione del numero dei modelli e dei colori. Se ho tanti modelli, a prescindere
-                dall'opacità, non si capirà niente. Devo trovare una soluzione migliore*/}
-            
+                <Radar key={modello.experiment_uuid} name={label(modello)} dataKey={label(modello)}
+                       stroke={colors[index % colors.length]} fill={colors[index % colors.length]} fillOpacity={0.3} />
+            ))}
             <Legend />
             <Tooltip content={<RadarTooltip />} />
         </RadarChart>

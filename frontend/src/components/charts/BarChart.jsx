@@ -3,31 +3,36 @@ import BarTooltip from './BarTooltip';
 import useLeaderboard from '../../hooks/useLeaderboard';
 
 
-function BarChartComponent({filters, datasetId}) {
+function BarChartComponent({filters, datasetId, versionId, pipelineId}) {
 
 
-  const { data, isLoading, error } = useLeaderboard({ 
+  const { leaderboard: data, isLoading, error } = useLeaderboard({ 
     dataset_uuid: datasetId, 
+    dataset_version_uuid: versionId,
+    pipeline_uuid: pipelineId,
     metric: filters.metric,
     split: filters.split
 });
 
   if (data && data.length === 0) {
-    return <div>No data available for the selected filters. Please, submit a new experiment.</div>;
+    return <p>No results for these filters. Possible reasons: the dataset has no experiments yet, 
+      or its experiments have no "{filters.metric}" values in the "{filters.split}" split.</p>;
   }
+
+  const chartData = data?.map((d) => ({ ...d, label: `#${d.rank} ${d.model_name}` }));
 
 return (
   <>
     {isLoading && <div>Loading leaderboard...</div>}
     {error && <div>Error loading leaderboard: {error.message}</div>}
     {data && (
-      <BarChart responsive data={data} style={{ width: '100%', aspectRatio: '16/9' }}>
+      <BarChart responsive data={chartData} style={{ width: '100%', aspectRatio: '16/9' }}>
         <CartesianGrid strokeDasharray="5 5" />
-        <Bar dataKey="value" fill="#8884d8" /> 
-        <XAxis dataKey="model_name" />
+        <Bar dataKey="value" fill="#8884d8" maxBarSize={350} />
+        <XAxis dataKey="label" />
         <YAxis />
         <Legend />
-        <Tooltip content={<BarTooltip />} />
+        <Tooltip content={<BarTooltip />} cursor={{ fill: 'rgba(128,128,128,0.15)' }} />
     </BarChart>)}
   </>
 )

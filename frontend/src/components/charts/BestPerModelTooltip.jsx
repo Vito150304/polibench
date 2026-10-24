@@ -1,4 +1,4 @@
-function LineTooltip({ active, payload, label }) {
+    function BestPerModelTooltip({ active, payload, label }) {
     if (active && payload && payload.length) {
         const data = payload[0].payload;
 
@@ -14,4 +14,4 @@ function LineTooltip({ active, payload, label }) {
     }
     return null;
 }
-export default LineTooltip;
+export default BestPerModelTooltip;

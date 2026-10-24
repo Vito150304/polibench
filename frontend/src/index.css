@@ -179,6 +179,7 @@ body {
   line-height: 1.55;
 }
 
+
 button {
   font: inherit;
   padding: 0;
@@ -189,13 +190,16 @@ button {
   transition: background-color 0.2s ease, transform 0.1s ease;
 }
 
+
 button:hover {
   background-color: var(--btn-primary-hover);
 }
 
+
 button:active {
   transform: scale(0.98); /* Effetto pressione quando clicchi */
 }
+
 
 ul, ol {
   list-style: none;
@@ -265,3 +269,32 @@ table {
   color: var(--text-secondary);
 }
 
+/*Tooltips*/
+
+.custom-tooltip {
+  background: var(--bg-card);
+  border: 1px solid var(--color-border);
+  border-radius: 12px;
+  box-shadow: var(--shadow-elevation-medium);
+  padding: 1rem 1.4rem;
+  width: max-content;
+  max-width: 32rem;          /* oltre questa larghezza il testo va a capo */
+  font-size: 1.3rem;
+  line-height: 1.4;
+}
+
+.custom-tooltip p {
+  margin: 0.2rem 0;
+  overflow-wrap: anywhere;   /* spezza il JSON senza spazi */
+  color: var(--text-secondary);
+}
+
+.custom-tooltip .label {
+  color: var(--text-primary);
+  font-weight: 600;
+}
+
+.custom-tooltip .hyperparams {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 1.15rem;
+}

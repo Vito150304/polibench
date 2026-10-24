@@ -4,53 +4,22 @@ import { BiMedal } from "react-icons/bi"; //terzo posto
 
 
 
-function BarTooltip({ active, payload, label }) {
+function BarTooltip({ active, payload }) {
     if (active && payload && payload.length) {
         const data = payload[0].payload;
 
         //logica per trovare i primi 3 valori massimi. Lo scopo è puramente grafico
-        let max = payload[0].value;
-        let indexofMax = 0;
-        payload.forEach((modello, index) => {
-            if (modello.value > max) {
-                max = modello.value;
-                indexofMax = index;
-            }
-        });
-
-        let secondMax = payload[0].value;
-        let indexofSecondMax = 0;
-        payload.forEach((modello, index) => {
-            if (modello.value > secondMax && index !== indexofMax) {
-                secondMax = modello.value;
-                indexofSecondMax = index;
-            }
-        });
-
-        let thirdMax = payload[0].value;
-        let indexofThirdMax = 0;
-        payload.forEach((modello, index) => {
-            if (modello.value > thirdMax && index !== indexofMax && index !== indexofSecondMax) {
-                thirdMax = modello.value;
-                indexofThirdMax = index;
-            }
-        });
-
         let icon = null;
-        if (data === payload[indexofMax].payload) {
-            icon = <Trophy className="trophy-icon" />;
-        } else if (data === payload[indexofSecondMax].payload) {
-            icon = <LiaMedalSolid className="medal-icon" />;
-        } else if (data === payload[indexofThirdMax].payload) {
-            icon = <BiMedal className="medal-icon" />;
-        }
+        if (data.rank === 1) icon = <Trophy className="trophy-icon" />;
+        else if (data.rank === 2) icon = <LiaMedalSolid className="medal-icon" />;
+        else if (data.rank === 3) icon = <BiMedal className="medal-icon" />;
 
 
         return (
             <div className="custom-tooltip">
                 <p className="label">
                     {icon}
-                    {`Model: ${label}`}
+                    {`Model: ${data.model_name} (${data.pipeline_code})`}
                 </p> {/*label rappresenta il valore sull'asse x. Per il barChart, in Xaxis ho messo il model_name*/}
 
                 <p className="score">{`Score: ${data.value}`}</p>

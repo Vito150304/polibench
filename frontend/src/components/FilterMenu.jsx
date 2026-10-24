@@ -1,26 +1,20 @@
-function FilterMenu({ filters, setFilters }) {
+function FilterMenu({ filters, setFilters, metricOptions }) {
     return (
-        <>
-            <div className="filter-menu">
+        <div className="filter-menu">
 
-                <label>Metric: </label>
-                <select value={filters.metric} onChange={(e) => setFilters({ ...filters, metric: e.target.value })}> {/*value={filters.metric} dice al menu: "mostra esattamente quello che c'è scritto nella variabile filters.metric". */}
-                    <option value="NDCG@10">NDCG@10</option>
-                    <option value="Precision@10">Precision@10</option>
-                    <option value="Recall@10">Recall@10</option>
-                </select>
+            <label htmlFor="metric">Metric: </label>
+            <select id="metric" value={filters.metric} onChange={(e) => setFilters({ ...filters, metric: e.target.value })}>
+                {metricOptions.map((m) => (
+                    <option key={m.value} value={m.value}>{m.label}</option>
+                ))}
+            </select>
 
-                <label>Split: </label>
-                <button onClick={() => setFilters({ ...filters, split: filters.split === 'validation' ? 'test' : 'validation' })}>{filters.split === 'validation' ? 'Switch to Test' : 'Switch to Validation'}</button>
+            <label>Split: </label>
+                <button onClick={() => setFilters({ ...filters, split: filters.split === 'validation' ? 'test' : 'validation' })}>
+                    {filters.split === 'validation' ? 'Validation (click for Test)' : 'Test (click for Validation)'}
+                </button>
 
-                <label>Sort by: </label>
-                <select value={filters.sortBy} onChange={(e) => setFilters({ ...filters, sortBy: e.target.value })}>
-                    <option value="asc">Ascending</option>
-                    <option value="desc">Descending</option>
-                </select>
-            
-            </div>
-        </>
+        </div>
     )
 }
 export default FilterMenu;

@@ -32,13 +32,7 @@ function App() {
 
                 <Route path='/' element={<HomePage />} />
 
-                <Route path='/leaderboard' element={
-                    <ProtectedRoute>
-                        <LeaderBoardPage />
-                    </ProtectedRoute>
-                } />
-
-                <Route path='/leaderboard/:datasetId/:versionId/:pipelineId' element={
+                <Route path='/leaderboard/:datasetId?/:versionId?/:pipelineId?' element={
                     <ProtectedRoute>
                         <LeaderBoardPage />
                     </ProtectedRoute>
