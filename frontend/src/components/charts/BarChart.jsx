@@ -26,7 +26,7 @@ return (
     {isLoading && <div>Loading leaderboard...</div>}
     {error && <div>Error loading leaderboard: {error.message}</div>}
     {data && (
-      <BarChart responsive data={chartData} style={{ width: '100%', aspectRatio: '16/9' }}>
+      <BarChart responsive data={chartData} style={{ width: '100%', aspectRatio: '2 / 1', maxHeight: '85vh' }}>
         <CartesianGrid strokeDasharray="5 5" />
         <Bar dataKey="value" fill="#8884d8" maxBarSize={350} />
         <XAxis dataKey="label" />

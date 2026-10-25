@@ -14,7 +14,7 @@ function BestPerModelChart({ datasetId, versionId, pipelineId, filters }) {
             pipeline_uuid: pipelineId,
             split: filters.split,
             target_metric: filters.metric,
-            direction: filters.direction,       // era 'max' fisso
+            direction: filters.direction,       
         });
     }
 }, [mutate, datasetId, versionId, pipelineId, filters]);
@@ -30,7 +30,7 @@ if (!chartData?.groups?.length) return <p>No results for these filters. Possible
       or its experiments have no "{filters.metric}" values in the "{filters.split}" split.</p>;
 
 return (
-    <BarChart responsive data={punti} style={{ width: '100%', aspectRatio: '16/9' }}>
+    <BarChart responsive data={punti} style={{ width: '100%', aspectRatio: '2 / 1', maxHeight: '85vh' }}>
         <CartesianGrid strokeDasharray="5 5" />
         <Bar dataKey="value" fill="#8884d8" maxBarSize={350} />
         <XAxis dataKey="model_name" />

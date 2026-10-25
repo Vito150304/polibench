@@ -48,6 +48,7 @@ function LoginPage() {
 
         onError: (error) => {
             console.error("Error while sending verification email:", error);
+            toast.error(`Error while sending verification email: ${error.message}`);
         }
     });
 

@@ -32,11 +32,7 @@ function App() {
 
                 <Route path='/' element={<HomePage />} />
 
-                <Route path='/leaderboard/:datasetId?/:versionId?/:pipelineId?' element={
-                    <ProtectedRoute>
-                        <LeaderBoardPage />
-                    </ProtectedRoute>
-                } />
+                <Route path='/leaderboard/:datasetId?/:versionId?/:pipelineId?' element={<LeaderBoardPage />} />
 
 
                 <Route path='/experiment' element={
@@ -45,11 +41,7 @@ function App() {
                     </ProtectedRoute>
                 } />
 
-                <Route path='/models' element={
-                    <ProtectedRoute>
-                        <ModelPage />
-                    </ProtectedRoute>
-                } />
+                <Route path='/models' element={<ModelPage />} />
 
                 <Route path='/register-model' element={
                     <ProtectedRoute>
@@ -57,17 +49,9 @@ function App() {
                     </ProtectedRoute>
                 }/>
 
-                <Route path='/datasets/:dataset_uuid' element={
-                    <ProtectedRoute>
-                        <DatasetDetailPage />
-                    </ProtectedRoute>
-                }/>
+                <Route path='/datasets/:dataset_uuid' element={<DatasetDetailPage />}/>
 
-                <Route path='/datasets' element={
-                    <ProtectedRoute>
-                        <DatasetPage />
-                    </ProtectedRoute>
-                }/>
+                <Route path='/datasets' element={<DatasetPage />}/>
 
                 <Route path='/register-dataset' element={
                     <ProtectedRoute>

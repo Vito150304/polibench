@@ -69,7 +69,7 @@ function Layout() {
                                     Logout</button></li>
                             </ul>
                         ) : (
-                            <ul>
+                            <ul className={styles.dropdownMenu}>
                                 <li><Link to="/login">Login</Link></li>
                                 <li><Link to="/register">Register</Link></li>
                             </ul>

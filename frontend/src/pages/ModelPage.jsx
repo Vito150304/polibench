@@ -36,7 +36,7 @@ function ModelPage() {
                 {modelliFiltrati.length === 0 ? (
                     <EmptyState
                         title="No Models Found"
-                        description="There are no models matching your search or registered."
+                        description={searchModel ? "There are no models matching your search." : "No models registered."}
                     />
                 ) : (   
                 

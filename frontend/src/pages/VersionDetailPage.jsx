@@ -55,7 +55,9 @@ function VersionDetailPage() {
             </div>
             <div className={styles.pipelineRegistry}>
                 <h3>Pipeline Registry</h3>
-                <button className={styles.pipelineButton} type="button" onClick={() => navigate(`/dataset-versions/${version_uuid}/create-pipeline`)}>Create New Pipeline</button> {/* Aggiungi qui il pulsante per creare una nuova pipeline */}
+                {pipelines.length > 0 && (
+                    <button className={styles.pipelineButton} type="button" onClick={() => navigate(`/dataset-versions/${version_uuid}/create-pipeline`)}>Create New Pipeline</button> 
+                )}
                 {pipelines.length === 0 ? (
                     <EmptyState
                         title="No Pipelines Found"

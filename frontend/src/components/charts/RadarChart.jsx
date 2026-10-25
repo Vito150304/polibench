@@ -23,7 +23,7 @@ function RadarChartComponent({ filters, datasetId, versionId, pipelineId }) {
 
     const label = (m) => `${m.model_name} · ${m.pipeline_code} · #${m.rank}`;
 
-    // 1) prima costruisco radarData...
+    
     const radarData = filters.multiMetrics.map((metric) => {
         const vertice = { metrica: metric };
         data.forEach((modello) => {
@@ -32,7 +32,7 @@ function RadarChartComponent({ filters, datasetId, versionId, pipelineId }) {
         return vertice;
     });
 
-    // 2) ...poi lo uso per trovare il valore più alto
+    
     const maxValue = Math.max(
         ...radarData.flatMap((r) =>
             Object.entries(r)
@@ -40,7 +40,7 @@ function RadarChartComponent({ filters, datasetId, versionId, pipelineId }) {
                 .map(([, v]) => v ?? 0)
         )
     ) || 1;
-    const radiusMax = Math.ceil(maxValue * 20) / 20;   // arrotonda a multipli di 0.05
+    const radiusMax = Math.ceil(maxValue * 20) / 20;
 
     return (
         <RadarChart responsive data={radarData} style={{ width: '100%', aspectRatio: '16/9' }}>
