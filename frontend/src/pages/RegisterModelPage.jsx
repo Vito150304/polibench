@@ -19,7 +19,7 @@ function RegisterModelPage() {
             payload.family = family;
         }
         if (paper) {
-        payload.paper = paper;
+        payload.paper_url = paper;
     }
 
         createModel(payload, {

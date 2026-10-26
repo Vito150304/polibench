@@ -4,8 +4,9 @@ function useBestConfiguration() {
     const ChartMutation = useMutation({
         mutationKey: ['best-configuration-leaderboard'],
         mutationFn: async ({dataset_uuid, dataset_version_uuid, pipeline_uuid, split, target_metric, direction}) => {
+            let response;
             try {
-                const response = await fetch('/api/v1/leaderboard/best-configuration', {
+                response = await fetch('/api/v1/leaderboard/best-configuration', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json'
@@ -19,17 +20,14 @@ function useBestConfiguration() {
                         direction: direction
                     })
                 });
-
-                if (!response.ok) {
-                    const errorData = await response.json().catch(() => ({}));
-                    throw new Error(errorData.detail || 'Failed to fetch leaderboard data');
-                }
-                
-                return await response.json();
             } catch(networkError) {
-                console.error("Network error:", networkError);
-                throw networkError;
+                throw new Error('Could not reach the server', {cause: networkError});
             }
+            if (!response.ok) {
+                const errorData = await response.json().catch(() => ({}));
+                throw new Error(errorData.detail || 'Failed to fetch leaderboard data');
+            }
+            return await response.json();
         }
     });
 

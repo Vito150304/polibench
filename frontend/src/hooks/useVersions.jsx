@@ -5,22 +5,22 @@ export const useVersions = (datasetId) => {
   const { data: versions, isLoading, error } = useQuery({
     queryKey: ['versions', datasetId],
     queryFn: async ({ signal }) => {
+      let response;
       try {
-        const response = await fetch(`/api/v1/datasets/${datasetId}/versions`, {
-                    signal
-                });
-                if (!response.ok) {
-                    const errorData = await response.json().catch(() => ({}));
-                    throw new Error(errorData.detail || 'Failed to fetch versions');
-                }
-                return response.json();
-            } catch (networkError) {
-                console.error("Network error during datasets versions fetch:", networkError);
-                throw new Error('Failed to fetch datasets versions', {cause: networkError});
-            }
-        },
-        enabled: !!datasetId, 
-    });
+        response = await fetch(`/api/v1/datasets/${datasetId}/versions`, {
+          signal
+        });
+        } catch (networkError) {
+        throw new Error('Could not reach the server', { cause: networkError });
+      }
+      if (!response.ok) {
+        const errorData = await response.json().catch(() => ({}));
+        throw new Error(errorData.detail || 'Failed to fetch versions');
+      }
+      return response.json();
+    },
+    enabled: !!datasetId, 
+  });
 
   return { 
     versions, 
@@ -33,19 +33,19 @@ export const useVersionDetails = (version_uuid) => {
   const { data: versionDetails, isLoading, error } = useQuery({
     queryKey: ['versionDetails', version_uuid],
     queryFn: async ({ signal }) => {
+      let response;
       try {
-        const response = await fetch(`/api/v1/dataset-versions/${version_uuid}`, {
+        response = await fetch(`/api/v1/dataset-versions/${version_uuid}`, {
           signal
         });
-        if (!response.ok) {
-          const errorData = await response.json().catch(() => ({}));
-          throw new Error(errorData.detail || 'Failed to fetch version details');
-        }
-        return response.json();
       } catch (networkError) {
-        console.error("Network error during version details fetch:", networkError);
-        throw new Error('Failed to fetch version details', { cause: networkError });
+        throw new Error('Could not reach the server', { cause: networkError });
       }
+      if (!response.ok) {
+        const errorData = await response.json().catch(() => ({}));
+        throw new Error(errorData.detail || 'Failed to fetch version details');
+      }
+      return response.json();
     },
     enabled: !!version_uuid,
   });

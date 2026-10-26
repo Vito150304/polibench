@@ -7,19 +7,19 @@ export const useDatasets = () => {
     const {data: datasets, isLoading, error} = useQuery({
         queryKey: ['datasets'],
         queryFn: async ({signal}) => {
+            let response;
             try {
-                const response = await fetch(`/api/v1/datasets`, {
+                response = await fetch(`/api/v1/datasets`, {
                     signal
                 });
-                if (!response.ok) {
-                    const errorData = await response.json().catch(() => ({}));
-                    throw new Error(errorData.detail || 'Failed to fetch datasets');
-                }
-                return response.json();
             } catch (networkError) {
-                console.error("Network error during datasets fetch:", networkError);
-                throw new Error('Failed to fetch datasets', {cause: networkError});
+                throw new Error('Could not reach the server', {cause: networkError});
             }
+            if (!response.ok) {
+                const errorData = await response.json().catch(() => ({}));
+                throw new Error(errorData.detail || 'Failed to fetch datasets');
+            }
+            return response.json();   
         },
         staleTime: 5 * 60 * 1000, 
         gcTime: 10 * 60 * 1000, 
@@ -35,8 +35,9 @@ export const useCreateDataset = () => {
     const {mutate: newDataset, isPending, error} = useMutation({
         mutationKey: ['create-dataset'],
         mutationFn: async (newDataset) => {
+            let response;
             try {
-                const response = await fetch(`/api/v1/datasets`, {
+                response = await fetch(`/api/v1/datasets`, {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
@@ -44,15 +45,14 @@ export const useCreateDataset = () => {
                     },
                     body: JSON.stringify(newDataset)
                 });
-                if (!response.ok) {
-                    const errorData = await response.json().catch(() => ({}));
-                    throw new Error(errorData.detail || 'Failed to create dataset');
-                }
-                return response.json();
             } catch (networkError) {
-                console.error("Network error during dataset creation:", networkError);
-                throw new Error('Failed to create dataset', {cause: networkError});
+                throw new Error('Could not reach the server', {cause: networkError});
             }
+            if (!response.ok) {
+                const errorData = await response.json().catch(() => ({}));
+                throw new Error(errorData.detail || 'Failed to create dataset');
+            }
+            return response.json();
         },
         onSuccess: () => {
             queryClient.invalidateQueries({queryKey: ['datasets']});
@@ -69,19 +69,19 @@ export const useDatasetDetails = (dataset_uuid) => {
     const {data: datasetDetails, isLoading, error} = useQuery({
         queryKey: ['dataset-details', dataset_uuid],
         queryFn: async ({signal}) => {
+            let response;
             try {
-                const response = await fetch(`/api/v1/datasets/${dataset_uuid}`, {
+                response = await fetch(`/api/v1/datasets/${dataset_uuid}`, {
                     signal
                 });
-                if (!response.ok) {
-                    const errorData = await response.json().catch(() => ({}));
-                    throw new Error(errorData.detail || 'Failed to fetch dataset details');
-                }
-                return response.json();
             } catch (networkError) {
-                console.error("Network error during dataset details fetch:", networkError);
-                throw new Error('Failed to fetch dataset details', {cause: networkError});
+                throw new Error('Could not reach the server', {cause: networkError});
             }
+            if (!response.ok) {
+                const errorData = await response.json().catch(() => ({}));
+                throw new Error(errorData.detail || 'Failed to fetch dataset details');
+            }
+            return response.json();
         }
     });
     return { datasetDetails, isLoading, error };
@@ -91,19 +91,19 @@ export const useVersions = (dataset_uuid) => {
     const {data: versions, isLoading, error} = useQuery({
         queryKey: ['versions', dataset_uuid],
         queryFn: async ({signal}) => {
+            let response;
             try {
-                const response = await fetch(`/api/v1/datasets/${dataset_uuid}/versions`, {
+                response = await fetch(`/api/v1/datasets/${dataset_uuid}/versions`, {
                     signal
                 });
-                if (!response.ok) {
-                    const errorData = await response.json().catch(() => ({}));
-                    throw new Error(errorData.detail || 'Failed to fetch dataset versions');
-                }
-                return response.json();
             } catch (networkError) {
-                console.error("Network error during dataset versions fetch:", networkError);
-                throw new Error('Failed to fetch dataset versions', {cause: networkError});
+                throw new Error('Could not reach the server', {cause: networkError});
             }
+            if (!response.ok) {
+                const errorData = await response.json().catch(() => ({}));
+                throw new Error(errorData.detail || 'Failed to fetch dataset versions');
+            }
+            return response.json();
         }
     });
     return { versions, isLoading, error };
@@ -116,8 +116,9 @@ export const useCreateDatasetVersion = (dataset_uuid) => {
     const {mutate: newVersion, isPending, error} = useMutation({
         mutationKey: ['create-dataset-version', dataset_uuid],
         mutationFn: async (newDatasetVersion) => {
+            let response;
             try {
-                const response = await fetch(`/api/v1/datasets/${dataset_uuid}/versions`, {
+                response = await fetch(`/api/v1/datasets/${dataset_uuid}/versions`, {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
@@ -125,15 +126,14 @@ export const useCreateDatasetVersion = (dataset_uuid) => {
                     },
                     body: JSON.stringify(newDatasetVersion)
                 });
-                if (!response.ok) {
-                    const errorData = await response.json().catch(() => ({}));
-                    throw new Error(errorData.detail || 'Failed to create dataset version');
-                }
-                return response.json();
             } catch (networkError) {
-                console.error("Network error during dataset version creation:", networkError);
-                throw new Error('Failed to create dataset version', {cause: networkError});
+                throw new Error('Could not reach the server', {cause: networkError});
             }
+            if (!response.ok) {
+                const errorData = await response.json().catch(() => ({}));
+                throw new Error(errorData.detail || 'Failed to create dataset version');
+                }
+            return response.json();
         },
         onSuccess: () => {
             queryClient.invalidateQueries({queryKey: ['versions', dataset_uuid]});
@@ -150,8 +150,9 @@ export const useVersionParse = (dataset_uuid) => {
     const {mutate: parseVersion, isPending, error} = useMutation({
         mutationKey: ['parse-dataset-version', dataset_uuid],
         mutationFn: async (versionData) => {
+            let response;
             try {
-                const response = await fetch(`/api/v1/datasets/${dataset_uuid}/versions/preview`, {
+                response = await fetch(`/api/v1/datasets/${dataset_uuid}/versions/preview`, {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
@@ -159,15 +160,14 @@ export const useVersionParse = (dataset_uuid) => {
                     },
                     body: JSON.stringify(versionData)
                 });
-                if (!response.ok) {
-                    const errorData = await response.json().catch(() => ({}));
-                    throw new Error(errorData.detail || 'Failed to parse dataset version');
-                }
-                return response.json();
             } catch (networkError) {
-                console.error("Network error during dataset version parsing:", networkError);
-                throw new Error('Failed to parse dataset version', {cause: networkError});
+                throw new Error('Could not reach the server', {cause: networkError});
             }
+            if (!response.ok) {
+                const errorData = await response.json().catch(() => ({}));
+                throw new Error(errorData.detail || 'Failed to parse dataset version');
+            }
+            return response.json();
         }
     });
     return {parseVersion, isPending, error};

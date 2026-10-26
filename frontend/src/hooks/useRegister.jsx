@@ -28,7 +28,6 @@ function useRegister() {
                     })
                 });
             } catch (networkError) {
-                console.error("Errore durante la fetch:", networkError);
                 throw new Error('Network error during registration', { cause: networkError }); 
             }
             if (!response.ok) {

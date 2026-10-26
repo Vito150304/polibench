@@ -9,8 +9,9 @@ export const useCreateExperiment = () => {
     const {mutate: createExperiment, isPending: isCreating, error: createError} = useMutation({
         mutationKey: ['create-experiment'],
         mutationFn: async (experimentData) => {
+            let response;
             try {
-                const response = await fetch(`/api/v1/experiments`, {
+                response = await fetch(`/api/v1/experiments`, {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
@@ -18,15 +19,14 @@ export const useCreateExperiment = () => {
                     },
                     body: JSON.stringify(experimentData),
                 });
+            } catch (networkError) {
+                throw new Error('Could not reach the server', { cause: networkError });
+            }
                 if (!response.ok) {
                     const errorData = await response.json().catch(() => ({}));
                     throw new Error(errorData.detail || 'Failed to create experiment');
                 }
                 return await response.json();
-            } catch (networkError) {
-                console.error('Error creating experiment:', networkError);
-                throw new Error('Failed to create experiment', { cause: networkError });
-            }
         }, //data è la risposta del backend, variables è il payload che ho mandato al backend
         onSuccess: (data, variables) => {
             //se la versione è nel payload, invalido la query delle versioni di quell'esperimento, altrimenti invalido la query di tutti gli esperimenti
@@ -44,17 +44,17 @@ export const useExperimentVersions = (version_uuid) => {
     const {data: experimentList, isLoading: isLoadingExperimentList, error: ExperimentListError} = useQuery({
         queryKey: ['experiment-versions', version_uuid],
         queryFn: async () => {
+            let response;
             try {
-                const response = await fetch(`/api/v1/dataset-versions/${version_uuid}/experiments`);
-                if (!response.ok) {
-                    const errorData = await response.json().catch(() => ({}));
-                    throw new Error(errorData.detail || 'Failed to fetch experiment versions');
-                }
-                return await response.json();
+                response = await fetch(`/api/v1/dataset-versions/${version_uuid}/experiments`);
             } catch (networkError) {
-                console.error('Error fetching experiment versions:', networkError);
-                throw new Error('Failed to fetch experiment versions', { cause: networkError });
+                throw new Error('Could not reach the server', { cause: networkError });
             }
+            if (!response.ok) {
+                const errorData = await response.json().catch(() => ({}));
+                throw new Error(errorData.detail || 'Failed to fetch experiment versions');
+            }
+            return await response.json();
         },
         enabled: !!version_uuid,
     });
@@ -67,21 +67,21 @@ export const useExperimentDetails = (experiment_uuid) => {
     const { data: experimentDetails, isLoading: isLoadingExperimentDetails, error: experimentDetailsError } = useQuery({
         queryKey: ['experiment-details', experiment_uuid],
         queryFn: async () => {
+            let response;
             try {
-                const response = await fetch(`/api/v1/experiments/${experiment_uuid}`, {
+                response = await fetch(`/api/v1/experiments/${experiment_uuid}`, {
                     headers: {
                         'Authorization': `Bearer ${accessToken}`
                     }
                 });
-                if (!response.ok) {
-                    const errorData = await response.json().catch(() => ({}));
-                    throw new Error(errorData.detail || 'Failed to fetch experiment details');
-                }
-                return await response.json();
             } catch (networkError) {
-                console.error('Error fetching experiment details:', networkError);
-                throw new Error('Failed to fetch experiment details', { cause: networkError });
+                throw new Error('Could not reach the server', { cause: networkError });
             }
+            if (!response.ok) {
+                const errorData = await response.json().catch(() => ({}));
+                throw new Error(errorData.detail || 'Failed to fetch experiment details');
+            }
+            return await response.json();
         },
         enabled: !!experiment_uuid,
     });

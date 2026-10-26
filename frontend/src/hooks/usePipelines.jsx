@@ -7,19 +7,20 @@ export const usePipelines = (versionId) => {
     const { data: pipelines, isLoading, error } = useQuery({
     queryKey: ['pipelines', versionId], 
     queryFn: async ({signal}) => {
+        let response;
             try {
-                const response = await fetch(`/api/v1/dataset-versions/${versionId}/pipelines`, {
+                response = await fetch(`/api/v1/dataset-versions/${versionId}/pipelines`, {
                     signal
                 });
-                if (!response.ok) {
-                    const errorData = await response.json().catch(() => ({}));
-                    throw new Error(errorData.detail || 'Failed to fetch pipelines');
-                }
-                return response.json();
             } catch (networkError) {
-                console.error("Network error during datasets pipelines fetch:", networkError);
-                throw new Error('Failed to fetch datasets pipelines', {cause: networkError});
+                throw new Error('Could not reach the server', {cause: networkError});
             }
+            if (!response.ok) {
+                const errorData = await response.json().catch(() => ({}));
+                throw new Error(errorData.detail || 'Failed to fetch pipelines');
+            }
+            return response.json();
+            
         },
         enabled: !!versionId, 
     });
@@ -35,19 +36,19 @@ export const usePipelineDetails = (pipeline_uuid) => {
     const { data: pipelineDetails, isLoading, error } = useQuery({
         queryKey: ['pipelineDetails', pipeline_uuid],
         queryFn: async ({ signal }) => {
+            let response;
             try {
-                const response = await fetch(`/api/v1/pipelines/${pipeline_uuid}`, {
+                response = await fetch(`/api/v1/pipelines/${pipeline_uuid}`, {
                     signal
                 });
-                if (!response.ok) {
-                    const errorData = await response.json().catch(() => ({}));
-                    throw new Error(errorData.detail || 'Failed to fetch pipeline details');
-                }
-                return response.json();
-            } catch (networkError) {
-                console.error("Network error during pipeline details fetch:", networkError);
-                throw new Error('Failed to fetch pipeline details', { cause: networkError });
+             } catch (networkError) {
+                throw new Error('Could not reach the server', { cause: networkError });
             }
+            if (!response.ok) {
+                const errorData = await response.json().catch(() => ({}));
+                throw new Error(errorData.detail || 'Failed to fetch pipeline details');
+            }
+            return response.json();
         },
         enabled: !!pipeline_uuid,
     });
@@ -65,8 +66,9 @@ export const useCreatePipeline = (version_uuid) => {
     const {mutate: createPipeline, isPending, error} = useMutation({
         mutationKey: ['create-pipeline', version_uuid],
         mutationFn: async (payload) => {
+            let response;
             try {
-                const response = await fetch(`/api/v1/dataset-versions/${version_uuid}/pipelines`, {
+                response = await fetch(`/api/v1/dataset-versions/${version_uuid}/pipelines`, {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
@@ -74,15 +76,14 @@ export const useCreatePipeline = (version_uuid) => {
                     },
                     body: JSON.stringify(payload)
                 });
-                if (!response.ok) {
-                    const errorData = await response.json().catch(() => ({}));
-                    throw new Error(errorData.detail || 'Failed to create pipeline');
-                }
-                return response.json();
             } catch (networkError) {
-                console.error("Network error during pipeline creation:", networkError);
-                throw new Error('Failed to create pipeline', { cause: networkError });
+                throw new Error('Could not reach the server', { cause: networkError });
             }
+            if (!response.ok) {
+                const errorData = await response.json().catch(() => ({}));
+                throw new Error(errorData.detail || 'Failed to create pipeline');
+            }
+            return response.json();
         },
         onSuccess: () => {
             queryClient.invalidateQueries({ queryKey: ['pipelines', version_uuid] });
@@ -101,8 +102,9 @@ export const usePipelinePreview = (version_uuid) => {
     const {mutate: previewPipeline, isPending, error} = useMutation({
         mutationKey: ['preview-pipeline', version_uuid],
         mutationFn: async (payload) => {
+            let response;
             try {
-                const response = await fetch(`/api/v1/dataset-versions/${version_uuid}/pipelines/preview`, {
+                response = await fetch(`/api/v1/dataset-versions/${version_uuid}/pipelines/preview`, {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
@@ -110,15 +112,14 @@ export const usePipelinePreview = (version_uuid) => {
                     },
                     body: JSON.stringify(payload)
                 });
-                if (!response.ok) {
-                    const errorData = await response.json().catch(() => ({}));
-                    throw new Error(errorData.detail || 'Failed to preview pipeline');
-                }
-                return response.json();
             } catch (networkError) {
-                console.error("Network error during pipeline preview:", networkError);
-                throw new Error('Failed to preview pipeline', { cause: networkError });
+                throw new Error('Could not reach the server', { cause: networkError });
             }
+            if (!response.ok) {
+                const errorData = await response.json().catch(() => ({}));
+                throw new Error(errorData.detail || 'Failed to preview pipeline');
+            }
+            return response.json();
         }
     });
 

@@ -11,8 +11,9 @@ function useCreateModel() {
     const {mutate: createModel, isPending, error} = useMutation({
         mutationKey: ['create-model'],
         mutationFn: async (nuovoModello) => {
+            let response;
             try {
-                const response = await fetch(`/api/v1/ml-models`, {
+                response = await fetch(`/api/v1/ml-models`, {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
@@ -20,15 +21,14 @@ function useCreateModel() {
                     },
                     body: JSON.stringify(nuovoModello)
                 });
-                if (!response.ok) {
-                    const errorData = await response.json().catch(() => ({}));
-                    throw new Error(errorData.detail || 'Failed to create model');
-                }
-                return await response.json();
-            } catch (networkError) {
-                console.error('Error creating model:', networkError);
-                throw new Error('Failed to create model', { cause: networkError });
+            }  catch (networkError) {
+                throw new Error('Could not reach the server', { cause: networkError });
             }
+            if (!response.ok) {
+                const errorData = await response.json().catch(() => ({}));
+                throw new Error(errorData.detail || 'Failed to create model');
+            }
+            return await response.json();
         },
         onSuccess: () => {
             //Appena la POST ha successo, diciamo a React Query 

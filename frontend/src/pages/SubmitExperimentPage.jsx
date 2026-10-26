@@ -10,14 +10,13 @@ import styles from '../styles/SubmitExperimentPage.module.css';
 
 function SubmitExperimentPage() {
 
-const {createExperiment, isCreating, createError} = useCreateExperiment();
+const {createExperiment, isCreating} = useCreateExperiment();
 const [datasetUuid, setDatasetUuid] = useState('');
 const [versionUuid, setVersionUuid] = useState('');
 const [pipelineUuid, setPipelineUuid] = useState('');
 const [modelUuid, setModelUuid] = useState('');
 const [runName, setRunName] = useState('');
 const [seed, setSeed] = useState('');
-const [metrics, setMetrics] = useState(''); //campo aggiuntivo che voleva il prof. DA QUELLO CHE RICORDO. VERIFICARE. Non voleva più il file csv però
 const [notes, setNotes] = useState('');
 
 
@@ -34,11 +33,10 @@ const handleSubmit = async (e) => {
         model_uuid: modelUuid, //il model_uuid obbligatorio dal backend
     }
     if (datasetUuid) payload.dataset_uuid = datasetUuid;
-    if (versionUuid) payload.version_uuid = versionUuid;
+    if (versionUuid) payload.dataset_version_uuid = versionUuid;
     if (pipelineUuid) payload.pipeline_uuid = pipelineUuid;
     if (runName) payload.run_name = runName;
     if (seed) payload.seed = Number(seed);
-    if (metrics) payload.metrics = metrics;
     if (notes) payload.notes = notes;
 
     createExperiment(payload, {
@@ -63,9 +61,8 @@ const handleSubmit = async (e) => {
                     <select value={datasetUuid} onChange={(e) => {
                         setDatasetUuid(e.target.value);
                         setVersionUuid(''); // Reset version, pipeline e model quando cambia il dataset 
-                        setPipelineUuid(''); 
-                        setModelUuid(''); 
-                    }} disabled={datasetsLoading || datasetsError || !datasets?.length === 0}>
+                        setPipelineUuid('');  
+                    }} disabled={datasetsLoading || datasetsError || datasets?.length === 0}>
                         {datasetsLoading ? (
                             <option value="" disabled>Loading datasets...</option>
                         ) : datasetsError ? (
@@ -89,7 +86,6 @@ const handleSubmit = async (e) => {
                     <select value={versionUuid} onChange={(e) => {
                         setVersionUuid(e.target.value);
                         setPipelineUuid('');
-                        setModelUuid('');
                     }} disabled={versionsLoading || versionsError || !datasetUuid || versions?.length === 0}>
                         {versionsLoading ? (
                             <option value="" disabled>Loading versions...</option>
@@ -113,7 +109,6 @@ const handleSubmit = async (e) => {
                     Pipeline:
                     <select value={pipelineUuid} onChange={(e) => {
                         setPipelineUuid(e.target.value);
-                        setModelUuid('');
                     }} disabled={pipelinesLoading || pipelinesError || !versionUuid || pipelines?.length === 0}>
                         {pipelinesLoading ? (
                             <option value="" disabled>Loading pipelines...</option>
@@ -141,7 +136,7 @@ const handleSubmit = async (e) => {
                 </label>
                 <label>
                     Model:* <span className={styles.required}>(required)</span>
-                    <select value={modelUuid} onChange={(e) => setModelUuid(e.target.value)} disabled={modelsLoading || modelsError || !models?.length === 0} required>
+                    <select value={modelUuid} onChange={(e) => setModelUuid(e.target.value)} disabled={modelsLoading || modelsError || models?.length === 0} required>
                         {modelsLoading ? (
                             <option value="" disabled>Loading models...</option>
                         ) : modelsError ? (
@@ -169,10 +164,6 @@ const handleSubmit = async (e) => {
                     <input className={styles.seed} type="number" value={seed} onChange={(e) => setSeed(e.target.value)} placeholder="e.g. 15" />
                 </label>
                 <label>
-                    Metrics:
-                    <input className={styles.metrics} type="text" value={metrics} onChange={(e) => setMetrics(e.target.value)} placeholder="e.g. NDCG@10..." /> {/*capire modalità di inserimento*/}
-                </label>
-                <label>
                     Notes:
                     <textarea value={notes} onChange={(e) => setNotes(e.target.value)} />
                 </label>
@@ -181,7 +172,6 @@ const handleSubmit = async (e) => {
                 <button type="submit" disabled={isCreating}>
                     {isCreating ? 'Creating...' : 'Create Experiment'}
                 </button>
-                {createError && <p>Error creating experiment: {createError.message}</p>}
             </div>
             </form>
             </div>

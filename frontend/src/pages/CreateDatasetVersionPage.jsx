@@ -108,7 +108,7 @@ function CreateDatasetVersionPage() {
                 <div className={styles.inputContainer}>
                     <div className={styles.datasetInfo}>
                         <label>
-                            Version:* <span className={styles.required}>(required)</span>
+                            Version: <span className={styles.required}>(required)</span>
                             <input className={styles.input} type="text" value={version} onChange={(e) => setVersion(e.target.value)} required placeholder="e.g. 2.0" />
                         </label>
                         <label>
@@ -129,8 +129,8 @@ function CreateDatasetVersionPage() {
 
             <p className={styles.description}>Choose configuration mode:</p>
             <select className={styles.select} value={choice} onChange={(e) => setChoice(e.target.value)}>
-                <option value="Modalità Upload">Modalità Upload</option>
-                <option value="Modalità Testuale">Modalità Testuale</option>
+                <option value="Modalità Upload">Upload Mode</option>
+                <option value="Modalità Testuale">Text Mode</option>
             </select>
             {choice === 'Modalità Upload' ? (
                 <div className={styles.uploadMode}>
@@ -173,7 +173,7 @@ function CreateDatasetVersionPage() {
                 </div>
             )}
             <div className={styles.buttons}>
-                    <button type = "button" onClick={() => navigate(`/datasets/${dataset_uuid}`)}>View Datasets</button>
+                    <button type = "button" onClick={() => navigate(`/datasets/${dataset_uuid}`)}>Back to Dataset</button>
                     <button type = "button" onClick={handleParse} disabled={isParsing}>Preview Version</button>
                     <button className={styles.createButton} type="submit" disabled={isPending}>Create Version</button>
                     {error && <p>Error creating version: {error.message}</p>}
