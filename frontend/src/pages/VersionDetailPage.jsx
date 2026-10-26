@@ -7,6 +7,7 @@ import {useExperimentDetails} from '../hooks/useExperiment';
 import {useExperimentVersions} from '../hooks/useExperiment';
 import useMetrics from '../hooks/useMetrics';
 import EmptyState from '../components/EmptyState';
+import {formatDate, formatUuid} from "../utils/formatters";
 import styles from "../styles/VersionDetailPage.module.css";
 
 
@@ -30,6 +31,8 @@ function VersionDetailPage() {
 
 
     const navigate = useNavigate();
+
+
 
     if (isLoading || pipelinesLoading || experimentListLoading) {
         return <div>Loading...</div>;
@@ -69,8 +72,8 @@ function VersionDetailPage() {
                     <ul>
                         {pipelines.map(pipeline => (
                             <li key={pipeline.uuid}>
-                                <p><span>Pipeline Id:</span> {pipeline.uuid}</p>
-                                <p><span>Created:</span> {pipeline.created_at}</p>
+                                <p><span>Pipeline Id:</span> {formatUuid(pipeline?.uuid)}</p>
+                                <p><span>Created:</span> {formatDate(pipeline?.created_at)}</p>
                                 <p><span>Status:</span> {pipeline.status}</p> 
                                 <p><span>Pipeline steps count:</span> {pipeline.steps_count}</p> 
                                 <button className={styles.pipelineDetails} type="button" onClick={() => setSelectedPipelineUuid(pipeline.uuid)}>
@@ -90,8 +93,8 @@ function VersionDetailPage() {
                     <p>Error loading pipeline details</p>
                 ) : (
                 <>
-                    <p><span>Pipeline Id:</span> {pipelineDetails.uuid}</p>
-                    <p><span>Created:</span> {pipelineDetails.created_at}</p>
+                    <p><span>Pipeline Id:</span> {pipelineDetails?.uuid}</p>
+                    <p><span>Created:</span> {formatDate(pipelineDetails?.created_at)}</p>
                     <p><span>Status:</span> {pipelineDetails.status}</p>
                     {pipelineDetails?.blocks?.length > 0 ? ( 
                         <>
@@ -122,8 +125,8 @@ function VersionDetailPage() {
                 <ul>
                     {experimentList.map(experiment => (
                         <li key={experiment.uuid}>
-                            <p><span>Experiment Id:</span> {experiment.uuid}</p>
-                            <p><span>Created:</span> {experiment.created_at}</p>
+                            <p><span>Experiment Id:</span> {formatUuid(experiment?.uuid)}</p>
+                            <p><span>Created:</span> {formatDate(experiment?.created_at)}</p>
                             <p><span>Status:</span> {experiment.status}</p>
                             <button className={styles.experimentDetails} type="button" onClick={() => setSelectedExperimentUuid(experiment.uuid)}>
                                 View Experiment Details
@@ -146,7 +149,7 @@ function VersionDetailPage() {
                         <p><span>Dataset Id:</span> {experimentDetails?.dataset_uuid}</p>
                         <p><span>Pipeline Id:</span> {experimentDetails?.pipeline_uuid}</p>
                         <p><span>Model name:</span> {experimentDetails?.model_name} </p>
-                        <p><span>Created:</span> {experimentDetails?.created_at}</p>
+                        <p><span>Created:</span> {formatDate(experimentDetails?.created_at)}</p>
                         <p><span>Status:</span> {experimentDetails?.status}</p>
                         <h2>Metrics</h2>
                         {metrics && metrics.length > 0 ? (

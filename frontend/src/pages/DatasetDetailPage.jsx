@@ -3,6 +3,7 @@ import {useDatasetDetails} from "../hooks/useDatasets";
 import {useVersions} from "../hooks/useVersions";
 import { useNavigate } from "react-router-dom";
 import { toast } from 'react-toastify';
+import {formatDate} from "../utils/formatters";
 import styles from "../styles/DatasetDetailPage.module.css";
 
 function DatasetDetailPage() {
@@ -33,6 +34,10 @@ function DatasetDetailPage() {
         }
     };
 
+
+    const datasetDate = formatDate(datasetDetails?.created_at); 
+ 
+
     if (isLoading) {
         return <div>Loading dataset details...</div>;
     }
@@ -54,7 +59,7 @@ function DatasetDetailPage() {
                 <div className={styles.detailsContainer}>
                     <p><span>Task:</span> {datasetDetails.task}</p>
                     {datasetDetails.description && <p><span>Description:</span> {datasetDetails.description}</p>}
-                    {datasetDetails.created_at && <p><span>Created:</span> {datasetDetails.created_at}</p>}
+                    {datasetDetails.created_at && <p><span>Created:</span> {datasetDate}</p>}
                     {datasetDetails.latest_version && <p><span>Latest Version:</span> {datasetDetails.latest_version}</p>}
                 </div>
                 <div className={styles.versionRegistry}>
@@ -66,7 +71,7 @@ function DatasetDetailPage() {
                             {versions.map(version => (
                                 <li key={version.uuid}>
                                     <p><span>Version:</span> {version.version}</p>
-                                    <p><span>Created:</span> {version.created_at}</p>
+                                    <p><span>Created:</span> {formatDate(version?.created_at)}</p>
                                     <p><span>Status:</span> {version.status}</p> 
                                     <p><span>Density:</span> {version.density}</p> 
 
