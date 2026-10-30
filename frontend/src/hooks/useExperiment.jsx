@@ -30,8 +30,8 @@ export const useCreateExperiment = () => {
         }, //data è la risposta del backend, variables è il payload che ho mandato al backend
         onSuccess: (data, variables) => {
             //se la versione è nel payload, invalido la query delle versioni di quell'esperimento, altrimenti invalido la query di tutti gli esperimenti
-            if (variables.version) {
-                queryClient.invalidateQueries({ queryKey: ['experiment-versions', variables.version] });
+            if (variables.dataset_version_uuid) {
+                queryClient.invalidateQueries({ queryKey: ['experiment-versions', variables.dataset_version_uuid] });
             } else {
                 queryClient.invalidateQueries({ queryKey: ['experiments'] });
             }
@@ -41,7 +41,7 @@ export const useCreateExperiment = () => {
 };
 
 export const useExperimentVersions = (version_uuid) => {
-    const {data: experimentList, isLoading: isLoadingExperimentList, error: ExperimentListError} = useQuery({
+    const {data: experimentList, isLoading, error} = useQuery({
         queryKey: ['experiment-versions', version_uuid],
         queryFn: async () => {
             let response;
@@ -58,7 +58,7 @@ export const useExperimentVersions = (version_uuid) => {
         },
         enabled: !!version_uuid,
     });
-    return { experimentList, isLoadingExperimentList, ExperimentListError };
+    return { experimentList, isLoading, error };
 };
 
 

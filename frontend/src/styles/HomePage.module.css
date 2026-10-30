@@ -1,6 +1,5 @@
 
-
-.title {
+/* .title {
     text-align: center;
     padding: 0;
 }
@@ -75,48 +74,48 @@
 
 .howItWorks ol {
     counter-reset: step; /*per inizializzare un contatore. quello della ordered list non va bene perché ha il "." finale*/
-    margin-left: 16px; /*spostiamo tutto leggermente a destra per staccarlo dai bordi della pagina*/
-    position: relative; /*dice di cominciare a calcolare le coordinate dei figli, come la linea, partendo dai tuoi (lista ol) bordi e non da quelli della pagina*/
+   /* margin-left: 16px; /*spostiamo tutto leggermente a destra per staccarlo dai bordi della pagina*/
+  /*  position: relative; /*dice di cominciare a calcolare le coordinate dei figli, come la linea, partendo dai tuoi (lista ol) bordi e non da quelli della pagina*/
 
-}
+/*}
 
 .howItWorks li {
     counter-increment: step;
-    margin-bottom: 24px; /*distanza tra gli step*/
-    padding-left: 48px; /*spingo il testo e il cerchio, elemento ::before che viene considerato posizionato all'interno di li, a destra di 48px. poiché il cerchio sarà largo 32px, dando questo spazio di 48px mi assicuro che ci sia spazio vuoto a sinistro in cui il cerchio possa stare comodamente*/
+    margin-bottom: 24px; /*distanza tra gli step
+    padding-left: 48px; /*spingo il testo e il cerchio, elemento ::before che viene considerato posizionato all'interno di li, a destra di 48px. poiché il cerchio sarà largo 32px, dando questo spazio di 48px mi assicuro che ci sia spazio vuoto a sinistro in cui il cerchio possa stare comodamente
     position: relative;
     align-items: center;
-    display: flex; /*li contiene il testo come  figlio. facendo così, lo allineo rispetto al cerchio*/
+    display: flex; /*li contiene il testo come  figlio. facendo così, lo allineo rispetto al cerchio
     color: var(--text-primary);
     
 }
 
 .howItWorks li::before {
     content: counter(step);
-    left: 0; /*blocca il cerchio a sinistra*/
+    left: 0; /*blocca il cerchio a sinistra
     width: 32px;
-    height: 32px; /*uguale a width per avere cerchi perfetti*/
+    height: 32px; /*uguale a width per avere cerchi perfetti
     display: flex;
     justify-content: center;
     align-items: center;
     border-radius: 50%;
     color: var(--brand-primary);
     border: 2px solid var(--brand-primary);
-    z-index: 2; /*tieni il cerchio sopra la linea*/
-    position: absolute; /*per non fargli subire il padding-left: 48px*/
+    z-index: 2; /*tieni il cerchio sopra la linea
+    position: absolute; /*per non fargli subire il padding-left: 48px
     background-color: var(--bg-card);
     box-shadow: var(--shadow-elevation-medium);
     
 }
 
 .howItWorks ol::before {
-    content: ''; /*disegna la linea tra i cerchi*/
+    content: ''; /*disegna la linea tra i cerchi
     position: absolute; /*si posiziona in base alle coordiante che decidiamo noi*/
-    /*fissa la linea facendola partire al bordo superiore dell'ol (top: 0) e la fa arrivare fino alla fine (bottom: 0)*/
+    /*fissa la linea facendola partire al bordo superiore dell'ol (top: 0) e la fa arrivare fino alla fine (bottom: 0)
     top: 0;
     bottom: 0; 
-    left: 15px; /*sposta la linea di 15px verso destra. dato che i cerchi sono larghi 32px, il loro centro è a 16 px. con spessore di 2px la linea passerà esattamente al centro*/
-    width: 2px; /*spessore linea*/
+    left: 15px; /*sposta la linea di 15px verso destra. dato che i cerchi sono larghi 32px, il loro centro è a 16 px. con spessore di 2px la linea passerà esattamente al centro
+    width: 2px; /*spessore linea
     z-index: 1;
     background-color: var(--color-border);
     box-shadow: var(--shadow-elevation-low);
@@ -132,5 +131,11 @@
 main {
     padding-inline: 1.6rem;
 }
+*/
 
 
+.page {
+    display: grid;
+    grid-template-rows: 2fr 1fr 1fr; 
+    grid-template-columns: 1fr 1fr;
+}

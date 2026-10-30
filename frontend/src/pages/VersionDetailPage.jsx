@@ -27,8 +27,8 @@ function VersionDetailPage() {
 
     //metrics
 
-    const {metrics, isLoading: metricsLoading, error: metricsError} = useMetrics(selectedExperimentUuid)
-
+    const {metrics, isLoading: metricsLoading, error: metricsError} = useMetrics(selectedExperimentUuid);
+    const metricsList = Object.values(metrics?.metrics_by_split ?? {}).flat();
 
     const navigate = useNavigate();
 
@@ -152,7 +152,7 @@ function VersionDetailPage() {
                         <p><span>Created:</span> {formatDate(experimentDetails?.created_at)}</p>
                         <p><span>Status:</span> {experimentDetails?.status}</p>
                         <h2>Metrics</h2>
-                        {metrics && metrics.length > 0 ? (
+                        {metricsList.length > 0 ? (
                             <>
                             <table>
                                 <thead>
@@ -164,8 +164,8 @@ function VersionDetailPage() {
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    {metrics.map((metric, index) => (
-                                        <tr key={index}>
+                                    {metricsList.map((metric) => (
+                                        <tr key={metric.uuid}>
                                             <td>
                                                 {metric.metric}
                                             </td>

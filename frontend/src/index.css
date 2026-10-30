@@ -23,14 +23,34 @@ img, svg {
 
 /*Colore di BRAND*/
 
---hue-brand: 180;
+--hue-brand: 204;
 --brand-primary: hsl(var(--hue-brand), 75%, 32%); /*colore che ho cercato di ottenere dal sito del poliba e dal suo logo*/
 
 
   /*Ombre (dark mode)*/
 
 
-  --shadow-color: 180deg 20% 0%;
+  --shadow-color: 204deg 12% 7%;
+  --shadow-elevation-low:
+    0.3px 0.5px 0.7px hsl(var(--shadow-color) / 0.34),
+    0.4px 0.8px 1px -1.2px hsl(var(--shadow-color) / 0.34),
+    1px 2px 2.5px -2.5px hsl(var(--shadow-color) / 0.34);
+  --shadow-elevation-medium:
+    0.3px 0.5px 0.7px hsl(var(--shadow-color) / 0.36),
+    0.8px 1.6px 2px -0.8px hsl(var(--shadow-color) / 0.36),
+    2.1px 4.1px 5.2px -1.7px hsl(var(--shadow-color) / 0.36),
+    5px 10px 12.6px -2.5px hsl(var(--shadow-color) / 0.36);
+  --shadow-elevation-high:
+    0.3px 0.5px 0.7px hsl(var(--shadow-color) / 0.34),
+    1.5px 2.9px 3.7px -0.4px hsl(var(--shadow-color) / 0.34),
+    2.7px 5.4px 6.8px -0.7px hsl(var(--shadow-color) / 0.34),
+    4.5px 8.9px 11.2px -1.1px hsl(var(--shadow-color) / 0.34),
+    7.1px 14.3px 18px -1.4px hsl(var(--shadow-color) / 0.34),
+    11.2px 22.3px 28.1px -1.8px hsl(var(--shadow-color) / 0.34),
+    17px 33.9px 42.7px -2.1px hsl(var(--shadow-color) / 0.34),
+    25px 50px 62.9px -2.5px hsl(var(--shadow-color) / 0.34);
+
+  /*--shadow-color: 180deg 20% 0%;
   --shadow-elevation-low:
     0.3px 0.5px 0.7px hsl(var(--shadow-color) / 0.32),
     0.4px 0.9px 1.2px -1px hsl(var(--shadow-color) / 0.37),
@@ -49,9 +69,7 @@ img, svg {
     10.3px 20.6px 27.6px -1.2px hsl(var(--shadow-color) / 0.35),
     14.8px 29.6px 39.7px -1.5px hsl(var(--shadow-color) / 0.37),
     20.9px 41.9px 56.2px -1.7px hsl(var(--shadow-color) / 0.39),
-    29px 58px 77.8px -2px hsl(var(--shadow-color) / 0.4);
-
-
+    29px 58px 77.8px -2px hsl(var(--shadow-color) / 0.4);*/
 
 
 /*Background (dark mode) */
@@ -81,7 +99,7 @@ img, svg {
 
 /*bordi*/
 
-  --color-border: hsl(180, 12%, 22%);
+  --color-border: hsl(var(--hue-brand), 12%, 22%);
 
 /*input*/
 
@@ -128,7 +146,7 @@ img, svg {
 
     /*bordi*/
 
-    --color-border: hsl(180, 12%, 86%);
+    --color-border: hsl(var(--hue-brand), 12%, 86%);
 
     /*input*/
 
@@ -144,7 +162,27 @@ img, svg {
     /*Ombre*/
 
 
-  --shadow-color: 180deg 4% 52%;
+  --shadow-color: 204deg 35% 72%;
+  --shadow-elevation-low:
+    0.3px 0.5px 0.7px hsl(var(--shadow-color) / 0.34),
+    0.4px 0.8px 1px -1.2px hsl(var(--shadow-color) / 0.34),
+    1px 2px 2.5px -2.5px hsl(var(--shadow-color) / 0.34);
+  --shadow-elevation-medium:
+    0.3px 0.5px 0.7px hsl(var(--shadow-color) / 0.36),
+    0.8px 1.6px 2px -0.8px hsl(var(--shadow-color) / 0.36),
+    2.1px 4.1px 5.2px -1.7px hsl(var(--shadow-color) / 0.36),
+    5px 10px 12.6px -2.5px hsl(var(--shadow-color) / 0.36);
+  --shadow-elevation-high:
+    0.3px 0.5px 0.7px hsl(var(--shadow-color) / 0.34),
+    1.5px 2.9px 3.7px -0.4px hsl(var(--shadow-color) / 0.34),
+    2.7px 5.4px 6.8px -0.7px hsl(var(--shadow-color) / 0.34),
+    4.5px 8.9px 11.2px -1.1px hsl(var(--shadow-color) / 0.34),
+    7.1px 14.3px 18px -1.4px hsl(var(--shadow-color) / 0.34),
+    11.2px 22.3px 28.1px -1.8px hsl(var(--shadow-color) / 0.34),
+    17px 33.9px 42.7px -2.1px hsl(var(--shadow-color) / 0.34),
+    25px 50px 62.9px -2.5px hsl(var(--shadow-color) / 0.34);
+
+  /*--shadow-color: 180deg 4% 52%;
 
   --shadow-elevation-low:
     0.3px 0.5px 0.6px hsl(var(--shadow-color) / 0.57),
@@ -167,6 +205,7 @@ img, svg {
     13.8px 27.6px 30.1px -2.6px hsl(var(--shadow-color) / 0.31),
     20.6px 41.1px 44.8px -3.1px hsl(var(--shadow-color) / 0.27),
     29.5px 59px 64.3px -3.5px hsl(var(--shadow-color) / 0.24);
+    */
   }
 }
 

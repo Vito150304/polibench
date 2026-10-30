@@ -85,29 +85,7 @@ export const useDatasetDetails = (dataset_uuid) => {
         }
     });
     return { datasetDetails, isLoading, error };
-}
-
-export const useVersions = (dataset_uuid) => {
-    const {data: versions, isLoading, error} = useQuery({
-        queryKey: ['versions', dataset_uuid],
-        queryFn: async ({signal}) => {
-            let response;
-            try {
-                response = await fetch(`/api/v1/datasets/${dataset_uuid}/versions`, {
-                    signal
-                });
-            } catch (networkError) {
-                throw new Error('Could not reach the server', {cause: networkError});
-            }
-            if (!response.ok) {
-                const errorData = await response.json().catch(() => ({}));
-                throw new Error(errorData.detail || 'Failed to fetch dataset versions');
-            }
-            return response.json();
-        }
-    });
-    return { versions, isLoading, error };
-}
+};
 
 
 export const useCreateDatasetVersion = (dataset_uuid) => {
