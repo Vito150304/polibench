@@ -1,10 +1,14 @@
 import {useCreateExperiment} from '../hooks/useExperiment';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useDatasets } from '../hooks/useDatasets';
 import { useVersions } from '../hooks/useVersions';
 import { usePipelines } from '../hooks/usePipelines';
 import useModels from '../hooks/useModels';
 import { toast } from 'react-toastify'; 
+import {useQueryClient} from '@tanstack/react-query';
+import {Link} from 'react-router-dom';
+import { validateMetricsCsv } from '../utils/metricsCsv';
+import { useUploadMetricImport, useMetricImportStatus } from '../hooks/useMetricImport';
 import styles from '../styles/SubmitExperimentPage.module.css';
 
 
@@ -18,6 +22,17 @@ const [modelUuid, setModelUuid] = useState('');
 const [runName, setRunName] = useState('');
 const [seed, setSeed] = useState('');
 const [notes, setNotes] = useState('');
+const [csvFile, setCsvFile] = useState(null);
+const [csvError, setCsvError] = useState('');
+
+//CSV
+const [createdExperimentUuid, setCreatedExperimentUuid] = useState('');
+const [createdVersionUuid, setCreatedVersionUuid] = useState('');
+const [formKey, setFormKey] = useState(0); // cambiandolo il form si ricrea da zero, e il campo file si svuota
+const queryClient = useQueryClient();
+const { uploadMetricImport, isUploading, uploadError } = useUploadMetricImport();
+const { latestImport } = useMetricImportStatus(createdExperimentUuid);
+
 
 
 const {datasets, isLoading: datasetsLoading, error: datasetsError} = useDatasets();
@@ -27,8 +42,70 @@ const {models, isLoading: modelsLoading, error: modelsError} = useModels();
 
 
 
+
+const handleCsvChange = async (e) => {
+    const file = e.target.files?.[0] ?? null;
+    setCsvFile(null);
+    setCsvError('');
+    if (!file) return;
+    const problem = await validateMetricsCsv(file);
+    if (problem) {
+        setCsvError(problem);
+        e.target.value = ''; // svuota il campo, così si può scegliere un altro file
+        return;
+    }
+    setCsvFile(file);
+};
+
+
+useEffect(() => {
+    if (latestImport?.status === 'completed') {
+        queryClient.invalidateQueries({ queryKey: ['experiment-versions', createdVersionUuid] });
+        queryClient.invalidateQueries({ queryKey: ['leaderboard'] });
+        queryClient.invalidateQueries({ queryKey: ['leaderboardMulti'] });
+        toast.success('Results imported successfully!', { toastId: 'metric-import-done' });
+    }
+}, [latestImport?.status, queryClient, createdVersionUuid]);
+
+
+
+const sendCsv = (experimentUuid) => {
+    uploadMetricImport({ experimentUuid, file: csvFile }, {
+        onError: (error) => {
+            console.error('Error uploading CSV:', error);
+            toast.error(`Error uploading results: ${error.message}`);
+        },
+    });
+};
+
+let importMessage = '';
+if (createdExperimentUuid) {
+    if (isUploading) importMessage = 'Uploading the file...';
+    else if (uploadError) importMessage = `Upload failed: ${uploadError.message}`;
+    else if (latestImport?.status === 'completed') importMessage = 'Results imported successfully.';
+    else if (latestImport?.status === 'failed') importMessage = `Import failed: ${latestImport.error_message}`;
+    else importMessage = 'Importing the results...';
+}
+const canRetry = !!createdExperimentUuid && !isUploading && !!csvFile
+    && (uploadError || latestImport?.status === 'failed');
+
+const resetForm = () => {
+    setDatasetUuid(''); setVersionUuid(''); setPipelineUuid(''); setModelUuid('');
+    setRunName(''); setSeed(''); setNotes('');
+    setCsvFile(null); setCsvError('');
+    setCreatedExperimentUuid(''); setCreatedVersionUuid('');
+    setFormKey((key) => key + 1);
+};
+
+
+
 const handleSubmit = async (e) => {
     e.preventDefault();
+    setCsvError('');
+    if (csvFile && (!versionUuid || !pipelineUuid)) {
+        setCsvError('To upload results, select a dataset version and a pipeline.');
+        return;
+    }
     const payload = {
         model_uuid: modelUuid, //il model_uuid obbligatorio dal backend
     }
@@ -40,8 +117,15 @@ const handleSubmit = async (e) => {
     if (notes) payload.notes = notes;
 
     createExperiment(payload, {
-        onSuccess: () => {
-            toast.success('Experiment created successfully! Go to the related specific version to see it.');
+        onSuccess: (data) => {
+            if (!csvFile) {
+                toast.success('Experiment created successfully! Go to the related specific version to see it.');
+                return;
+            }
+            toast.success('Experiment created. Uploading the results...');
+            setCreatedExperimentUuid(data.uuid);
+            setCreatedVersionUuid(versionUuid);
+            sendCsv(data.uuid);
         },
         onError: (error) => {
             console.error('Error creating experiment:', error);
@@ -50,11 +134,13 @@ const handleSubmit = async (e) => {
     });
 }
 
+
+
     return (
         <>
         <h1>Submit Experiment</h1>
         <div className={styles.page}>
-        <form onSubmit={handleSubmit} className={styles.form}>
+        <form onSubmit={handleSubmit} className={styles.form} key={formKey}>
             <div className={styles.inputContainer}>
                 <label>
                     Dataset:
@@ -167,12 +253,34 @@ const handleSubmit = async (e) => {
                     Notes:
                     <textarea value={notes} onChange={(e) => setNotes(e.target.value)} />
                 </label>
+                   <label>
+                        Results (CSV): <span className={styles.optional}>(optional)</span>
+                        <input type="file" accept=".csv,text/csv" onChange={handleCsvChange} />
+                    </label>
+                    <p className={styles.hint}>
+                        Columns: split, metric, k, value, direction. Only "metric" and "value" are required.
+                    </p>
+                    {csvError && <p className={styles.error} role="alert">{csvError}</p>}
             </div>
             <div className={styles.button}>
-                <button type="submit" disabled={isCreating}>
+                <button type="submit" disabled={isCreating || !!createdExperimentUuid}>
                     {isCreating ? 'Creating...' : 'Create Experiment'}
                 </button>
             </div>
+            {createdExperimentUuid && (
+                <div className={styles.importStatus} role="status">
+                    <p>{importMessage}</p>
+                    {canRetry && (
+                        <button type="button" onClick={() => sendCsv(createdExperimentUuid)}>Retry upload</button>
+                    )}
+                    {latestImport?.status === 'completed' && (
+                        <>
+                         <Link to={`/dataset-versions/${createdVersionUuid}`}>View the version</Link>
+                         <button type="button" onClick={resetForm}>Submit another experiment</button>
+                        </>
+                    )}
+                </div>
+            )}
             </form>
             </div>
         </>
