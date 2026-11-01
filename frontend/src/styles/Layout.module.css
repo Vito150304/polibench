@@ -1,86 +1,71 @@
-
-/*li, a, svg, testo*/
-
-a {
-    display: flex;
-    align-items: center;
-
-}
-
-nav a {
-    transition: transform 0.2s ease, box-shadow 0.2 ease;
-}
-
-nav a:hover {
-  background-color: var(--bg-nav);
-  transform: scale(1.02);
-  box-shadow: var(--shadow-elevation-medium);
-}
-
-a svg {
-    margin-right: 1.3rem;
-}
-
-
 .header {
     display: flex;
-    position: relative;
+    flex-wrap: wrap; /*se la larghezza della finestrra si riduce, gli elementi vanno a capo, invece di avere overflow*/
+    align-items: center; /*asse verticale*/
+    gap: 1.2rem 3rem;
+    padding: 1.6rem 4rem;
+    border-bottom: 1px solid var(--color-border);
 }
 
-
-.userMenu {
-    background-color: var(--bg-sfondo);
-    position: absolute;
-    z-index: 10;
-    top: 0;
-    right: 0;
-}
-
-.header button {
-    cursor: pointer;
-    border: none;
-    display:flex;
-    align-items: center;
-    justify-content: center;
-}
-
-.logoutButton {
-    box-shadow: var(--shadow-elevation-low);
-    padding: 0 1rem;
+.brand {
+    font-size: 2rem;
+    font-weight: bold;
+    color: var(--text-primary);
 }
 
 .nav {
-    flex: 1;
+    flex-grow: 1; /*dice al figlio nav di allargarsi e prendere lo spazio NON OCCUPATO 
+    (quindi calcolato in precedenza dal motore di rendering) dall'altro/altri figli.
+     Vedo spazio vuoto a destra perché la nav occupa tutto quello spazio, ma i figli (ul) occupano uno spazio minore, lasciando
+     spazio vuoto che non è padding ne margin, ma la grandezza naturale di nav. */
+
+    flex-shrink: 1;
+    flex-basis: auto; /*distribuisce la larghezza dello schermo in parti non uguali, ma che dipendono dalla dimensione del contenuto 
+    (ex: nav + link occupano 500px, userMenu 180. Sarà dato più spazio a nav + link. Se fosse zero ciò non accadrebbe, dividendo le cose 
+    in parti di dimensioni uguali)*/
 }
 
-.nav button {
-    width: 100%;
+.navList {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.8rem 3rem;
 }
 
-.nav button svg {
-    height: 3.8rem;
+.navLink {
+    display: block;
+    padding: 0.4rem 0;
+    color: var(--text-secondary);
+    border-bottom: 2px solid transparent;
+    transition: color 0.2s ease, border-color 0.2s ease;
 }
 
-.nav ul {
-    margin: 0 auto;
-    width: min(100%, 18em);
-    font-size: calc(1.6rem + 0.8vw);
-    
+.navLink:hover {
+    color: var(--text-primary);
+}
+
+.active {
+    color: var(--text-primary);
+    border-bottom-color: var(--brand-primary);
+}
+
+.userMenu {
+    display: flex;
+    align-items: center;
 }
 
 .dropdownMenu {
     display: flex;
-    gap: 1.8rem;
-    padding-right: 1.5rem;
+    align-items: center;
+    gap: 2.4rem;
 }
 
-.iconButton {
-    background-color: var(--bg-sfondo);
-    color: var(--color-icon);
+.logoutButton {
+    padding: 0.6rem 1.2rem;
+    border-radius: 8px;
 }
 
-
-.iconButton:hover {
-    background-color: var(--bg-sfondo);
+.content {
+    max-width: 120rem;
+    margin: 0 auto;
+    padding: 2.4rem 1.6rem;
 }
-
