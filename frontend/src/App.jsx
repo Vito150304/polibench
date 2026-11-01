@@ -83,7 +83,7 @@ function App() {
                     </ProtectedRoute>} />
 
                 <Route path='/users' element={
-                    <ProtectedRoute>
+                    <ProtectedRoute requireSuperuser={true}>
                         <UsersPage />
                     </ProtectedRoute>} />
             </Route>

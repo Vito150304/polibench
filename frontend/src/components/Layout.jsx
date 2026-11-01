@@ -6,7 +6,7 @@ import styles from "../styles/Layout.module.css";
 
 function Layout() {
 
-    const {isLoggedIn, isCheckingSession, logout} = useAuth();
+    const {isLoggedIn, isCheckingSession, logout, utente} = useAuth();
     const [isOpenMenu, setIsOpenMenu] = useState(false);
     const navigate = useNavigate();
 
@@ -43,7 +43,7 @@ function Layout() {
                             <li><Link to="/models"><Cpu size="1.2em" /> Model</Link></li>
                             <li><Link to="/datasets"><Database size="1.2em" /> Datasets</Link></li>
                         </ul>
-                        {isLoggedIn && (
+                        {utente?.is_superuser && (
                             <ul>
                                 <li><Link to="/users"><UserRound size={"1.2em"} /> Users</Link></li>
                             </ul>
