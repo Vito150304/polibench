@@ -1,24 +1,19 @@
-import {Link, Outlet, useNavigate} from "react-router-dom";
+import {Link, NavLink, Outlet, useNavigate} from "react-router-dom";
 import { useAuth } from "../contexts/AuthContext";
-import { useState } from "react";
-import { House, Podium, CirclePlus, Cpu, Database, UserRound, ChevronDown, ChevronUp } from 'lucide-react';
+import { House, Podium, CirclePlus, Cpu, Database, UserRound } from 'lucide-react';
 import styles from "../styles/Layout.module.css";
 
 function Layout() {
 
     const {isLoggedIn, isCheckingSession, logout, utente} = useAuth();
-    const [isOpenMenu, setIsOpenMenu] = useState(false);
     const navigate = useNavigate();
 
-    const toggleMenu = () => {
-        setIsOpenMenu(!isOpenMenu);
-    }
 
     if (isCheckingSession) {
         return (
             <>
                 <header className={styles.header}>
-                    <h1>PoliBench</h1>
+                    <Link to="/" className={styles.loadingTitle}>PoliBench</Link>
                 </header>
                 <p>Loading...</p> {/*volendo ci posso mettere un'icona o 
                 componente di caricamento diverso. 
@@ -27,41 +22,30 @@ function Layout() {
         )
     }
 
+    const navLink = ({ isActive }) => isActive ? `${styles.navLink} ${styles.active}` : styles.navLink;
+
+
     return (
         <>
             <header className={styles.header}>
                 <nav className={styles.nav}>
-                    {isOpenMenu ? (
-                        <>
-                        <button onClick={toggleMenu} className={styles.iconButton}>
-                            <ChevronUp size={38} />
-                        </button>
+                    <ul>
+                        <li><NavLink to="/" end className={navLink}><House size="1.2em" /> Home</NavLink></li>
+                        <li><NavLink to="/leaderboard" className={navLink}><Podium size="1.2em" /> Leaderboard</NavLink></li>
+                        <li><NavLink to="/experiment" className={navLink}><CirclePlus size="1.2em" /> Submit Experiment</NavLink></li>
+                        <li><NavLink to="/models" className={navLink}><Cpu size="1.2em" /> Model</NavLink></li>
+                        <li><NavLink to="/datasets" className={navLink}><Database size="1.2em" /> Datasets</NavLink></li>
+                    </ul>
+                    {utente?.is_superuser && (
                         <ul>
-                            <li><Link to="/"><House size="1.2em" /> Home</Link></li>
-                            <li><Link to="/leaderboard"><Podium size="1.2em" /> Leaderboard</Link></li>
-                            <li><Link to="/experiment"><CirclePlus size="1.2em" /> Submit Experiment</Link></li>
-                            <li><Link to="/models"><Cpu size="1.2em" /> Model</Link></li>
-                            <li><Link to="/datasets"><Database size="1.2em" /> Datasets</Link></li>
+                            <li><NavLink to="/users" className={navLink}><UserRound size={"1.2em"} /> Users</NavLink></li>
                         </ul>
-                        {utente?.is_superuser && (
-                            <ul>
-                                <li><Link to="/users"><UserRound size={"1.2em"} /> Users</Link></li>
-                            </ul>
-                        )}
-                        </>
-                    ) : (
-                        <button onClick={toggleMenu} className={styles.iconButton}>
-                            <ChevronDown size={38} />
-                        </button>
                     )}
-                    </nav>
-
+                </nav>
                     <div className={styles.userMenu}>
                         {isLoggedIn ? (
-                    
-                                
                             <ul className={styles.dropdownMenu}>
-                                <li><Link to="/profile">Profile</Link></li>
+                                <li><NavLink to="/profile" className={navLink}>Profile</NavLink></li>
                                 <li><button className={styles.logoutButton} onClick={() => {
                                     logout();
                                     navigate("/login");
@@ -70,8 +54,8 @@ function Layout() {
                             </ul>
                         ) : (
                             <ul className={styles.dropdownMenu}>
-                                <li><Link to="/login">Login</Link></li>
-                                <li><Link to="/register">Register</Link></li>
+                                <li><NavLink to="/login" className={navLink}>Login</NavLink></li>
+                                <li><NavLink to="/register" className={navLink}>Register</NavLink></li>
                             </ul>
                     )}
                 </div>
