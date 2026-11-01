@@ -98,13 +98,16 @@ function CreateDatasetVersionPage() {
         });
     };
 
-
+        const characteristicKeys = ['n_users', 'n_items', 'n_interactions', 'density'];
+        const shownCharacteristics = characteristicKeys.filter(
+            (key) => parseInfo?.characteristics?.[key] != null
+        );
 
     return (
         <>
             <h1>Create a new Dataset Version</h1>
             <p className={styles.description}>Enter the details for the new version:</p>
-            <form className={styles.form} onSubmit={handleSubmit}>
+            <form className={styles.form} onSubmit={handleSubmit} onChange={() => setIsOpenPreview(false)}>
                 <div className={styles.inputContainer}>
                     <div className={styles.datasetInfo}>
                         <label>
@@ -186,13 +189,12 @@ function CreateDatasetVersionPage() {
                     {parseInfo.recognized_version && <p><span>Version:</span> {parseInfo.recognized_version}</p>}
                     <p><span>Parsed Sources:</span> {parseInfo.source_count}</p>
                     <p><span>Parsed Resources:</span> {parseInfo.resource_count}</p>
-                    {parseInfo.pipeline_steps_count && <p><span>Pipeline steps:</span> {parseInfo.pipeline_steps_count}</p>}
+                    {parseInfo.pipeline_steps_count != null && <p><span>Pipeline steps:</span> {parseInfo.pipeline_steps_count}</p>}
                     <div className={styles.previewCharacteristics}>
-                    {parseInfo.characteristics && <p><span>Characteristics:</span></p>}
-                    {parseInfo.characteristics?.n_users && <p><span>n_users: </span>{parseInfo.characteristics?.n_users}</p>}
-                    {parseInfo.characteristics?.n_items && <p><span>n_items: </span>{parseInfo.characteristics?.n_items}</p>}
-                    {parseInfo.characteristics?.n_interactions && <p><span>n_interactions: </span>{parseInfo.characteristics?.n_interactions}</p>}
-                    {parseInfo.characteristics?.density && <p><span>density: </span>{parseInfo.characteristics?.density}</p>}
+                        <p><span>Characteristics:</span> {shownCharacteristics.length === 0 && 'none provided'}</p>
+                        {shownCharacteristics.map((key) => (
+                            <p key={key}><span>{key}: </span>{parseInfo.characteristics[key]}</p>
+                        ))}
                     </div>
                     <div className={styles.previewButton}>
                     <button type="button" onClick={() => setIsOpenPreview(false)}>Close Preview</button>

@@ -31,8 +31,9 @@ function UsersPage() {
                     <h3>User Details</h3>
                     <p>{selectedUser.first_name} {selectedUser.last_name}</p>
                     <p>Email: {selectedUser.email}</p>
-                    <p>{selectedUser.isActive}</p>
-                    <p>{selectedUser.isVerified}</p>
+                    <p>Account status: {selectedUser.is_active ? 'Active' : 'Inactive'}</p>
+                    <p>Email verification: {selectedUser.is_verified ? 'Verified' : 'Not verified'}</p>
+                    <p>Account type: {selectedUser.is_superuser ? 'Administrator' : 'Standard user'}</p>
                 </div>
             )}
         </>

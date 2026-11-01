@@ -77,8 +77,8 @@ function CreatePipelinePage() {
                 setIsOpenPreview(true);
             },
             onError: (error) => {
-                console.error('Error parsing version:', error);
-                toast.error(`Error parsing version: ${error.message}`);
+                console.error('Error previewing pipeline:', error);
+                toast.error(`Error previewing pipeline: ${error.message}`);
             }
         });
     };
@@ -89,7 +89,7 @@ function CreatePipelinePage() {
         <>
             <h1>Create a new Pipeline</h1>
             <p className={styles.description}>Enter the details for the new pipeline:</p>
-            <form onSubmit={handleSubmit} className={styles.form}>
+            <form onSubmit={handleSubmit} className={styles.form} onChange={() => setIsOpenPreview(false)}>
                 <div className={styles.inputContainer}>
                     <label>
                         Code:
@@ -108,8 +108,8 @@ function CreatePipelinePage() {
 
             <p className={styles.description}>Choose configuration mode:</p>
             <select className={styles.select} value={choice} onChange={(e) => setChoice(e.target.value)}>
-                <option value="Modalità Upload">Modalità Upload</option>
-                <option value="Modalità Testuale">Modalità Testuale</option>
+                <option value="Modalità Upload">Upload Mode</option>
+                <option value="Modalità Testuale">Text Mode</option>
             </select>
             {choice === 'Modalità Upload' ? (
                 <div className={styles.uploadMode}>
@@ -131,7 +131,7 @@ function CreatePipelinePage() {
                     <button type = "button" onClick={() => navigate(`/dataset-versions/${version_uuid}`)}>View Version Details</button>
                     <button type = "button" onClick={handleParse} disabled={isPreviewing}>Preview Pipeline</button>
                     <button type="submit" disabled={isPending}>Create Pipeline</button>
-                    {previewError && <p>Error parsing pipeline: {previewError.message}</p>}
+                    {previewError && <p>Error previewing pipeline: {previewError.message}</p>}
                     {error && <p>Error creating pipeline: {error.message}</p>}
             </div>
             </form>
@@ -139,9 +139,9 @@ function CreatePipelinePage() {
             {isOpenPreview && parseInfo && (
                 <div className={styles.preview}>
                     <h2>Preview of the new pipeline</h2>
-                    <p><span>Version:</span> <span>{parseInfo.recognized_version}</span></p>
-                    <p><span>Requested code:</span> <span>{parseInfo.requested_code}</span></p>
-                    <p><span>Pipeline steps:</span> <span>{parseInfo.pipeline_steps_count}</span></p>
+                    <p><span>Version:</span> {parseInfo.recognized_version ?? '—'}</p>
+                    <p><span>Requested code:</span> {parseInfo.requested_code ?? '—'}</p>
+                    <p><span>Pipeline steps:</span> {parseInfo.pipeline_steps_count ?? '—'}</p>
                     <div className={styles.previewButton}>
                         <button type="button" onClick={() => setIsOpenPreview(false)}>Close Preview</button>
                     </div>

@@ -25,6 +25,8 @@ function VersionDetailPage() {
     const [selectedExperimentUuid, setSelectedExperimentUuid] = useState(null);
     const {experimentDetails, isLoading: experimentDetailsLoading, error: experimentDetailsError} = useExperimentDetails(selectedExperimentUuid);
 
+    const selectedExperiment = experimentList?.find((e) => e.uuid === selectedExperimentUuid);
+
     //metrics
 
     const {metrics, isLoading: metricsLoading, error: metricsError} = useMetrics(selectedExperimentUuid);
@@ -52,7 +54,7 @@ function VersionDetailPage() {
     return (
         <>
             <div className={styles.detailsContainer}>
-                <p><span>Version</span> {versionDetails.version}</p>
+                <p><span>Version:</span> {versionDetails.version}</p>
                 <p><span>Status:</span> {versionDetails.status}</p>
                 {versionDetails.release_notes && <p><span>Release Notes:</span> {versionDetails.release_notes}</p>}
             </div>
@@ -96,14 +98,17 @@ function VersionDetailPage() {
                     <p><span>Pipeline Id:</span> {pipelineDetails?.uuid}</p>
                     <p><span>Created:</span> {formatDate(pipelineDetails?.created_at)}</p>
                     <p><span>Status:</span> {pipelineDetails.status}</p>
-                    {pipelineDetails?.blocks?.length > 0 ? ( 
-                        <>
-                            <p><span>Pipeline name:</span> {pipelineDetails.blocks[0].name}</p>
-                            <p><span>Pipeline operation:</span> {pipelineDetails.blocks[0].operation}</p>
-                            <p><span>Pipeline hyperparameters:</span> {JSON.stringify(pipelineDetails.blocks[0].params)}</p>
-                        </>
+                       {pipelineDetails?.blocks?.length > 0 ? (
+                            <ol>
+                                {pipelineDetails.blocks.map((block, index) => (
+                                    <li key={index}>
+                                        <p><span>Step {index + 1}:</span> {block.name} ({block.operation})</p>
+                                        <p><span>Hyperparameters:</span> {JSON.stringify(block.params)}</p>
+                                    </li>
+                                ))}
+                            </ol>
                         ) : (
-                        <p>No pipeline blocks available.</p>
+                            <p>No pipeline blocks available.</p>
                         )}
                         <button type="button" onClick={() => setSelectedPipelineUuid(null)}>Close Preview</button>
                 </>
@@ -126,6 +131,8 @@ function VersionDetailPage() {
                     {experimentList.map(experiment => (
                         <li key={experiment.uuid}>
                             <p><span>Experiment Id:</span> {formatUuid(experiment?.uuid)}</p>
+                            {experiment.run_name && <p><span>Run name:</span> {experiment.run_name}</p>}
+                            <p><span>Model:</span> {experiment.model_name ?? '—'}</p>
                             <p><span>Created:</span> {formatDate(experiment?.created_at)}</p>
                             <p><span>Status:</span> {experiment.status}</p>
                             <button className={styles.experimentDetails} type="button" onClick={() => setSelectedExperimentUuid(experiment.uuid)}>
@@ -148,7 +155,8 @@ function VersionDetailPage() {
                         <p><span>Experiment Id:</span> {experimentDetails?.uuid}</p>
                         <p><span>Dataset Id:</span> {experimentDetails?.dataset_uuid}</p>
                         <p><span>Pipeline Id:</span> {experimentDetails?.pipeline_uuid}</p>
-                        <p><span>Model name:</span> {experimentDetails?.model_name} </p>
+                        <p><span>Model name:</span> {selectedExperiment?.model_name ?? '—'}</p>
+                        {selectedExperiment?.run_name && <p><span>Run name:</span> {selectedExperiment.run_name}</p>}
                         <p><span>Created:</span> {formatDate(experimentDetails?.created_at)}</p>
                         <p><span>Status:</span> {experimentDetails?.status}</p>
                         <h2>Metrics</h2>

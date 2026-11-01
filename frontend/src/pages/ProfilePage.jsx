@@ -46,8 +46,14 @@ function ProfilePage() {
             <h3>User Details</h3>
             <p className={styles.userName}>{utente.first_name} {utente.last_name}</p>
             <p className={styles.userEmail}>Email: {utente.email}</p>
-            <p>{utente.isActive}</p>
-            <p>{utente.isVerified}</p>
+            <p>Account status: {utente.is_active ? 'Active' : 'Inactive'}</p>
+            <p>Email verification: {utente.is_verified ? 'Verified' : 'Not verified'}</p>
+            {!utente.is_verified && (
+                <p>
+                    Your email is not verified yet, so you cannot create datasets, models or experiments.
+                    Open the verification link you received, or use "Resend email" on the login page.
+                </p>
+            )}
             <form onSubmit={handleUpdateUser}>
                 <h3>Update Profile</h3>
                 <div className={styles.inputContainer}>

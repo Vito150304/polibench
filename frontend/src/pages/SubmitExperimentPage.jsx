@@ -154,7 +154,7 @@ const handleSubmit = async (e) => {
                         ) : datasetsError ? (
                             <option value="" disabled>Error loading datasets</option>
                         ) : datasets?.length === 0 ? (
-                            <option value="" disabled>No datasets registered. Register a dataset to submit an experiment.</option>
+                            <option value="" disabled>No datasets available</option>
                         ) : (
                             <>
                                 <option value="">Select a dataset</option>
@@ -167,6 +167,9 @@ const handleSubmit = async (e) => {
                         )}
                     </select>
                 </label>
+                {datasets?.length === 0 && (
+                    <p className={styles.hint}>Register a dataset to submit an experiment.</p>
+                )}
                 <label>
                     Version:
                     <select value={versionUuid} onChange={(e) => {
