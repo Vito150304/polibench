@@ -34,6 +34,29 @@
     color: var(--brand-primary);
 }
 
+.leftSide .buttons {
+    display: flex;
+    margin-top: 8rem;
+    gap: 2.4rem;
+} 
+
+
+.leftSide .getStarted {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1.2rem 2.4rem;
+    border-radius: 1.6rem;
+    border: 2px solid var(--color-border);
+    background-color: var(--btn-primary-bg);
+    color: var(--btn-primary-text);
+    transition: background-color 0.2s ease;
+}
+
+.getStarted:hover {
+    background-color: var(--btn-primary-hover);
+}
+
 .RightSide {
     display: flex;
     flex-direction: column;
@@ -143,3 +166,13 @@
 
 }
 
+/*immagine ha il colore giusto per light e dark mode*/
+.image { 
+    filter: invert(1);
+}
+
+@media (prefers-color-scheme: light) {
+    .image {
+        filter: none;
+    }
+}

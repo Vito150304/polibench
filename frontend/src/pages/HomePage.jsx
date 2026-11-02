@@ -1,5 +1,6 @@
 import styles from '../styles/HomePage.module.css';
 import leaderboard from '../assets/leaderboard.png';
+import { Link } from 'react-router-dom';
 
 function HomePage() {
     return (
@@ -11,6 +12,10 @@ function HomePage() {
                     <p>A benchmarking tool designed to evaluate the performance of various <span>models</span> applied to
                     datasets. Performance evaluation is influenced by multiple factors, including the choice of dataset, 
                     model architecture, and training procedure, as well as <span>hyperparameters</span>.</p>
+                    <div className={styles.buttons}>
+                        <Link to="/datasets" className={styles.getStarted}>View dataset</Link>
+                        <Link to="/leaderboard" className={styles.getStarted}>View leaderboard</Link>
+                    </div>
                 </div>
                 <div className={styles.RightSide}>
                     <div className={styles.image}>
@@ -31,7 +36,7 @@ function HomePage() {
                     <li>Define the pipeline</li> 
                     <li>Choose a model</li>
                     <li>Submit experiment</li>
-                    <li>View the results on the leaderboard.</li>
+                    <li>View the leaderboard</li>
                 </ol>
             </div>
             <div className={styles.middleSection}>
