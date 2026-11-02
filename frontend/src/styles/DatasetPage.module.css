@@ -1,56 +1,149 @@
-/*div, eventuale EmptyState component o 
-ul (con li cliccabili e tag p). bottone. */
+.title {
+    text-align: left;
+    font-size: 3.2rem;
+    color: var(--text-primary);
+    margin-bottom: 2rem;
+}
 
 
+.upperSection {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 2rem;
+    margin-bottom: 1.6rem;
+    flex-wrap: wrap;
+}
 
-.container li {
-    padding-bottom: 1em; /*giusto per avere chiara visivamente la struttura, forse da eliminare*/
-    /*lavoro vero*/
-    border: 1px solid var(--color-border);
-    border-radius: 16px;
-    cursor: pointer;
+.search {
+    flex: 1;
+    max-width: 42rem;
+}
+
+.search input {
+    width: 100%;
+    padding: 0.8rem 1.6rem;
+    border-radius: 1.6rem;
+    background-color: var(--input-bg);
+    color: var(--input-text);
+    border: 1px solid var(--input-border);
     box-shadow: var(--shadow-elevation-low);
-    transition: transform 0.2s ease, box-shadow 0.2 ease;
+    margin-bottom: 0; 
 }
 
-.container li:hover {
-    transform: scale(1.02);
-    box-shadow: var(--shadow-elevation-medium);
+.search input:focus {
+    outline: none;
+    border-color: var(--brand-primary);
+    box-shadow: 0 0 0 3px var(--input-focus-ring);
 }
 
-.container {
-    padding-inline: 1.6rem;
+.register button { 
+    background-color: var(--btn-primary-bg);
+    color: var(--btn-primary-text);
+    border: 1px solid var(--color-border);
+    border-radius: 1.2rem;
+    padding: 0.8rem 2rem;
+    font-weight: 600;
+    box-shadow: var(--shadow-elevation-low);
+    margin-bottom: 0;
+    min-height: 3.5rem;
+}
+
+.register button:hover {
+    background-color: var(--btn-primary-hover);
+}
+
+.info {
+    display: block;
+    margin-bottom: 3.2rem;
+    color: var(--text-secondary);
+    font-size: 1.4rem;
 }
 
 .list {
     display: grid;
-    /*grid-template-columns: repeat(auto-fit, minmax(270px, 1fr));*/
-    grid-template-columns: repeat(auto-fit, minmax(min(27rem, 100%), 32rem)); /*stessa cosa di sopra, ma pensato per telefoni vecchi (<270px)*/
-    justify-content: center;
-    gap: 2rem;
+    grid-template-columns: repeat(auto-fill, minmax(28rem, 1fr));
+    gap: 2.4rem;
     margin-bottom: 5rem;
+    padding: 0;
+    list-style: none;
+    width: 100%;
 }
+
 
 .list li {
     background-color: var(--bg-card);
-}
-
-.bold {
-    font-style: italic;
-    font-size: 1.7rem; 
-}
-
-.register {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
-.register button { 
-    border: 1px solid var (--color-border);
-    text-align: center;
+    border: 1px solid var(--color-border);
+    border-radius: 16px;
+    padding: 2rem;
+    cursor: pointer;
     box-shadow: var(--shadow-elevation-low);
-    padding: 1rem;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+
+
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    min-height: 16rem; 
 }
 
-/*tag p ha un margine sopra e sotto*/
+.list li:hover {
+    transform: translateY(-3px);
+    box-shadow: var(--shadow-elevation-medium);
+}
+
+.infoDataset {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 1.6rem;
+    width: 100%;
+}
+
+.name {
+    font-weight: 700;
+    font-size: 2rem;
+    color: var(--text-primary);
+    margin: 0;
+    line-height: 1.25;
+    word-break: break-word; /*evita che un nome lungo rompa la colonna*/
+}
+
+
+.description {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end; /*mette tutto a destra visibilità e task */
+    gap: 0.6rem;
+    flex-shrink: 0; 
+}
+
+.description p {
+    margin: 0;
+    font-size: 1.3rem;
+    color: var(--text-secondary);
+    text-align: right;
+}
+
+/* styling visibilità*/
+.description p:first-child {
+    font-weight: 600;
+    font-size: 1.2rem;
+    padding: 0.2rem 0.8rem;
+    border-radius: 8px;
+    background-color: var(--bg-sfondo);
+    border: 1px solid var(--color-border);
+    text-transform: lowercase;
+}
+
+
+.countVersion {
+    margin: 0;
+    font-size: 1.4rem;
+    color: var(--text-secondary);
+    font-weight: 500;
+}
+
+.container {
+    padding-inline: 0; /* Rimossa l'inutile rientranza per sfruttare tutto lo spazio */
+}

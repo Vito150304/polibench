@@ -1,32 +1,64 @@
-.search {
-    display: flex;
-    justify-content: center;
+.title {
+    text-align: left;
+    font-size: 3.2rem;
+    color: var(--text-primary);
+    margin-bottom: 2rem;
 }
 
-.search svg {
-    position: absolute;
-    z-index: 3;
-    padding-top: 2px;
-    width: 27px;
-    height: 27px;
-    left: 2.5rem;
+
+.upperSection {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 2rem;
+    margin-bottom: 1.6rem;
+    flex-wrap: wrap;
+}
+
+.search {
+    flex: 1;
+    max-width: 64rem;
 }
 
 .search input {
-    position: relative;
-    border-radius: 14px;
-    border: 0.5px solid;
     width: 100%;
-    text-align: center;
-    margin-bottom: 7rem;
-    box-shadow: var(--shadow-elevation-medium);
+    padding: 0.8rem 1.6rem;
+    border-radius: 1.6rem;
+    background-color: var(--input-bg);
+    color: var(--input-text);
+    border: 1px solid var(--input-border);
+    box-shadow: var(--shadow-elevation-low);
+    margin-bottom: 0; 
+}
+
+.search input:focus {
+    outline: none;
+    border-color: var(--brand-primary);
+    box-shadow: 0 0 0 3px var(--input-focus-ring);
+}
+
+.register button { 
+    background-color: var(--btn-primary-bg);
+    color: var(--btn-primary-text);
+    border: 1px solid var(--color-border);
+    border-radius: 1.2rem;
+    padding: 0.8rem 2rem;
+    font-weight: 600;
+    box-shadow: var(--shadow-elevation-low);
+    margin-bottom: 0;
+    min-height: 3.5rem;
+}
+
+.register button:hover {
+    background-color: var(--btn-primary-hover);
 }
 
 
 .container {
     display: grid;
-    place-items: center; /*l'equivalente di justify-content: center e align-items center, ma per i grid*/
     overflow-x: auto; 
+    width: 100;
+    margin-top: 8rem;
 }
 
 
@@ -40,6 +72,7 @@
     margin-bottom: 5rem;
     background-color: var(--bg-card);
     box-shadow: var(--shadow-elevation-low);
+    width: 100%;
 }
 
 .table th, .table td {
@@ -52,15 +85,15 @@
     overflow-wrap: anywhere;
 }
 
-.register {
-    display: flex;
-    justify-content: center;
-    align-items: center;
+.paper {
+    transition: opacity 0.2s ease;
 }
 
-.register button {
-    border: 1px solid var(--color-border);
-    text-align: center;
-    padding: 1rem;
-    margin-bottom: 2rem;
+.paper a {
+    font-weight: bold;
+}
+
+.paper:hover {
+    text-decoration: underline;
+    opacity: 0.85;
 }
