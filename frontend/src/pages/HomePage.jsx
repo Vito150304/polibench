@@ -1,5 +1,5 @@
 import styles from '../styles/HomePage.module.css';
-import landingPage from '../assets/landingPage.jpg';
+import leaderboard from '../assets/leaderboard.png';
 
 function HomePage() {
     return (
@@ -14,7 +14,7 @@ function HomePage() {
                 </div>
                 <div className={styles.RightSide}>
                     <div className={styles.image}>
-                        <img src={landingPage} alt="Landing Image" />
+                        <img src={leaderboard} alt="Leaderboard" />
                     </div>
                     <div className={styles.features}>
                         <div className={styles.feature}>
@@ -31,7 +31,7 @@ function HomePage() {
                     <li>Define the pipeline</li> 
                     <li>Choose a model</li>
                     <li>Submit experiment</li>
-                    <li>View, or compare, the results on the dashboard.</li>
+                    <li>View the results on the leaderboard.</li>
                 </ol>
             </div>
             <div className={styles.middleSection}>
