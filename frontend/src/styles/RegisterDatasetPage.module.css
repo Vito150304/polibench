@@ -1,71 +1,96 @@
-
 .page {
-    min-height: 50dvh;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
+    max-width: 56rem;
+    margin: 0 auto;
+}
+
+.title {
+    margin: 0 0 0.8rem;
+    font-size: 2.8rem;
+    text-align: left;
+}
+
+.note {
+    margin: 0 0 2.4rem;
+    font-size: 1.4rem;
 }
 
 .form {
-    width: min(100%, 40rem);
-}
-
-.inputContainer { 
-    display: grid;
-    grid-template-columns: minmax(0, 1fr); /*la colonna non cresce col contenuto*/
-    margin-inline: auto;
-    gap: 2.5rem; 
-}
-
-.inputContainer input, .inputContainer select {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    padding: 2.4rem;
+    background-color: var(--bg-card);
+    border: 1px solid var(--color-border);
     border-radius: 14px;
-    border: 0.5px solid;
-}
-
-.inputContainer input {
-    width: 30rem;
     box-shadow: var(--shadow-elevation-low);
 }
 
-
-.inputContainer select, .inputContainer textarea {
-    width: 100%;
-    box-shadow: var(--shadow-elevation-low);
-}
-
-.inputContainer select {
-    cursor: pointer;
-}
-
-.inputContainer label {
-    display: grid; /*implicitamente, trasforma label in un elemento block, facendogli occupare tutta la riga e costringendo l'input, select ecc ad andare a capo*/
-    grid-template-columns: minmax(0, 1fr);
+.field {
+    display: flex;
+    flex-direction: column;
     gap: 0.6rem;
 }
 
-.navigation, .button {
-    display: flex;
-    justify-content: center;
-    align-items: center;
+.label {
+    font-size: 1.4rem;
+    font-weight: 600;
+    color: var(--text-primary);
 }
 
-.button {
-    margin-bottom: 1rem;
-}
-
-
-.button button, .viewDatasets {
-    padding: 1rem;
-}
-
-.required {
+.star {
     color: var(--color-danger);
-    font-style: italic;
 }
 
-.inputContainer textarea {
-    resize: vertical; /*si può allungare, non allargare*/
-    max-width: 100%;
-    min-height: 8rem;
+.field input,
+.field select,
+.field textarea {
+    width: 100%;
+    padding: 0.8rem 1.2rem;
+    font: inherit;
+    border-radius: 8px;
+}
+
+.field textarea {
+    resize: vertical;
+    min-height: 10rem;
+}
+
+.actions {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+    gap: 1.2rem;
+    margin-top: 0.8rem;
+}
+
+.primary,
+.secondary {
+    padding: 1rem 2rem;
+    font-weight: 600;
+    border: 1px solid transparent;
+    border-radius: 8px;
+}
+
+.primary {
+    background-color: var(--btn-primary-bg);
+    color: var(--btn-primary-text);
+}
+
+.primary:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+.primary:disabled:hover {
+    background-color: var(--btn-primary-bg);
+}
+
+.secondary {
+    background-color: transparent;
+    color: var(--text-primary);
+    border-color: var(--color-border);
+}
+
+.secondary:hover {
+    background-color: var(--bg-nav);
 }

@@ -15,12 +15,12 @@ function RegisterDatasetPage() {
     const handleSubmit = (e) => {
         e.preventDefault();
         const payload = {
-            name: name, 
-            task: task, 
-            visibility: visibility, 
+            name: name.trim(),
+            task: task,
+            visibility: visibility,
         };
-        if (description) {
-            payload.description = description;
+        if (description.trim()) {
+            payload.description = description.trim();
         }
         newDataset(payload, {
             onSuccess: () => {
@@ -31,13 +31,13 @@ function RegisterDatasetPage() {
     }
 
     return (
-        <>
-            <h1>Register a new Dataset</h1>
-            <div className={styles.page}>
+        <div className={styles.page}>
+            <h1 className={styles.title}>Register a new Dataset</h1>
+            <p className={styles.note}>Fields marked with <span className={styles.star}>*</span> are required.</p>
+
             <form onSubmit={handleSubmit} className={styles.form}>
-                <div className={styles.inputContainer}>
-                <label>
-                    Name:*
+                <label className={styles.field}>
+                    <span className={styles.label}>Name <span className={styles.star}>*</span></span>
                     <input
                         type="text"
                         value={name}
@@ -45,44 +45,39 @@ function RegisterDatasetPage() {
                         required
                     />
                 </label>
-                <label>
-                    Task:*
+                <label className={styles.field}>
+                    <span className={styles.label}>Task <span className={styles.star}>*</span></span>
                     <select value={task} onChange={(e) => setTask(e.target.value)} required>
                         <option value="ranking">Ranking</option>
                         <option value="rating_prediction">Rating Prediction</option>
-                        <option value="ctr">CTR (Click-Through Rate)</option>
                     </select>
                 </label>
-                <label>
-                    Visibility:
-                    <select
-                        value={visibility}
-                        onChange={(e) => setVisibility(e.target.value)}
-                    >
+                <label className={styles.field}>
+                    <span className={styles.label}>Visibility</span>
+                    <select value={visibility} onChange={(e) => setVisibility(e.target.value)}>
                         <option value="private">Private</option>
                         <option value="public">Public</option>
                     </select>
                 </label>
-                <label>
-                    Description:
+                <label className={styles.field}>
+                    <span className={styles.label}>Description</span>
                     <textarea
+                        rows={4}
                         value={description}
                         onChange={(e) => setDescription(e.target.value)}
                     />
                 </label>
-                <div className={styles.button}>
-                <button type="submit" disabled={isPending}>
-                    {isPending ? 'Creating...' : 'Create Dataset'}
-                </button>
-                </div>
+
+                <div className={styles.actions}>
+                    <button type="button" className={styles.secondary} onClick={() => navigate("/datasets")}>
+                        Cancel
+                    </button>
+                    <button type="submit" className={styles.primary} disabled={isPending || !name.trim()}>
+                        {isPending ? 'Creating...' : 'Create Dataset'}
+                    </button>
                 </div>
             </form>
-            <div className={styles.navigation}>
-                <button className={styles.viewDatasets} onClick={() => navigate("/datasets")}>View Datasets</button>
-            </div>
-            </div>
-            <p className={styles.required}>*: Required fields</p>
-        </>
+        </div>
     )
 }
 export default RegisterDatasetPage;
