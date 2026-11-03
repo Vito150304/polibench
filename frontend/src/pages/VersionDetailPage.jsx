@@ -45,9 +45,6 @@ function VersionDetailPage() {
     if (pipelinesError) {
         return <div>Error fetching pipelines</div>;
     }
-    if (pipelineDetailsError) {
-        return <div>Error fetching pipeline details</div>;
-    }
     if (experimentListError) {
         return <div>Error fetching experiment list</div>;
     }

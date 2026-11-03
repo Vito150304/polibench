@@ -73,12 +73,14 @@
     background-color: var(--bg-card);
     box-shadow: var(--shadow-elevation-low);
     width: 100%;
+    
 }
 
 .table th, .table td {
     padding: 0.4rem 2.5rem;
     text-align: left;
-    border: 1px solid var(--color-border);
+    border: none;
+    border-bottom: 1px solid var(--color-border);
 }
 
 .table td {
@@ -96,4 +98,8 @@
 .paper:hover {
     text-decoration: underline;
     opacity: 0.85;
+}
+
+.tableWrapper {
+    overflow-x: auto;
 }

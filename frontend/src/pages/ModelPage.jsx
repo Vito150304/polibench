@@ -21,50 +21,57 @@ function ModelPage() {
         navigate("/register-model"); 
     }
 
-    const modelliFiltrati =  models.filter((modello) => modello.name.toLowerCase().includes(searchModel.toLowerCase())); //barra di ricerca
+    const modelliFiltrati =  (models ?? []).filter((modello) =>
+        modello.name.toLowerCase().includes(searchModel.toLowerCase())
+    ); //barra di ricerca
+
+     const isWebLink = (url) => /^https?:\/\//i.test(url);
     
-    return ( //Possibile implementazione futura (anche backend) è aggiungere un endpoint DELETE
-        //per cancellare un modello registrato per sbaglio ad esempio
+     return (
         <>
-            <h1 className = {styles.title}>MODELS</h1>
-            <div className = {styles.upperSection}>
-                <div className = {styles.search}>
-                    <input value = {searchModel} onChange = {(e) => setSearchModel(e.target.value)} placeholder = "Search for a model name" />
+            <h1 className={styles.title}>MODELS</h1>
+            <div className={styles.upperSection}>
+                <div className={styles.search}>
+                    <input value={searchModel} onChange={(e) => setSearchModel(e.target.value)} placeholder="Search for a model name" />
                 </div>
-                {modelliFiltrati.length > 0 && (
-                    <div className = {styles.register}>
-                        <button onClick = {RegisterModel}>Register a new Model</button>
-                    </div>
-                )}
+                <div className={styles.register}>
+                    <button onClick={RegisterModel}>Register a new Model</button>
+                </div>
             </div>
-            <div className = {styles.container}>
+            <div className={styles.container}>
                 {modelliFiltrati.length === 0 ? (
                     <EmptyState
                         title="No Models Found"
                         description={searchModel ? "There are no models matching your search." : "No models registered."}
                     />
-                ) : (   
-                
-                <table className = {styles.table}>
-                    <thead>
-                        <tr>
-                            <th>Name</th>
-                            <th>Family</th>
-                            <th>Paper</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {modelliFiltrati.map((modello) => (
-                            <tr key={modello.uuid}>
-                                <td>{modello.name}</td>
-                                <td>{modello.family ? modello.family : (
-                                    <span>-</span>
-                                    )}</td>
-                                <td className={styles.paper}>{modello.paper_url ? <a href={modello.paper_url}>View Paper</a> : "No Paper Available"}</td>
-                            </tr>
-                        ))}
-                    </tbody>
-                </table>)}
+                ) : (
+                    <div className={styles.tableWrapper}>
+                        <table className={styles.table}>
+                            <thead>
+                                <tr>
+                                    <th>Name</th>
+                                    <th>Family</th>
+                                    <th>Paper</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {modelliFiltrati.map((modello) => (
+                                    <tr key={modello.uuid}>
+                                        <td>{modello.name}</td>
+                                        <td>{modello.family ? modello.family : <span>-</span>}</td>
+                                        <td className={styles.paper}>
+                                            {modello.paper_url && isWebLink(modello.paper_url) ? (
+                                                <a href={modello.paper_url} target="_blank" rel="noopener noreferrer">View Paper</a>
+                                            ) : (
+                                                "No Paper Available"
+                                            )}
+                                        </td>
+                                    </tr>
+                                ))}
+                            </tbody>
+                        </table>
+                    </div>
+                )}
             </div>
         </>
     );

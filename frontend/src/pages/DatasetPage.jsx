@@ -11,7 +11,6 @@ function DatasetPage() {
     const [searchDataset, setSearchDataset] = useState(''); //barra di ricerca
     const navigate = useNavigate();
 
-    const datasetFiltrati = datasets.filter((dataset) => dataset.name.toLowerCase().includes(searchDataset.toLowerCase())); //barra di ricerca
 
     if (isLoading) {
         return <div>Loading datasets...</div>;
@@ -19,6 +18,9 @@ function DatasetPage() {
     if (error) {
         return <div>Error loading datasets: {error.message}</div>;
     }
+
+    const datasetFiltrati = (datasets ?? []).filter((dataset) =>
+    dataset.name.toLowerCase().includes(searchDataset.toLowerCase()));
 
     return (
         <>
@@ -31,7 +33,7 @@ function DatasetPage() {
                         placeholder="Search for a dataset name"
                     />
                 </div>
-                {datasetFiltrati.length > 0 && (
+                {(datasets ?? []).length > 0 && (
                     <div className={styles.register}>
                         <button onClick={() => navigate("/register-dataset")}>Register a new Dataset</button>
                     </div>
@@ -40,11 +42,11 @@ function DatasetPage() {
             <div className={styles.container}>
                 {datasetFiltrati.length === 0 ? (
                     <EmptyState
-                        title="No Datasets Found"
-                        description="There are no datasets registered."
-                        action="Register a new Dataset"
-                        route="/register-dataset"
-                    />
+                    title="No Datasets Found"
+                    description={searchDataset ? "There are no datasets matching your search." : "There are no datasets registered."}
+                    action={searchDataset ? undefined : "Register a new Dataset"}
+                    route={searchDataset ? undefined : "/register-dataset"}
+                />
                 ) : (
                     <>
                         <span className={styles.info}>Click on a dataset to view its details</span>
@@ -61,7 +63,8 @@ function DatasetPage() {
                                     {dataset.versions_count === 0 ? (
                                         <p className={styles.countVersion}> There are no versions</p>
                                     ) : ( 
-                                        <p className={styles.countVersion}> {dataset.versions_count} versions</p>
+                                        <p className={styles.countVersion}>
+                                            {dataset.versions_count} {dataset.versions_count === 1 ? 'version' : 'versions'} </p>
                                     )}
                                 </li>
                             ))}

@@ -73,7 +73,7 @@ function DatasetDetailPage() {
                                     <p><span>Version:</span> {version.version}</p>
                                     <p><span>Created:</span> {formatDate(version?.created_at)}</p>
                                     <p><span>Status:</span> {version.status}</p> 
-                                    <p><span>Density:</span> {version.density}</p> 
+                                    <p><span>Density:</span> {version.density != null ? Number(version.density).toFixed(4) : '—'}</p> 
 
                                     <div className={styles.versionActions}>
                                         <button type="button" onClick={() => navigate(`/dataset-versions/${version.uuid}`)}>
