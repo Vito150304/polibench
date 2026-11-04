@@ -1,7 +1,9 @@
 import  {useAuth}  from '../contexts/AuthContext';
 import { useRef } from 'react';
+import { Link } from 'react-router-dom';
 import { useMutation } from '@tanstack/react-query';
 import { toast } from 'react-toastify'; 
+import styles from '../styles/LoginPage.module.css';
 
 function LoginPage() {
 
@@ -63,15 +65,30 @@ function LoginPage() {
         NewVerificationEmailMutation.mutate({ email: currentEmail });
     }
 
-    return( //Ci devo mettere l'interfaccia per login con Google
-        <>
-        <form onSubmit = {handleSubmit}>
-            <input type = "email" ref = {emailRef} placeholder = "Email" required />
-            <input type = "password" ref = {passwordRef} placeholder = "Password" required />
-            <button type = "submit">Login</button>
-        </form>
-        <button onClick = {handleNewVerificationEmail}>Resend email.</button>
-        </>
+        return( //Ci devo mettere l'interfaccia per login con Google
+        <div className={styles.page}>
+            <h1 className={styles.title}>Login</h1>
+            <form onSubmit={handleSubmit} className={styles.form}>
+                <label className={styles.field}>
+                    <span className={styles.label}>Email</span>
+                    <input type="email" ref={emailRef} required />
+                </label>
+                <label className={styles.field}>
+                    <span className={styles.label}>Password</span>
+                    <input type="password" ref={passwordRef} required />
+                </label>
+                <button type="submit" className={styles.primary}>Login</button>
+                <button
+                    type="button"
+                    className={styles.secondary}
+                    onClick={handleNewVerificationEmail}
+                    disabled={NewVerificationEmailMutation.isPending}
+                >
+                    Resend verification email
+                </button>
+            </form>
+            <p className={styles.footer}>Don't have an account? <Link to="/register">Register</Link></p>
+        </div>
     )
 }
 export default LoginPage;

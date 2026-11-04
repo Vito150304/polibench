@@ -1,0 +1,72 @@
+.page {
+    max-width: 40rem;
+    margin: 0 auto;
+    padding-bottom: 4rem;
+}
+
+.title {
+    margin: 0 0 2.4rem;
+    font-size: 2.8rem;
+    text-align: left;
+}
+
+.form {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    padding: 2.4rem;
+    background-color: var(--bg-card);
+    border: 1px solid var(--color-border);
+    border-radius: 14px;
+    box-shadow: var(--shadow-elevation-low);
+}
+
+.field {
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+}
+
+.label {
+    font-size: 1.4rem;
+    font-weight: 600;
+    color: var(--text-primary);
+}
+
+.field input {
+    width: 100%;
+    padding: 0.8rem 1.2rem;
+    font: inherit;
+    border-radius: 8px;
+}
+
+.primary,
+.secondary {
+    width: 100%;
+    padding: 1rem 2rem;
+    font-weight: 600;
+    border: 1px solid transparent;
+    border-radius: 8px;
+}
+
+.secondary {
+    background-color: transparent;
+    color: var(--text-primary);
+    border-color: var(--color-border);
+}
+
+.secondary:hover {
+    background-color: var(--bg-nav);
+}
+
+.footer {
+    margin: 1.6rem 0 0;
+    font-size: 1.4rem;
+    text-align: center;
+}
+
+.footer a {
+    font-weight: 600;
+    color: var(--text-primary);
+    text-decoration: underline;
+}
