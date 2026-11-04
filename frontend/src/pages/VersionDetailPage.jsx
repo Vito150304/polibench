@@ -25,7 +25,7 @@ function VersionDetailPage() {
     const [selectedExperimentUuid, setSelectedExperimentUuid] = useState(null);
     const {experimentDetails, isLoading: experimentDetailsLoading, error: experimentDetailsError} = useExperimentDetails(selectedExperimentUuid);
 
-    const selectedExperiment = experimentList?.find((e) => e.uuid === selectedExperimentUuid);
+    
 
     //metrics
 
@@ -56,10 +56,18 @@ function VersionDetailPage() {
                 {versionDetails.release_notes && <p><span>Release Notes:</span> {versionDetails.release_notes}</p>}
             </div>
             <div className={styles.pipelineRegistry}>
-                <h3>Pipeline Registry</h3>
-                {pipelines.length > 0 && (
-                    <button className={styles.pipelineButton} type="button" onClick={() => navigate(`/dataset-versions/${version_uuid}/create-pipeline`)}>Create New Pipeline</button> 
-                )}
+                <div className={styles.sectionHeader}>
+                    <h3>Pipeline Registry</h3>
+                    {pipelines.length > 0 && (
+                        <button
+                            className={styles.pipelineButton}
+                            type="button"
+                            onClick={() => navigate(`/dataset-versions/${version_uuid}/create-pipeline`)}
+                        >
+                            Create New Pipeline
+                        </button>
+                    )}
+                </div>
                 {pipelines.length === 0 ? (
                     <EmptyState
                         title="No Pipelines Found"
@@ -69,49 +77,52 @@ function VersionDetailPage() {
                     />
                 ) : (
                     <ul>
-                        {pipelines.map(pipeline => (
-                            <li key={pipeline.uuid}>
-                                <p><span>Pipeline Id:</span> {formatUuid(pipeline?.uuid)}</p>
-                                <p><span>Created:</span> {formatDate(pipeline?.created_at)}</p>
-                                <p><span>Status:</span> {pipeline.status}</p> 
-                                <p><span>Pipeline steps count:</span> {pipeline.steps_count}</p> 
-                                <button className={styles.pipelineDetails} type="button" onClick={() => setSelectedPipelineUuid(pipeline.uuid)}>
-                                    View Pipeline Details
-                                </button>
-                            </li>
-                        ))}
+                        {pipelines.map((pipeline) => {
+                            const isSelected = pipeline.uuid === selectedPipelineUuid;
+                            return (
+                                <li key={pipeline.uuid}>
+                                    <p><span>Pipeline Id:</span> {formatUuid(pipeline?.uuid)}</p>
+                                    <p><span>Created:</span> {formatDate(pipeline?.created_at)}</p>
+                                    <p><span>Status:</span> {pipeline.status}</p>
+                                    <p><span>Pipeline steps count:</span> {pipeline.steps_count}</p>
+                                    <button
+                                        className={styles.pipelineDetails}
+                                        type="button"
+                                        onClick={() => setSelectedPipelineUuid(isSelected ? null : pipeline.uuid)}
+                                    >
+                                        {isSelected ? 'Hide Pipeline Details' : 'View Pipeline Details'}
+                                    </button>
+
+                                    {isSelected && (
+                                        <div className={styles.pipelinePreview}>
+                                            {pipelineDetailsLoading ? (
+                                                <p>Loading pipeline details...</p>
+                                            ) : pipelineDetailsError ? (
+                                                <p>Error loading pipeline details</p>
+                                            ) : pipelineDetails?.blocks?.length > 0 ? (
+                                                <ol>
+                                                   {pipelineDetails.blocks.map((block, index) => (
+                                                        <li key={index}>
+                                                            <p><span>Step {index + 1}:</span> {block.name}</p>
+                                                            <p><span>Operation:</span> {block.operation}</p>
+                                                            {Object.entries(block.params ?? {}).map(([key, value]) => (
+                                                                <p key={key}><span>{key}:</span> {Array.isArray(value) ? value.join(', ') : String(value)}</p>
+                                                            ))}
+                                                        </li>
+                                                    ))}
+                                                </ol>
+                                            ) : (
+                                                <p>No pipeline blocks available.</p>
+                                            )}
+                                        </div>
+                                    )}
+                                </li>
+                            );
+                        })}
                     </ul>
                 )}
             </div>
-            {selectedPipelineUuid && (
-                <div className={styles.pipelinePreview}>
-                    <h2>Pipeline Details</h2>
-                    {pipelineDetailsLoading ? (
-                        <p>Loading pipeline details...</p>
-                    ) : pipelineDetailsError ? (
-                    <p>Error loading pipeline details</p>
-                ) : (
-                <>
-                    <p><span>Pipeline Id:</span> {pipelineDetails?.uuid}</p>
-                    <p><span>Created:</span> {formatDate(pipelineDetails?.created_at)}</p>
-                    <p><span>Status:</span> {pipelineDetails.status}</p>
-                       {pipelineDetails?.blocks?.length > 0 ? (
-                            <ol>
-                                {pipelineDetails.blocks.map((block, index) => (
-                                    <li key={index}>
-                                        <p><span>Step {index + 1}:</span> {block.name} ({block.operation})</p>
-                                        <p><span>Hyperparameters:</span> {JSON.stringify(block.params)}</p>
-                                    </li>
-                                ))}
-                            </ol>
-                        ) : (
-                            <p>No pipeline blocks available.</p>
-                        )}
-                        <button type="button" onClick={() => setSelectedPipelineUuid(null)}>Close Preview</button>
-                </>
-            )}
-            </div>
-        )}
+            
 
 {/*Experiment list related to this version*/}
         <div className={styles.experimentList}>
@@ -125,79 +136,73 @@ function VersionDetailPage() {
                 />
             ) : (
                 <ul>
-                    {experimentList.map(experiment => (
-                        <li key={experiment.uuid}>
-                            <p><span>Experiment Id:</span> {formatUuid(experiment?.uuid)}</p>
-                            {experiment.run_name && <p><span>Run name:</span> {experiment.run_name}</p>}
-                            <p><span>Model:</span> {experiment.model_name ?? '—'}</p>
-                            <p><span>Created:</span> {formatDate(experiment?.created_at)}</p>
-                            <p><span>Status:</span> {experiment.status}</p>
-                            <button className={styles.experimentDetails} type="button" onClick={() => setSelectedExperimentUuid(experiment.uuid)}>
-                                View Experiment Details
-                            </button>
-                        </li>
-                    ))}
+                    {experimentList.map((experiment) => {
+                        const isSelected = experiment.uuid === selectedExperimentUuid;
+                        return (
+                            <li key={experiment.uuid}>
+                                <p><span>Experiment Id:</span> {formatUuid(experiment?.uuid)}</p>
+                                {experiment.run_name && <p><span>Run name:</span> {experiment.run_name}</p>}
+                                <p><span>Model:</span> {experiment.model_name ?? '—'}</p>
+                                <p><span>Created:</span> {formatDate(experiment?.created_at)}</p>
+                                <p><span>Status:</span> {experiment.status}</p>
+                                <button
+                                    className={styles.experimentDetails}
+                                    type="button"
+                                    onClick={() => setSelectedExperimentUuid(isSelected ? null : experiment.uuid)}
+                                >
+                                    {isSelected ? 'Hide Experiment Details' : 'View Experiment Details'}
+                                </button>
+
+                                {isSelected && (
+                                    <div className={styles.experimentPreview}>
+                                        {(experimentDetailsLoading || metricsLoading) ? (
+                                            <p>Loading experiment details...</p>
+                                        ) : (experimentDetailsError || metricsError) ? (
+                                            <p>Error loading experiment details</p>
+                                        ) : (
+                                            <>
+                                                <p><span>Dataset Id:</span> {experimentDetails?.dataset_uuid}</p>
+                                                <p><span>Pipeline Id:</span> {experimentDetails?.pipeline_uuid}</p>
+                                                <h4>Metrics</h4>
+                                                {metricsList.length > 0 ? (
+                                                    <div className={styles.tableWrapper}>
+                                                        <table className={styles.table}>
+                                                            <thead>
+                                                                <tr>
+                                                                    <th>Metric Name</th>
+                                                                    <th>Value</th>
+                                                                    <th>Split</th>
+                                                                    <th>Direction</th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                                {metricsList.map((metric) => (
+                                                                    <tr key={metric.uuid}>
+                                                                        <td>{metric.metric}</td>
+                                                                        <td>{metric.value != null ? Number(metric.value).toFixed(4) : '—'}</td>
+                                                                        <td>{metric.split}</td>
+                                                                        <td>{metric.direction}</td>
+                                                                    </tr>
+                                                                ))}
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                ) : (
+                                                    <p>No metric available</p>
+                                                )}
+                                            </>
+                                        )}
+                                    </div>
+                                )}
+                            </li>
+                        );
+                    })}
                 </ul>
             )}
         </div>
-        {selectedExperimentUuid && (
-            <div className={styles.experimentPreview}>
-                <h2>Experiment Details</h2>
-                {(experimentDetailsLoading || metricsLoading) ? (
-                    <p>Loading experiment details...</p>
-                ) : (experimentDetailsError || metricsError) ? (
-                    <p>Error loading experiment details</p>
-                ) : (
-                    <>
-                        <p><span>Experiment Id:</span> {experimentDetails?.uuid}</p>
-                        <p><span>Dataset Id:</span> {experimentDetails?.dataset_uuid}</p>
-                        <p><span>Pipeline Id:</span> {experimentDetails?.pipeline_uuid}</p>
-                        <p><span>Model name:</span> {selectedExperiment?.model_name ?? '—'}</p>
-                        {selectedExperiment?.run_name && <p><span>Run name:</span> {selectedExperiment.run_name}</p>}
-                        <p><span>Created:</span> {formatDate(experimentDetails?.created_at)}</p>
-                        <p><span>Status:</span> {experimentDetails?.status}</p>
-                        <h2>Metrics</h2>
-                        {metricsList.length > 0 ? (
-                            <>
-                            <table>
-                                <thead>
-                                    <tr>
-                                        <th>Metric Name</th>
-                                        <th>Value</th>
-                                        <th>Split</th>
-                                        <th>Direction</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    {metricsList.map((metric) => (
-                                        <tr key={metric.uuid}>
-                                            <td>
-                                                {metric.metric}
-                                            </td>
-                                            <td>
-                                                {metric.value}
-                                            </td>
-                                            <td>
-                                                {metric.split}
-                                            </td>
-                                            <td>
-                                                {metric.direction}
-                                            </td>
-                                        </tr>
-                                    ))}
-                                </tbody>
-                            </table>
-                        </>
-                        ) : (                           
-                            <p>No metric available</p>
-                        )}
-                        <button type="button" onClick={() => setSelectedExperimentUuid(null)}>Close Preview</button>
-                    </>
-                )}
-            </div>
-        )}
+        
         <div className={styles.versionButton}>
-            <button type="button" onClick={() => navigate(`/datasets`)}>Go Back to Dataset</button>
+            <button type="button" onClick={() => navigate(`/datasets`)}>Back to Datasets</button>
         </div>
     </>
     );

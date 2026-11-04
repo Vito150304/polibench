@@ -1,69 +1,117 @@
-/*DARE LO STILE ALLA TABELLA CHE CONTIENE LE METRICHE*/
-
-
-
-
-.detailsContainer span, .pipelineRegistry span, .experimentList span, 
-.pipelinePreview span, .experimentPreview span {
+.detailsContainer span,
+.pipelineRegistry span,
+.experimentList span,
+.pipelinePreview span,
+.experimentPreview span {
     font-weight: bold;
     font-style: italic;
 }
 
+/* titolo della sezione e pulsante sulla stessa riga */
+.sectionHeader {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1.6rem;
+    margin-bottom: 1.6rem;
+}
+
+.sectionHeader h3 {
+    width: auto;
+    margin: 0;
+    padding: 0;
+    border: none;
+    text-align: left;
+}
+
 .pipelineButton {
-    right: 0;
-    position: absolute;
-    margin-right: 2rem;
-    cursor: pointer;
-    z-index: 2;
-    padding: 0 1rem;
+    padding: 0.8rem 1.6rem;
+    border-radius: 8px;
     box-shadow: var(--shadow-elevation-low);
 }
 
-.pipelineRegistry ul {
-    position: relative;
+.pipelineRegistry > ul,
+.experimentList > ul {
+    display: flex;
+    flex-direction: column;
+    gap: 1.6rem;
 }
 
-.pipelineDetails, .experimentDetails {
-    color: var(--color-info);
+.pipelineRegistry > ul > li,
+.experimentList > ul > li {
+    padding: 1.6rem 2rem;
+    background-color: var(--bg-card);
+    border: 1px solid var(--color-border);
+    border-radius: 14px;
+}
+
+.pipelineDetails,
+.experimentDetails {
     width: 100%;
     text-align: center;
+    color: var(--color-info);
     background-color: var(--bg-sfondo);
 }
 
-.pipelineDetails:hover, .experimentDetails:hover {
+.pipelineDetails:hover,
+.experimentDetails:hover {
     background-color: var(--bg-sfondo);
 }
 
+/* anteprima dentro la card */
+.pipelinePreview,
+.experimentPreview {
+    margin-top: 1.2rem;
+    padding: 1.2rem 1.6rem;
+    background-color: var(--bg-sfondo);
+    border: 1px solid var(--color-border);
+    border-radius: 14px;
+}
+
+/* tabella delle metriche */
+.tableWrapper {
+    overflow-x: auto;
+    border: 1px solid var(--color-border);
+    border-radius: 12px;
+}
+
+.table {
+    width: 100%;
+    min-width: 40rem;
+    border-collapse: collapse;
+}
+
+.table th,
+.table td {
+    padding: 0.8rem 1.4rem;
+    text-align: left;
+    border-bottom: 1px solid var(--color-border);
+}
+
+.table tr:last-child td {
+    border-bottom: none;
+}
 
 .versionButton {
     display: flex;
-    cursor: pointer;
     align-items: center;
     justify-content: center;
     padding-top: 4rem;
-    font-weight: bold;
 }
 
 .versionButton button {
-    padding: 1rem;
-}
-
-.pipelinePreview, .experimentPreview {
-    background-color: var(--bg-card);
-    border-radius: 14px;
-    border: 1px solid var(--color-border);
-
-}
-
-.pipelinePreview button, .experimentPreview button {
-    font-weight: bold;
-    width: 100%;
-    text-align: center;
-    border-radius: 14px;
-    border-top: 1px solid var(--border-color);
+    padding: 1rem 2rem;
 }
 
 
+.pipelinePreview ol li {
+    border-bottom: 3.2px solid var(--color-border);
+}
+
+.pipelinePreview ol li:last-child {
+    border-bottom: none;
+}
 
 
  
