@@ -6,7 +6,6 @@ import { toast } from 'react-toastify';
 import styles from '../styles/CreatePipelinePage.module.css';
 
 function CreatePipelinePage() {
-
     const {version_uuid} = useParams();
     const navigate = useNavigate();
 
@@ -17,36 +16,26 @@ function CreatePipelinePage() {
 
     const [isOpenPreview, setIsOpenPreview] = useState(false);
     const [parseInfo, setParseInfo] = useState(null);
-    const {previewPipeline, isPending: isPreviewing, error: previewError} = usePipelinePreview(version_uuid);
+    const {previewPipeline, isPending: isPreviewing} = usePipelinePreview(version_uuid);
 
-
-    const [choice, setChoice] = useState('Modalità Upload'); 
-
-    //stato per il file upload
-
+    const [choice, setChoice] = useState('Modalità Upload');
     const [pipelineFile, setPipelineFile] = useState(null);
-    
-
-    //stato per il file testuale
-
-
     const [pipelineText, setPipelineText] = useState('');
-    
 
-
+    const buildPayload = async () => {
+        const payload = { status };
+        if (code.trim()) payload.code = code.trim();
+        if (choice === 'Modalità Upload') {
+            if (pipelineFile) payload.yaml_raw = await pipelineFile.text();
+        } else if (pipelineText.trim()) {
+            payload.yaml_raw = pipelineText;
+        }
+        return payload;
+    };
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-
-        const payload = {
-            status: status
-        };
-        if (code) payload.code = code;
-        if (choice === 'Modalità Upload') {
-            if (pipelineFile) payload.yaml_raw = await pipelineFile.text();
-        } else {
-            if (pipelineText) payload.yaml_raw = pipelineText;
-        }
+        const payload = await buildPayload();
 
         createPipeline(payload, {
             onSuccess: () => {
@@ -54,22 +43,11 @@ function CreatePipelinePage() {
                 navigate(`/dataset-versions/${version_uuid}`);
             }
         });
-        
     };
 
     const handleParse = async (e) => {
         e.preventDefault();
-        const payload = {
-            status: status
-        };
-        if (code) payload.code = code;
-        if (choice === 'Modalità Upload') {
-
-            if (pipelineFile) payload.yaml_raw = await pipelineFile.text();
-        } else {
-
-            if (pipelineText) payload.yaml_raw = pipelineText;
-        }
+        const payload = await buildPayload();
 
         previewPipeline(payload, {
             onSuccess: (data) => {
@@ -83,21 +61,20 @@ function CreatePipelinePage() {
         });
     };
 
-
-
     return (
-        <>
-            <h1>Create a new Pipeline</h1>
-            <p className={styles.description}>Enter the details for the new pipeline:</p>
+        <div className={styles.page}>
+            <h1 className={styles.title}>Create a new Pipeline</h1>
+            <p className={styles.note}>Enter the details for the new pipeline.</p>
+
             <form onSubmit={handleSubmit} className={styles.form} onChange={() => setIsOpenPreview(false)}>
-                <div className={styles.inputContainer}>
-                    <label>
-                        Code:
-                        <input className={styles.input} type="text" value={code} onChange={(e) => setCode(e.target.value)} />
+                <div className={styles.row}>
+                    <label className={styles.field}>
+                        <span className={styles.label}>Code <span className={styles.optional}>(optional)</span></span>
+                        <input type="text" value={code} onChange={(e) => setCode(e.target.value)} />
                     </label>
-                    <label>
-                        Status:
-                        <select className={styles.selection} value={status} onChange={(e) => setStatus(e.target.value)} required>
+                    <label className={styles.field}>
+                        <span className={styles.label}>Status</span>
+                        <select value={status} onChange={(e) => setStatus(e.target.value)} required>
                             <option value="draft">Draft</option>
                             <option value="ready">Ready</option>
                             <option value="processing">Processing</option>
@@ -106,48 +83,67 @@ function CreatePipelinePage() {
                     </label>
                 </div>
 
-            <p className={styles.description}>Choose configuration mode:</p>
-            <select className={styles.select} value={choice} onChange={(e) => setChoice(e.target.value)}>
-                <option value="Modalità Upload">Upload Mode</option>
-                <option value="Modalità Testuale">Text Mode</option>
-            </select>
-            {choice === 'Modalità Upload' ? (
-                <div className={styles.uploadMode}>
-                    <label>
-                        Pipeline YAML File: 
-                        <input className={styles.input} type="file" accept=".yaml,.yml" onChange={(e) => setPipelineFile(e.target.files[0])} />
+                <label className={styles.field}>
+                    <span className={styles.label}>Configuration Mode</span>
+                    <select value={choice} onChange={(e) => setChoice(e.target.value)}>
+                        <option value="Modalità Upload">Upload YAML file</option>
+                        <option value="Modalità Testuale">Enter YAML text</option>
+                    </select>
+                </label>
+
+                {choice === 'Modalità Upload' ? (
+                    <label className={styles.field}>
+                        <span className={styles.label}>Pipeline YAML File</span>
+                        <input type="file" accept=".yaml,.yml" onChange={(e) => setPipelineFile(e.target.files[0])} />
                     </label>
-                </div>
-            ) : (
-                <div className={styles.textMode}>
-    
-                    <label>
-                        Pipeline YAML:
-                        <textarea className={styles.textarea} value={pipelineText} onChange={(e) => setPipelineText(e.target.value)} />
+                ) : (
+                    <label className={styles.field}>
+                        <span className={styles.label}>Pipeline YAML</span>
+                        <textarea
+                            rows={8}
+                            value={pipelineText}
+                            onChange={(e) => setPipelineText(e.target.value)}
+                            placeholder="Paste pipeline YAML content..."
+                        />
                     </label>
+                )}
+
+                {error && <p className={styles.errorMessage}>Error creating pipeline: {error.message}</p>}
+
+                <div className={styles.actions}>
+                    <button type="button" className={styles.secondary} onClick={() => navigate(`/dataset-versions/${version_uuid}`)}>
+                        Back to Version
+                    </button>
+                    <button type="button" className={styles.secondary} onClick={handleParse} disabled={isPreviewing}>
+                        {isPreviewing ? 'Previewing...' : 'Preview Pipeline'}
+                    </button>
+                    <button type="submit" className={styles.primary} disabled={isPending}>
+                        {isPending ? 'Creating...' : 'Create Pipeline'}
+                    </button>
                 </div>
-            )}
-            <div className={styles.buttons}>
-                    <button type = "button" onClick={() => navigate(`/dataset-versions/${version_uuid}`)}>View Version Details</button>
-                    <button type = "button" onClick={handleParse} disabled={isPreviewing}>Preview Pipeline</button>
-                    <button type="submit" disabled={isPending}>Create Pipeline</button>
-                    {previewError && <p>Error previewing pipeline: {previewError.message}</p>}
-                    {error && <p>Error creating pipeline: {error.message}</p>}
-            </div>
             </form>
-            
+
             {isOpenPreview && parseInfo && (
-                <div className={styles.preview}>
-                    <h2>Preview of the new pipeline</h2>
-                    <p><span>Version:</span> {parseInfo.recognized_version ?? '—'}</p>
-                    <p><span>Requested code:</span> {parseInfo.requested_code ?? '—'}</p>
-                    <p><span>Pipeline steps:</span> {parseInfo.pipeline_steps_count ?? '—'}</p>
-                    <div className={styles.previewButton}>
-                        <button type="button" onClick={() => setIsOpenPreview(false)}>Close Preview</button>
+                <div className={styles.previewCard}>
+                    <div className={styles.previewHeader}>
+                        <h2 className={styles.previewTitle}>Pipeline Preview</h2>
+                        <button
+                            type="button"
+                            className={styles.closePreview}
+                            aria-label="Close preview"
+                            onClick={() => setIsOpenPreview(false)}
+                        >
+                            ✕
+                        </button>
+                    </div>
+                    <div className={styles.previewContent}>
+                        <p><strong>Version:</strong> {parseInfo.recognized_version ?? '—'}</p>
+                        <p><strong>Requested code:</strong> {parseInfo.requested_code ?? '—'}</p>
+                        <p><strong>Pipeline steps:</strong> {parseInfo.pipeline_steps_count ?? '—'}</p>
                     </div>
                 </div>
             )}
-        </>
+        </div>
     )
 }
 export default CreatePipelinePage;

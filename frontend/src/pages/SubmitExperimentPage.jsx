@@ -138,10 +138,11 @@ const handleSubmit = async (e) => {
 
     return (
         <>
-        <h1>Submit Experiment</h1>
-        <div className={styles.page}>
-        <form onSubmit={handleSubmit} className={styles.form} key={formKey}>
-            <div className={styles.inputContainer}>
+       <div className={styles.page}>
+            <h1 className={styles.title}>Submit Experiment</h1>
+            <p className={styles.note}>Fields marked with <span className={styles.required}>*</span> are required.</p>
+            <form onSubmit={handleSubmit} className={styles.form} key={formKey}>
+                    <div className={styles.inputContainer}>
                 <label>
                     Dataset:
                     <select value={datasetUuid} onChange={(e) => {
@@ -224,7 +225,7 @@ const handleSubmit = async (e) => {
                     </select>
                 </label>
                 <label>
-                    Model:* <span className={styles.required}>(required)</span>
+                    <span className={styles.labelText}>Model: <span className={styles.required}>*</span></span>
                     <select value={modelUuid} onChange={(e) => setModelUuid(e.target.value)} disabled={modelsLoading || modelsError || models?.length === 0} required>
                         {modelsLoading ? (
                             <option value="" disabled>Loading models...</option>
@@ -257,7 +258,7 @@ const handleSubmit = async (e) => {
                     <textarea value={notes} onChange={(e) => setNotes(e.target.value)} />
                 </label>
                    <label>
-                        Results (CSV): <span className={styles.optional}>(optional)</span>
+                        <span className={styles.labelText}>Results (CSV): <span className={styles.optional}>(optional)</span></span>
                         <input type="file" accept=".csv,text/csv" onChange={handleCsvChange} />
                     </label>
                     <p className={styles.hint}>
