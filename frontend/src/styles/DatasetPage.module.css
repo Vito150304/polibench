@@ -125,7 +125,6 @@
     text-align: right;
 }
 
-/* styling visibilità*/
 .description p:first-child {
     font-weight: 600;
     font-size: 1.2rem;
@@ -145,5 +144,5 @@
 }
 
 .container {
-    padding-inline: 0; /* Rimossa l'inutile rientranza per sfruttare tutto lo spazio */
+    padding-inline: 0; 
 }

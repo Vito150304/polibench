@@ -90,7 +90,7 @@ function CreateDatasetVersionPage() {
 
             <form className={styles.form} onSubmit={handleSubmit} onChange={() => setIsOpenPreview(false)}>
                 
-                {/* 1. Meta Informazioni principali (Version & Status affiancati) */}
+
                 <div className={styles.row}>
                     <label className={styles.field}>
                         <span className={styles.label}>
@@ -185,10 +185,10 @@ function CreateDatasetVersionPage() {
                     </div>
                 )}
 
-                {/* Error Banner se presente */}
+
                 {error && <p className={styles.errorMessage}>Error creating version: {error.message}</p>}
 
-                {/* 4. Azioni Form */}
+                
                 <div className={styles.actions}>
                     <button type="button" className={styles.secondary} onClick={() => navigate(`/datasets/${dataset_uuid}`)}>
                         Back to Dataset
@@ -202,7 +202,7 @@ function CreateDatasetVersionPage() {
                 </div>
             </form>
 
-            {/* 5. Box di Preview (Card condizionale sottostante) */}
+            {/* box di Preview (Card condizionale sottostante) */}
             {isOpenPreview && parseInfo && (
                 <div className={styles.previewCard}>
                     <div className={styles.previewHeader}>

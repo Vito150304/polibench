@@ -5,7 +5,7 @@ function ProtectedRoute({ children, requireSuperuser = false }) {
     const {isLoggedIn, isCheckingSession, utente, isLoading, isError} = useAuth();
 
     if (isCheckingSession) {
-        return <div>Loading...</div>; //volendo ci posso mettere un'icona o componente di caricamento diverso
+        return <div>Loading...</div>; 
     }
 
     if (!isLoggedIn) {

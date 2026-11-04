@@ -7,7 +7,6 @@
     font-style: italic;
 }
 
-/* titolo della sezione e pulsante sulla stessa riga */
 .sectionHeader {
     display: flex;
     flex-wrap: wrap;

@@ -14,9 +14,7 @@ function Layout() {
                 <header className={styles.header}>
                     <Link to="/" className={styles.brand}>PoliBench</Link>
                 </header>
-                <p>Loading...</p> {/*volendo ci posso mettere un'icona o 
-                componente di caricamento diverso. 
-                Forse non serve perché è gestito da ProtectedRoute*/}
+                <p>Loading...</p> 
             </>
         )
     }

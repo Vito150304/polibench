@@ -56,7 +56,8 @@ function AuthProvider({children}) {
     toast.info('Your session has expired. Please log in again.');
     };
 
-    const {data: utente, isLoading, isError, error} = useQuery({ //principalmente questa chiamata mi serve per prendere le info sugli utenti che mi serviranno per essere stampate nei componenti, ma non è strettamente legata al login
+    const {data: utente, isLoading, isError, error} = useQuery({ //principalmente questa chiamata mi serve per prendere le info sugli utenti 
+    // che mi serviranno per essere stampate nei componenti, ma non è strettamente legata al login
                 queryKey: ['user'],
                 queryFn: async ({signal}) => {
                     const response = await fetch('/api/v1/users/me', {
@@ -70,14 +71,15 @@ function AuthProvider({children}) {
                         const err = new Error(errorData.detail || 'Failed to fetch user data');
                         err.status = response.status;
                         if (response.status === 401) {
-                            expireSession();          // token scaduto o non valido
+                            expireSession();  // token scaduto o non valido
                         }
                         throw err;
                     }
                     return await response.json();
                 },
                 enabled: isLoggedIn, 
-                staleTime: 1000 * 60 * 10, //di default vale zero ms, ma impostato a 10 min, implica che se cambio pagina non richiedo dati al backend per questo intervallo di tempo
+                staleTime: 1000 * 60 * 10, //di default vale zero ms, ma impostato a 10 min, 
+                // implica che se cambio pagina non richiedo dati al backend per questo intervallo di tempo
                 retry: (failureCount, err) => err.status !== 401 && failureCount < 3,
             })
    

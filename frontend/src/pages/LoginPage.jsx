@@ -65,7 +65,7 @@ function LoginPage() {
         NewVerificationEmailMutation.mutate({ email: currentEmail });
     }
 
-        return( //Ci devo mettere l'interfaccia per login con Google
+        return( 
         <div className={styles.page}>
             <h1 className={styles.title}>Login</h1>
             <form onSubmit={handleSubmit} className={styles.form}>

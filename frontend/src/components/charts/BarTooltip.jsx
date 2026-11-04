@@ -8,7 +8,7 @@ function BarTooltip({ active, payload }) {
     if (active && payload && payload.length) {
         const data = payload[0].payload;
 
-        //logica per trovare i primi 3 valori massimi. Lo scopo è puramente grafico
+        //trovo i primi 3 valori massimi. Lo scopo è puramente grafico
         let icon = null;
         if (data.rank === 1) icon = <Trophy className="trophy-icon" />;
         else if (data.rank === 2) icon = <LiaMedalSolid className="medal-icon" />;
