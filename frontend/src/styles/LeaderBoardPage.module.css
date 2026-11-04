@@ -1,0 +1,88 @@
+.title {
+    margin: 0 0 2.4rem;
+    font-size: 2.8rem;
+    text-align: left;
+}
+
+
+.chartSwitch {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.8rem;
+    margin-bottom: 2rem;
+}
+
+.tab {
+    padding: 0.8rem 1.6rem;
+    font-weight: 600;
+    color: var(--text-secondary);
+    background-color: transparent;
+    border: 1px solid var(--color-border);
+    border-radius: 999px;
+}
+
+.tab:hover {
+    color: var(--text-primary);
+    background-color: var(--bg-card);
+}
+
+.activeTab {
+    color: var(--btn-primary-text);
+    background-color: var(--btn-primary-bg);
+    border-color: var(--btn-primary-bg);
+}
+
+.activeTab:hover {
+    color: var(--btn-primary-text);
+    background-color: var(--btn-primary-hover);
+}
+
+/* riquadri: selettori, filtri, grafici */
+.selectors,
+.filters,
+.charts {
+    margin-bottom: 1.6rem;
+    padding: 2rem;
+    background-color: var(--bg-card);
+    border: 1px solid var(--color-border);
+    border-radius: 14px;
+    box-shadow: var(--shadow-elevation-low);
+}
+
+.selectors {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(20rem, 1fr));
+    gap: 1.6rem;
+}
+
+.field {
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+}
+
+.label {
+    font-size: 1.4rem;
+    font-weight: 600;
+    color: var(--text-primary);
+}
+
+.field select {
+    width: 100%;
+    padding: 0.8rem 1.2rem;
+    font: inherit;
+    border-radius: 8px;
+}
+
+.status {
+    margin: 0 0 1.6rem;
+    padding: 1rem 1.4rem;
+    font-size: 1.4rem;
+    background-color: var(--bg-card);
+    border: 1px solid var(--color-border);
+    border-radius: 8px;
+}
+
+.filters {
+    padding-bottom: 0;
+}

@@ -4,11 +4,18 @@ import RadarChartComponent from '../components/charts/RadarChart';
 import { useState, useMemo } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import FilterMenu from '../components/FilterMenu';
+import EmptyState from '../components/EmptyState';
 import {useDatasets} from '../hooks/useDatasets';
 import {useVersions} from '../hooks/useVersions';
 import {usePipelines} from '../hooks/usePipelines';
 import { metrics_by_task } from '../utils/metrics';
+import styles from '../styles/LeaderBoardPage.module.css';
 
+const CHARTS = [
+    { value: 'barChart', label: 'Bar Chart' },
+    { value: 'radarChart', label: 'Radar Chart' },
+    { value: 'lineChart', label: 'Best Per Model Chart' },
+];
 
 function LeaderBoardPage() {
 
@@ -60,58 +67,73 @@ function LeaderBoardPage() {
 
     return (
         <>
-        <h1>Leader Board </h1>
+        <h1 className={styles.title}>Leaderboard</h1>
 
-        <div className = "change-chart">
-            <button onClick={() => setChart('barChart')}>Bar Chart</button>
-            <button onClick={() => setChart('radarChart')}>Radar Chart</button>
-            <button onClick={() => setChart('lineChart')}>Best Per Model Chart</button>
+        <div className={styles.chartSwitch} role="group" aria-label="Chart type">
+            {CHARTS.map((item) => (
+                <button
+                    key={item.value}
+                    type="button"
+                    aria-pressed={chart === item.value}
+                    className={chart === item.value ? `${styles.tab} ${styles.activeTab}` : styles.tab}
+                    onClick={() => setChart(item.value)}
+                >
+                    {item.label}
+                </button>
+            ))}
         </div>
 
-        <div className="navigation">
-            <label htmlFor="ds">Dataset: </label>
-            <select id="ds" value={datasetId ?? ''} onChange={(e) => go(e.target.value)}>
-                <option value="">Select a dataset</option>
-                {datasets?.map((dataset) => (
-                    <option key={dataset.uuid} value={dataset.uuid}>{dataset.name}</option>
-                ))}
-            </select>
+        <div className={styles.selectors}>
+            <div className={styles.field}>
+                <label htmlFor="ds" className={styles.label}>Dataset</label>
+                <select id="ds" value={datasetId ?? ''} onChange={(e) => go(e.target.value)}>
+                    <option value="">Select a dataset</option>
+                    {datasets?.map((dataset) => (
+                        <option key={dataset.uuid} value={dataset.uuid}>{dataset.name}</option>
+                    ))}
+                </select>
+            </div>
 
-            <label htmlFor="ver">Version: </label>
-            <select id="ver" value={versionId ?? ''} disabled={!datasetId}
-                    onChange={(e) => go(datasetId, e.target.value)}>
-                <option value="">All versions</option>
-                {versions?.map((version) => (
-                    <option key={version.uuid} value={version.uuid}>{version.version}</option>
-                ))}
-            </select>
+            <div className={styles.field}>
+                <label htmlFor="ver" className={styles.label}>Version</label>
+                <select id="ver" value={versionId ?? ''} disabled={!datasetId}
+                        onChange={(e) => go(datasetId, e.target.value)}>
+                    <option value="">All versions</option>
+                    {versions?.map((version) => (
+                        <option key={version.uuid} value={version.uuid}>{version.version}</option>
+                    ))}
+                </select>
+            </div>
 
-            <label htmlFor="pipe">Pipeline: </label>
-            <select id="pipe" value={pipelineId ?? ''} disabled={!versionId}
-                    onChange={(e) => go(datasetId, versionId, e.target.value)}>
-                <option value="">All pipelines</option>
-                {pipelines?.map((pipeline) => (
-                    <option key={pipeline.uuid} value={pipeline.uuid}>{pipeline.code}</option>
-                ))}
-            </select>
+            <div className={styles.field}>
+                <label htmlFor="pipe" className={styles.label}>Pipeline</label>
+                <select id="pipe" value={pipelineId ?? ''} disabled={!versionId}
+                        onChange={(e) => go(datasetId, versionId, e.target.value)}>
+                    <option value="">All pipelines</option>
+                    {pipelines?.map((pipeline) => (
+                        <option key={pipeline.uuid} value={pipeline.uuid}>{pipeline.code}</option>
+                    ))}
+                </select>
+            </div>
         </div>
-        {status && <p role="status">{status}</p>}
+        {status && <p className={styles.status} role="status">{status}</p>}
 
-        <section className="filters">
+        <section className={styles.filters}>
             <FilterMenu filters={effectiveFilters} setFilters={setFilters} metricOptions={metricOptions} />
         </section>
 
-        <section className="charts-container">
-            {!datasetId ? (
-                <p>Select a dataset to see the leaderboard.</p>
-            ) : hasNoVersions ? null : (
-            <>
+        {!datasetId ? (
+            <EmptyState
+                title="Select a dataset"
+                description="Choose a dataset above to see the leaderboard."
+            />
+        ) : hasNoVersions ? null : (
+            <section className={styles.charts}>
                 {chart === 'barChart' && <BarChartComponent filters={effectiveFilters} datasetId={datasetId} versionId={chartVersionId} pipelineId={pipelineId} />}
                 {chart === 'radarChart' && <RadarChartComponent filters={effectiveFilters} datasetId={datasetId} versionId={chartVersionId} pipelineId={pipelineId} />}
                 {chart === 'lineChart' && <BestPerModelChart filters={effectiveFilters} datasetId={datasetId} versionId={versionId} pipelineId={pipelineId} />}
-            </>
-    )}
-</section>
+            </section>
+        )}
         </>
     );
 }
