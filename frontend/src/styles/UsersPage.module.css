@@ -1,0 +1,80 @@
+.page {
+    max-width: 96rem;
+    margin: 0 auto;
+    padding-bottom: 4rem;
+}
+
+.title {
+    margin: 0 0 0.8rem;
+    font-size: 2.8rem;
+    text-align: left;
+}
+
+.note {
+    margin: 0 0 2.4rem;
+    font-size: 1.4rem;
+}
+
+.layout {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-start;
+    gap: 2.4rem;
+}
+
+.list {
+    display: flex;
+    flex: 1 1 32rem;
+    flex-direction: column;
+    gap: 0.8rem;
+    min-width: 0;
+}
+
+.userButton {
+    width: 100%;
+    padding: 1.2rem 1.6rem;
+    text-align: left;
+    font-weight: 500;
+    color: var(--text-primary);
+    background-color: var(--bg-card);
+    border: 1px solid var(--color-border);
+    border-radius: 10px;
+    overflow-wrap: anywhere;
+}
+
+.userButton:hover {
+    background-color: var(--bg-nav);
+}
+
+.selected {
+    border-color: var(--brand-primary);
+}
+
+.details {
+    display: flex;
+    flex: 1 1 28rem;
+    flex-direction: column;
+    gap: 1.2rem;
+    min-width: 0;
+    padding: 2.4rem;
+    background-color: var(--bg-card);
+    border: 1px solid var(--color-border);
+    border-radius: 14px;
+    box-shadow: var(--shadow-elevation-low);
+}
+
+.details p {
+    margin: 0;
+    overflow-wrap: anywhere;
+}
+
+.detailsTitle {
+    margin: 0;
+    font-size: 1.8rem;
+}
+
+.label {
+    font-size: 1.4rem;
+    font-weight: 600;
+    color: var(--text-primary);
+}

@@ -14,10 +14,10 @@ function ProfilePage() {
     const [lastName, setLastName] = useState('');
     const [email, setEmail] = useState('');
 
-    if (isLoading || isPending) {
+    if (isLoading) {
         return <div>Loading...</div>;
     }
-    
+
     if (error) {
         return <div>Error fetching user: {error.message}</div>;
     }
@@ -29,9 +29,9 @@ function ProfilePage() {
     const handleUpdateUser = (e) => {
         e.preventDefault();
         const payload = {};
-        if (name) payload.first_name = name;
-        if (lastName) payload.last_name = lastName;
-        if (email) payload.email = email;
+        if (name.trim()) payload.first_name = name.trim();
+        if (lastName.trim()) payload.last_name = lastName.trim();
+        if (email.trim()) payload.email = email.trim();
         updateUserDetails(payload);
     };
 
@@ -42,50 +42,57 @@ function ProfilePage() {
     };
 
     return (
-        <>  
-            <h3>User Details</h3>
-            <p className={styles.userName}>{utente.first_name} {utente.last_name}</p>
-            <p className={styles.userEmail}>Email: {utente.email}</p>
-            <p>Account status: {utente.is_active ? 'Active' : 'Inactive'}</p>
-            <p>Email verification: {utente.is_verified ? 'Verified' : 'Not verified'}</p>
-            {!utente.is_verified && (
-                <p>
-                    Your email is not verified yet, so you cannot create datasets, models or experiments.
-                    Open the verification link you received, or use "Resend email" on the login page.
-                </p>
-            )}
-            <form onSubmit={handleUpdateUser}>
-                <h3>Update Profile</h3>
-                <div className={styles.inputContainer}>
-                <label>
-                    First Name:
-                    <input type="text" value={name} onChange={(e) => setName(e.target.value)} />
+        <div className={styles.page}>
+            <h1 className={styles.title}>Profile</h1>
+
+            <section className={styles.card}>
+                <h2 className={styles.cardTitle}>User Details</h2>
+                {utente?.first_name && (
+                    <p><span className={styles.label}>Name:</span> {utente.first_name} {utente.last_name}</p>
+                )}
+                {utente?.email && (
+                    <p><span className={styles.label}>Email:</span> {utente.email}</p>
+                )}
+                <p><span className={styles.label}>Account status:</span> {utente.is_active ? 'Active' : 'Inactive'}</p>
+                <p><span className={styles.label}>Email verification:</span> {utente.is_verified ? 'Verified' : 'Not verified'}</p>
+                {!utente.is_verified && (
+                    <p className={styles.warning}>
+                        Your email is not verified yet, so you cannot create datasets, models or experiments.
+                        Open the verification link you received, or use "Resend verification email" on the login page.
+                    </p>
+                )}
+            </section>
+
+            <form onSubmit={handleUpdateUser} className={styles.card}>
+                <h2 className={styles.cardTitle}>Update Profile</h2>
+                <p className={styles.hint}>Fill in only the fields you want to change.</p>
+                <label className={styles.field}>
+                    <span className={styles.label}>First name</span>
+                    <input type="text" value={name} onChange={(e) => setName(e.target.value)} placeholder={utente.first_name} />
                 </label>
-                <label>
-                    Last Name:
-                    <input type="text" value={lastName} onChange={(e) => setLastName(e.target.value)} />
+                <label className={styles.field}>
+                    <span className={styles.label}>Last name</span>
+                    <input type="text" value={lastName} onChange={(e) => setLastName(e.target.value)} placeholder={utente.last_name} />
                 </label>
-                <label>
-                    Email:
-                    <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} />
+                <label className={styles.field}>
+                    <span className={styles.label}>Email</span>
+                    <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} placeholder={utente.email} />
                 </label>
-                <div className={styles.buttonUpdate}>
-                <button type="submit" disabled={isPending || (!name && !lastName && !email)}>Update Profile</button>
-                </div>
+                <div className={styles.actions}>
+                    <button type="submit" disabled={isPending || (!name.trim() && !lastName.trim() && !email.trim())}>
+                        {isPending ? 'Updating...' : 'Update Profile'}
+                    </button>
                 </div>
             </form>
 
-            {/*chiedere a raffaele se solo il superuser può cambiare la password perché altrimenti non troverei l'endpoint*/}
-            <div className={styles.button}>
-                <button onClick={handleDeleteUser} disabled={isDeleting}>Delete Account</button>
-            </div>
-        </>
-
+            <section className={styles.dangerCard}>
+                <h2 className={styles.cardTitle}>Delete Account</h2>
+                <p>Deleting your account is permanent and cannot be undone.</p>
+                <button type="button" className={styles.danger} onClick={handleDeleteUser} disabled={isDeleting}>
+                    Delete Account
+                </button>
+            </section>
+        </div>
     );
 }
 export default ProfilePage;
-
-
-
-
-

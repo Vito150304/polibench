@@ -1,55 +1,94 @@
-
-
-.userName {
-    text-align: center;
-    font-weight: bold;
+.page {
+    max-width: 56rem;
+    margin: 0 auto;
+    padding-bottom: 4rem;
 }
 
-.userEmail {
-    text-align: center;
-    font-style: italic;
+.title {
+    margin: 0 0 2.4rem;
+    font-size: 2.8rem;
+    text-align: left;
 }
 
-.inputContainer {
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: 2.5rem;
-    place-items: center;
-    margin-top: 4rem;
-    margin-bottom: 1.5rem;
-}
-
-
-
-/*dato che i label sono diventati elementi block, nonostante la lunghezza diversa dei label si va a capo,
- quindi i campi di input sono allineati*/
-.inputContainer label {
-    display: grid; 
-    gap: 0.6rem;
-}
-
-
-.inputContainer input {
+.card,
+.dangerCard {
+    display: flex;
+    flex-direction: column;
+    gap: 1.2rem;
+    margin-bottom: 2.4rem;
+    padding: 2.4rem;
+    background-color: var(--bg-card);
+    border: 1px solid var(--color-border);
     border-radius: 14px;
-    border: 0.5px solid;
-    margin-left: 1rem;
-    width: 30rem;
     box-shadow: var(--shadow-elevation-low);
 }
 
-.inputContainer button {
-    padding: 1rem;
+.dangerCard {
+    border-color: var(--color-danger);
 }
 
+.card p,
+.dangerCard p {
+    margin: 0;
+}
 
-.button {
+.cardTitle {
+    margin: 0;
+    font-size: 1.8rem;
+}
+
+.label {
+    font-size: 1.4rem;
+    font-weight: 600;
+    color: var(--text-primary);
+}
+
+.hint {
+    font-size: 1.3rem;
+}
+
+.warning {
+    padding: 1rem 1.4rem;
+    background-color: var(--bg-sfondo);
+    border: 1px solid var(--color-warning);
+    border-radius: 8px;
+}
+
+.field {
     display: flex;
-    align-items: center;
-    justify-content: center;
+    flex-direction: column;
+    gap: 0.6rem;
 }
 
-.button button {
+.field input {
+    width: 100%;
+    padding: 0.8rem 1.2rem;
+    font: inherit;
+    border-radius: 8px;
+}
+
+.actions {
+    display: flex;
+    justify-content: flex-end;
+}
+
+.actions button {
+    padding: 1rem 2rem;
+    font-weight: 600;
+    border-radius: 8px;
+}
+
+.danger {
+    align-self: flex-start;
+    padding: 1rem 2rem;
+    font-weight: 600;
     color: var(--color-danger);
-    font-weight: bold;
-    padding: 1rem;
+    background-color: transparent;
+    border: 1px solid var(--color-danger);
+    border-radius: 8px;
+}
+
+.danger:hover {
+    color: #fff;
+    background-color: var(--color-danger);
 }
