@@ -104,7 +104,7 @@ function VersionDetailPage() {
                                                    {pipelineDetails.blocks.map((block, index) => (
                                                         <li key={index}>
                                                             <p><span>Step {index + 1}:</span> {block.name}</p>
-                                                            <p><span>Operation:</span> {block.operation}</p>
+                                                            {block?.operation && <p><span>Operation:</span> {block.operation}</p>}
                                                             {Object.entries(block.params ?? {}).map(([key, value]) => (
                                                                 <p key={key}><span>{key}:</span> {Array.isArray(value) ? value.join(', ') : String(value)}</p>
                                                             ))}
