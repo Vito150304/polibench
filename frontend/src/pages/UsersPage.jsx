@@ -38,8 +38,8 @@ function UsersPage() {
                 {selectedUser && (
                     <section className={styles.details}>
                         <h2 className={styles.detailsTitle}>User Details</h2>
-                        {selectedUser?.name && (
-                            <p><span className={styles.label}>Name:</span> {selectedUser.name}</p>
+                        {selectedUser?.first_name && selectedUser?.last_name && (
+                            <p><span className={styles.label}>Name:</span> {selectedUser.first_name} {selectedUser.last_name}</p>
                         )}
                         <p><span className={styles.label}>Email:</span> {selectedUser.email}</p>
                         <p><span className={styles.label}>Account status:</span> {selectedUser.is_active ? 'Active' : 'Inactive'}</p>
