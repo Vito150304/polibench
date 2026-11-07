@@ -4,33 +4,26 @@
 ![Python](https://img.shields.io/badge/Python-%3E=3.12-3776AB?logo=python&logoColor=white)
 ![FastAPI](https://img.shields.io/badge/FastAPI-009688?logo=fastapi&logoColor=white)
 ![React](https://img.shields.io/badge/React-19-61DAFB?logo=react&logoColor=black)
+![JavaScript](https://img.shields.io/badge/JavaScript-F7DF1E?logo=javascript&logoColor=black)
 ![MongoDB](https://img.shields.io/badge/MongoDB-47A248?logo=mongodb&logoColor=white)
 ![Docker](https://img.shields.io/badge/Docker-2496ED?logo=docker&logoColor=white)
 
-**Polibench** è una piattaforma web per il **benchmarking comparativo di modelli di raccomandazione** (Recommender
-Systems). Consente a ricercatori e team di registrare dataset, algoritmi, esperimenti e metriche di valutazione in un
-unico ambiente strutturato, e di consultare leaderboard ordinate per performance.
+**Polibench** è una piattaforma web per il **benchmarking comparativo di modelli di raccomandazione** (Recommender Systems). Consente a ricercatori e team di registrare dataset, algoritmi, esperimenti e metriche di valutazione in un unico ambiente strutturato, e di consultare leaderboard ordinate per performance.
 
-Il progetto nasce in contesto accademico e si ispira a piattaforme come [BARS](https://openbenchmark.github.io/BARS/)
-e [OpenBenchmark](https://openbenchmark.github.io/), con l'obiettivo di centralizzare i risultati sperimentali e
-facilitare la riproducibilità.
+Il progetto nasce in contesto accademico e si ispira a piattaforme come [BARS](https://openbenchmark.github.io/BARS/) e [OpenBenchmark](https://openbenchmark.github.io/), con l'obiettivo di centralizzare i risultati sperimentali e facilitare la riproducibilità.
+
+> **Questa versione del repository.** Il backend è stato realizzato da Raffaele Grieco. Il frontend è stato riprogettato da zero da Vito Burdi come tesi di laurea triennale (Politecnico di Bari, corso di Ingegneria Informatica e dell'Automazione, relatore Prof. Antonio Ferrara). Il codice del frontend è in JavaScript e si trova nel branch `newFrontend`. Per far partire tutto in pochi passi segui la [guida di avvio](GUIDA-AVVIO.md).
 
 ---
 
 ## Funzionalità principali
 
-- **Gestione Dataset e Versioni** — dataset catalografico + dataset versioning con YAML (`dataset`, `version`,
-  `characteristics`) e tracciamento `sources/resources`.
-- **Pipeline Registry** — pipeline separate dalla versione (`P001`, `P002`, …), visualizzazione a blocchi/chain e YAML
-  dedicato per pipeline.
-- **Registrazione Modelli** — catalogo di algoritmi di raccomandazione (BPR, LightGCN, SGL, …) con iperparametri di
-  riferimento, paper e implementazione.
-- **Submission di Esperimenti** — associazione pipeline–modello con configurazione di training, seed, codice sorgente e
-  artefatti per la riproducibilità.
-- **Metriche di Valutazione** — registrazione batch di metriche (AUC, LogLoss, NDCG@k, Recall@k, …) per split (
-  test/validation) con direzione (max/min).
-- **Leaderboard** — classifica in tempo reale dei modelli per dataset, metrica e split, con grafici interattivi (
-  Recharts).
+- **Gestione Dataset e Versioni** — dataset catalografico + dataset versioning con YAML (`dataset`, `version`, `characteristics`) e tracciamento `sources/resources`.
+- **Pipeline Registry** — pipeline separate dalla versione (`P001`, `P002`, …), visualizzazione a blocchi/chain e YAML dedicato per pipeline.
+- **Registrazione Modelli** — catalogo di algoritmi di raccomandazione (BPR, LightGCN, SGL, …) con iperparametri di riferimento, paper e implementazione.
+- **Submission di Esperimenti** — associazione pipeline–modello con configurazione di training, seed, codice sorgente e artefatti per la riproducibilità.
+- **Metriche di Valutazione** — registrazione batch di metriche (AUC, LogLoss, NDCG@k, Recall@k, …) per split (test/validation) con direzione (max/min).
+- **Leaderboard** — classifica in tempo reale dei modelli per dataset, metrica e split, con grafici interattivi (Recharts).
 - **Autenticazione** — JWT con email/password, Google OAuth2 (SSO), verifica email via SMTP.
 - **Ruoli utente** — `admin`, `researcher`, `viewer` con controlli di accesso differenziati.
 - **API UUID-first** — tutti gli endpoint pubblici usano UUID; gli ObjectId MongoDB restano interni.
@@ -47,18 +40,18 @@ facilitare la riproducibilità.
 | **Validazione**        | [Pydantic v2](https://docs.pydantic.dev/)                                      | Schemi API e modelli dati                 |
 | **Database**           | [MongoDB](https://www.mongodb.com/)                                            | Database documentale NoSQL                |
 | **Driver DB**          | [Motor](https://motor.readthedocs.io/)                                         | Client MongoDB async per Python           |
-| **Frontend**           | [React 19](https://react.dev/) + [TypeScript](https://www.typescriptlang.org/) | UI reattiva type-safe                     |
+| **Frontend**           | [React 19](https://react.dev/) (JavaScript)                                    | Interfaccia utente a componenti           |
 | **Build tool**         | [Vite](https://vitejs.dev/)                                                    | Dev server con HMR e build ottimizzato    |
-| **Stili**              | [SCSS (BEM)](https://getbem.com/)                                              | CSS modulare senza framework esterni      |
+| **Stili**              | CSS Modules + variabili CSS (`index.css`)                                      | Un file CSS per pagina, senza framework   |
 | **Grafici**            | [Recharts](https://recharts.org/)                                              | Visualizzazione dati (leaderboard charts) |
-| **Routing**            | [React Router v7](https://reactrouter.com/)                                    | Client-side routing con loader            |
-| **Form**               | [React Hook Form](https://react-hook-form.com/)                                | Gestione form performante                 |
-| **HTTP client**        | [Axios](https://axios-http.com/)                                               | Chiamate API con interceptor JWT          |
+| **Routing**            | [React Router v7](https://reactrouter.com/) (`react-router-dom`)               | Navigazione lato client, rotte protette   |
+| **Dati dal server**    | [TanStack Query](https://tanstack.com/query)                                   | Chiamate API, cache, stati di caricamento |
+| **Notifiche**          | [react-toastify](https://fkhadra.github.io/react-toastify/)                    | Messaggi a comparsa (successo/errore)     |
 | **Reverse proxy**      | [Traefik](https://traefik.io/)                                                 | Routing, TLS automatico (Let's Encrypt)   |
 | **Containerizzazione** | [Docker Compose](https://docs.docker.com/compose/)                             | Orchestrazione servizi (dev + prod)       |
 | **Package manager**    | [uv](https://docs.astral.sh/uv/) (backend), npm (frontend)                     | Gestione dipendenze                       |
-| **Testing**            | pytest + httpx (backend), Vitest (frontend)                                    | Test DB, API e componenti                 |
-| **Linting**            | Ruff + Black (backend), ESLint + Prettier (frontend)                           | Qualità del codice                        |
+| **Testing**            | pytest + httpx (backend)                                                       | Test DB e API (nessun test automatico nel frontend) |
+| **Linting**            | Ruff + Black (backend), ESLint (frontend)                                      | Qualità del codice                        |
 
 ---
 
@@ -81,24 +74,27 @@ polibench/
 │       ├── db/                 # Smoke test database
 │       └── routers/            # Test API end-to-end
 │
-├── frontend/                   # Web app React
+├── frontend/                   # Web app React (JavaScript)
 │   ├── src/
-│   │   ├── components/         # Componenti UI (common, auth, leaderboard, layout)
-│   │   ├── contexts/           # React Context (auth, snackbar)
-│   │   ├── hooks/              # Custom hooks
-│   │   ├── models/             # Tipi TypeScript
-│   │   ├── routes/             # Pagine (home, datasets, models, experiments, leaderboard, …)
-│   │   ├── services/           # Chiamate API (auth, dataset, experiment, leaderboard, …)
-│   │   └── styles/             # SCSS organizzato in BEM
+│   │   ├── pages/              # Una pagina per file (Home, Dataset, Modelli, Leaderboard, …)
+│   │   ├── components/         # Componenti riusati (Layout, EmptyState, FilterMenu, grafici, …)
+│   │   ├── contexts/           # Sessione utente (AuthContext e AuthProvider)
+│   │   ├── hooks/              # Hook per le chiamate al backend (useDatasets, useModels, …)
+│   │   ├── utils/              # Funzioni di supporto (date, metriche, controllo del CSV)
+│   │   ├── styles/             # Un file .module.css per pagina o componente
+│   │   ├── App.jsx             # Tabella delle rotte
+│   │   ├── main.jsx            # Punto di ingresso
+│   │   └── index.css           # Variabili di colore, tipografia, regole globali
 │   └── public/                 # Asset statici
 │
 ├── docs/                       # Documentazione estesa
-│   ├── backend/                # 15 documenti (panoramica → sviluppi futuri)
-│   └── frontend/               # 4 documenti (overview, tecnologie, architettura, SCSS)
+│   ├── backend/                
+│   └── frontend/
 │
 ├── docker-compose.yml          # Sviluppo locale (hot reload)
-├── docker-compose.prod.yml     # Produzione (TLS, build ottimizzate)
+├── docker-compose.prod.yml     # Produzione (non preparata per il frontend, vedi più sotto)
 ├── .env.example                # Template variabili d'ambiente
+├── GUIDA-AVVIO.md              # Guida passo passo per avviare il progetto
 └── LICENSE                     # MIT
 ```
 
@@ -124,24 +120,23 @@ polibench/
 └──────────────────────────────────────────┘
 ```
 
-I router sono volutamente **sottili**: ricevono la richiesta, delegano al service layer e restituiscono la risposta.
-Tutta la logica (risoluzione UUID → ObjectId, denormalizzazione, query leaderboard) vive nei service.
+I router sono volutamente **sottili**: ricevono la richiesta, delegano al service layer e restituiscono la risposta. Tutta la logica (risoluzione UUID → ObjectId, denormalizzazione, query leaderboard) vive nei service.
 
 ### Frontend — layout
 
 ```
-┌────────────────────────────────────────────────────┐
-│  TopMenuBar (logo, profilo, login/logout)          │
-├──────────────┬─────────────────────────────────────┤
-│  Sidebar     │  Contenuto principale               │
-│              │                                     │
-│  Dashboard   │  PageHeader                         │
-│  Leaderboard │  KPI Cards / Tabelle / Grafici      │
-│  Datasets    │  Form di submission                 │
-│  Models      │  Dettagli entità                    │
-│  Experiments │                                     │
-└──────────────┴─────────────────────────────────────┘
+┌──────────────────────────────────────────────────────────────┐
+│  Menu in alto: logo, pagine (Home, Leaderboard, Submit        │
+│  Experiment, Models, Datasets, Users), profilo / login        │
+├──────────────────────────────────────────────────────────────┤
+│                                                              │
+│  Contenuto della pagina (larghezza massima, centrato):       │
+│  liste e schede, form, dettagli, filtri e grafici            │
+│                                                              │
+└──────────────────────────────────────────────────────────────┘
 ```
+
+Il frontend parla con il backend solo con chiamate `fetch` agli indirizzi `/api/v1/...`: con Docker le inoltra Traefik (porta 80), con `npm run dev` le inoltra Vite (da `http://localhost:5173` verso `http://localhost:8000`). Non serve nessun indirizzo da configurare. I dettagli sono in [`docs/frontend/00_overview.md`](docs/frontend/00_overview.md).
 
 ---
 
@@ -163,14 +158,18 @@ Tutta la logica (risoluzione UUID → ObjectId, denormalizzazione, query leaderb
 
 ## Avvio rapido
 
+La guida passo passo, pensata anche per chi non conosce Docker, è in [`GUIDA-AVVIO.md`](GUIDA-AVVIO.md). Qui il riassunto.
+
 ### Prerequisiti
 
 - [Docker](https://docs.docker.com/get-docker/) e [Docker Compose](https://docs.docker.com/compose/install/)
+- [Git](https://git-scm.com/)
+- Le porte **80, 5173, 8000, 8090, 27017** libere (se hai altre copie di Polibench accese, fermale con `docker compose stop`)
 
 ### 1. Clona il repository
 
 ```bash
-git clone https://github.com/baraff/polibench.git
+git clone -b newFrontend https://github.com/Vito150304/polibench.git polibench
 cd polibench
 ```
 
@@ -178,53 +177,54 @@ cd polibench
 
 ```bash
 cp .env.example .env
-# Modifica .env con i tuoi valori (vedi sezione "Configurazione" più sotto)
 ```
 
-### 3. Avvia lo stack in sviluppo
+Per un primo avvio in locale bastano **due modifiche** nel file `.env`: `SECRET_KEY` (una sequenza casuale di almeno 32 caratteri, per esempio con `openssl rand -hex 32`) e `FIRST_SUPERUSER_PASSWORD` (la password dell'amministratore). Gli altri valori si possono lasciare così come sono; la sezione "Configurazione" più sotto li descrive. Il file `.env` non va mai committato: contiene password e chiavi segrete. La [guida di avvio](GUIDA-AVVIO.md) spiega ogni passo.
+
+### 3. Avvia lo stack
 
 ```bash
-docker compose watch
+docker compose up -d --build
 ```
 
-Questo avvia tutti i servizi con hot reload per backend e frontend.
+Parte tutto: database, backend, frontend, reverse proxy e Mongo Express. Per spegnere tenendo i dati usa `docker compose stop`; per riaccendere `docker compose up -d`.
 
-### 4. Accedi all'applicazione
+### 4. Popola il database con dati di esempio
+
+```bash
+docker compose exec backend uv run python scripts/seed.py --mode demo
+```
+
+Modalità disponibili del seed:
+
+- `minimal`: seed rapido con 1 dataset/versione + 1 modello + 1 esperimento.
+- `demo`: seed esteso multi-dataset/multi-versione con stati esperimenti misti e metric import realistici.
+- `edge`: casi limite validi per test UI/consistenza (senza dati volutamente invalidi).
+
+Per svuotare il database prima di ripopolarlo esiste l'opzione `--reset` (per un primo avvio non serve: lancia il comando una volta sola).
+
+### 5. Apri l'applicazione
 
 | Servizio              | URL                                                              |
 |-----------------------|------------------------------------------------------------------|
-| **Frontend**          | [http://localhost](http://localhost)                             |
+| **Frontend (Docker)** | [http://localhost](http://localhost)                             |
 | **API root**          | [http://localhost/api/v1](http://localhost/api/v1)               |
 | **Swagger UI**        | [http://localhost/docs](http://localhost/docs)                   |
 | **ReDoc**             | [http://localhost/redoc](http://localhost/redoc)                 |
 | **Mongo Express**     | [http://localhost/mongo-express](http://localhost/mongo-express) |
 | **Traefik Dashboard** | [http://localhost:8090](http://localhost:8090)                   |
 
-### 5. Popola il database con dati di esempio (opzionale)
+Con il frontend avviato da Docker apri sempre `http://localhost`, **senza** `:5173`: la porta 5173 è l'accesso interno del container e non inoltra le chiamate al backend, quindi non funziona correttamente.
 
-```bash
-docker compose exec backend uv run python scripts/seed.py --mode minimal
-```
+Se invece stai lavorando sul frontend con `npm run dev` (vedi "Sviluppo locale"), il frontend è su [http://localhost:5173](http://localhost:5173) e `http://localhost` mostra "404 page not found", perché il container del frontend è fermo. Gli altri link della tabella (API, Swagger, ReDoc, Mongo Express, Traefik) funzionano in entrambi i casi.
 
-Per svuotare il database prima di popolare:
+Per entrare come amministratore scegli **Login** e usa l'email scritta in `FIRST_SUPERUSER` e la password impostata al punto 2. Senza login puoi già consultare leaderboard, dataset e modelli.
 
-```bash
-docker compose exec backend uv run python scripts/seed.py --mode demo --reset
-```
-
-Modalità disponibili:
-
-- `minimal`: seed rapido con 1 dataset/versione + 1 modello + 1 esperimento.
-- `demo`: seed esteso multi-dataset/multi-versione con stati esperimenti misti e metric import realistici.
-- `edge`: casi limite validi per test UI/consistenza (senza dati volutamente invalidi).
-
-Note seed:
+Note sul seed:
 
 - fixture YAML registry reali in `backend/scripts/fixtures/datarec_registry/`
 - metriche esperimenti demo importate da CSV separati (non confuse con dataset characteristics YAML)
-- `demo` include fixture per testare `Show best configuration`: `amazon_books` v2023
-  con ranking metric trade-off (`ndcg@10`, `recall@20`, `hit@10`) e `movielens` v1m
-  con metriche rating minimizzate (`rmse`, `mae`)
+- `demo` include fixture per testare `Show best configuration`: `amazon_books` v2023 con ranking metric trade-off (`ndcg@10`, `recall@20`, `hit@10`) e `movielens` v1m con metriche rating minimizzate (`rmse`, `mae`)
 
 ---
 
@@ -246,13 +246,23 @@ Il server sarà disponibile su `http://127.0.0.1:8000`.
 
 ### Frontend
 
+Il modo più semplice per lavorare sul frontend è tenere acceso il resto con Docker e fermare solo il container del frontend:
+
 ```bash
+docker compose up -d
+docker compose stop frontend
 cd frontend
 npm install     # Installa le dipendenze
 npm run dev     # Avvia il dev server con hot reload
 ```
 
-Il frontend sarà disponibile su `http://localhost:5173`.
+Il frontend sarà disponibile su [http://localhost:5173](http://localhost:5173). Il server di sviluppo inoltra le chiamate `/api` al backend in Docker (`http://localhost:8000`, vedi `frontend/vite.config.js`), quindi il resto dello stack deve essere acceso.
+
+Mentre lavori così:
+
+- usa `http://localhost:5173`, non `http://localhost`: finché il container del frontend è fermo, `http://localhost` risponde "404 page not found";
+- il link di verifica dell'email stampato nei log del backend comincia con `http://localhost/verify-email?token=...`: aggiungi `:5173` dopo `localhost` (`http://localhost:5173/verify-email?token=...`);
+- quando hai finito, ferma `npm run dev` (Ctrl+C) e ricostruisci il frontend in Docker con `docker compose up -d --build frontend`: da quel momento torna a funzionare `http://localhost`.
 
 ---
 
@@ -281,19 +291,22 @@ uv run pytest -v
 
 ### Frontend
 
+Il frontend non ha test automatici. Si controlla la qualità del codice con ESLint (lo stesso controllo della CI):
+
 ```bash
 cd frontend
-npm run test
+npm run lint
 ```
 
 ---
 
 ## Configurazione
 
-Tutte le variabili d'ambiente sono definite nel file `.env` alla radice del progetto. Un template con valori di esempio
-è disponibile in [`.env.example`](.env.example).
+Tutte le variabili d'ambiente sono definite nel file `.env` alla radice del progetto. Un template con valori di esempio è disponibile in [`.env.example`](.env.example).
 
 ### Variabili principali
+
+Il frontend non legge variabili d'ambiente: chiama sempre `/api/v1/...` sullo stesso indirizzo da cui è servito. `VITE_BACKEND_API_URL` e `VITE_PWD_SIGNUP_ENABLED` sono ancora presenti in `.env.example` (restano dal progetto originale), ma il codice del frontend non le usa.
 
 | Variabile                  | Descrizione                                                  | Default                    |
 |----------------------------|--------------------------------------------------------------|----------------------------|
@@ -308,13 +321,12 @@ Tutte le variabili d'ambiente sono definite nel file `.env` alla radice del prog
 | `MONGO_DB`                 | Nome del database                                            | `polibench`                |
 | `MONGO_USER`               | Username MongoDB                                             | —                          |
 | `MONGO_PASSWORD`           | Password MongoDB                                             | —                          |
-| `VITE_BACKEND_API_URL`     | URL dell'API usato dal frontend                              | `http://localhost/api/v1/` |
-| `FRONTEND_URL`             | URL del frontend (per link di verifica email)                | `http://localhost:5173`    |
+| `STACK_NAME`               | Nome dello stack Docker (separa i dati di copie diverse)     | `polibench`                |
+| `FRONTEND_URL`             | URL del frontend (per link di verifica email)                | `http://localhost`         |
 
 ### SMTP (invio email di verifica)
 
-Polibench supporta la verifica dell'email degli utenti registrati. Configura un provider SMTP per abilitare l'invio. Se
-SMTP non è configurato, il link di verifica viene stampato nella console del backend.
+Polibench supporta la verifica dell'email degli utenti registrati. Configura un provider SMTP per abilitare l'invio. Se SMTP non è configurato, il link di verifica viene stampato nella console del backend (per leggerlo: `docker compose logs backend | grep "Link di verifica"`).
 
 Opzioni supportate:
 
@@ -324,13 +336,11 @@ Opzioni supportate:
 
 ### SSO Google (opzionale)
 
-Per abilitare il login con Google, configura `GOOGLE_CLIENT_ID` e `GOOGLE_CLIENT_SECRET` ottenuti
-dalla [Google Cloud Console](https://console.cloud.google.com/). Lascia vuoti per disabilitare.
+Per abilitare il login con Google, configura `GOOGLE_CLIENT_ID` e `GOOGLE_CLIENT_SECRET` ottenuti dalla [Google Cloud Console](https://console.cloud.google.com/). Lascia vuoti per disabilitare.
 
 ### Mongo Express
 
-Il pannello web Mongo Express è protetto da HTTP Basic Auth. Configura `MONGO_EXPRESS_USER` e `MONGO_EXPRESS_PASSWORD`
-nel file `.env`. In produzione cambia sempre le credenziali di default.
+Il pannello web Mongo Express è protetto da HTTP Basic Auth. Configura `MONGO_EXPRESS_USER` e `MONGO_EXPRESS_PASSWORD` nel file `.env`. In produzione cambia sempre le credenziali di default.
 
 ---
 
@@ -340,8 +350,9 @@ Il file [`docker-compose.prod.yml`](docker-compose.prod.yml) è configurato per 
 
 - **Traefik** come reverse proxy con TLS automatico (Let's Encrypt)
 - Redirect automatico HTTP → HTTPS e www → non-www
-- Frontend compilato e servito da **nginx**
 - Mongo Express protetto e accessibile su `/mongo-express`
+
+> **Nota.** In questa versione la parte di produzione è ereditata dal progetto originale e **non è stata provata**: il frontend ha solo il `Dockerfile.development`, mentre `docker-compose.prod.yml` cerca un `frontend/Dockerfile` (build compilata servita da un web server) che non è stato scritto. Per un uso reale servirà prepararlo.
 
 ### Avviare in produzione
 
@@ -421,8 +432,7 @@ La documentazione interattiva completa è disponibile su `/docs` (Swagger UI) e 
 - `dataset_yaml_raw`: metadata catalografici dataset-level (`datasets/*.yml`)
 - `version_yaml_raw`: definizione version-level con `sources` e `resources` (`versions/*_*.yml`)
 - `characteristics_yaml_raw`: dataset characteristics (`metrics/*_*.yml`)
-- `pipeline_yaml_raw`: compatibilità transitoria in create-version; la source of truth pipeline è il model `Pipeline`
-  (`yaml_raw` + `blocks`)
+- `pipeline_yaml_raw`: compatibilità transitoria in create-version; la source of truth pipeline è il model `Pipeline` (`yaml_raw` + `blocks`)
 
 Le **dataset characteristics** (`n_users`, `density`, `gini_*`) restano in `DatasetVersion`;  
 le **experiment metrics** (`ndcg`, `recall`, `rmse`, ...) entrano solo in `ExperimentMetric` via CSV import.
@@ -456,37 +466,35 @@ La cartella [`docs/`](docs/) contiene documentazione estesa divisa per area:
 
 ### Frontend (`docs/frontend/`)
 
-| File                                                     | Contenuto                             |
-|----------------------------------------------------------|---------------------------------------|
-| [`00_overview.md`](docs/frontend/00_overview.md)         | Panoramica e struttura                |
-| [`01_technologies.md`](docs/frontend/01_technologies.md) | Stack tecnologico frontend            |
-| [`02_architecture.md`](docs/frontend/02_architecture.md) | Architettura componenti e routing     |
-| [`03_scss.md`](docs/frontend/03_scss.md)                 | Organizzazione SCSS e convenzioni BEM |
+| File                                                     | Contenuto                                                                   |
+|----------------------------------------------------------|-----------------------------------------------------------------------------|
+| [`00_overview.md`](docs/frontend/00_overview.md)         | Struttura, rotte, sessione, chiamate al backend, leaderboard, stili         |
 
 ---
 
 ## Pagine dell'applicazione
 
-| Pagina                | Route                            | Descrizione                                         |
-|-----------------------|----------------------------------|-----------------------------------------------------|
-| Home                  | `/`                              | Landing page con panoramica del progetto            |
-| Login                 | `/login`                         | Accesso con email/password o Google SSO             |
-| Registrazione         | `/register`                      | Registrazione nuovo utente                          |
-| Verifica email        | `/verify-email`                  | Conferma indirizzo email                            |
-| Profilo               | `/profile`                       | Profilo utente (protetta)                           |
-| Datasets              | `/datasets`                      | Lista di tutti i dataset                            |
-| Dettaglio dataset     | `/datasets/:uuid`                | Informazioni dataset + lista versioni               |
-| Dettaglio versione    | `/dataset-versions/:uuid`        | Sources & Resources ad accordion (padre→figlie), YAML e lista pipeline |
-| Dettaglio pipeline    | `/pipelines/:uuid`               | Chain blocchi pipeline, YAML e lista esperimenti    |
-| Nuovo dataset         | `/datasets/new`                  | Form creazione dataset (protetta)                   |
-| Modelli               | `/models`                        | Lista di tutti i modelli                            |
-| Dettaglio modello     | `/models/:uuid`                  | Informazioni e esperimenti del modello              |
-| Nuovo modello         | `/models/new`                    | Form registrazione modello (protetta)               |
-| Leaderboard           | `/leaderboard`                   | Classifica globale con filtri e grafici             |
-| Dettaglio esperimento | `/experiments/:uuid`             | Dettaglio di un esperimento e relative metriche     |
-| Nuovo esperimento     | `/experiments/new`               | Form submission esperimento (protetta)              |
-| Submission metriche   | `/experiments/:uuid/metrics/new` | Form invio batch metriche (protetta)                |
-| Gestione utenti       | `/users`                         | Pannello admin per la gestione utenti (solo admin)  |
+Le pagine marcate "protetta" richiedono di aver fatto il login: se non lo sei, l'app ti porta a `/login`.
+
+| Pagina                       | Route                                            | Descrizione                                                       |
+|------------------------------|--------------------------------------------------|-------------------------------------------------------------------|
+| Home                         | `/`                                              | Presentazione, percorso in sei passi, collegamenti rapidi         |
+| Login                        | `/login`                                         | Accesso con email e password                                      |
+| Registrazione                | `/register`                                      | Registrazione di un nuovo utente                                  |
+| Email inviata                | `/email-sent`                                    | Conferma dell'invio dell'email di verifica                        |
+| Verifica email               | `/verify-email`                                  | Conferma dell'indirizzo email (link ricevuto)                     |
+| Profilo                      | `/profile`                                       | Dati dell'utente, modifica e cancellazione dell'account (protetta) |
+| Utenti                       | `/users`                                         | Elenco utenti (protetta, solo superutente)                        |
+| Dataset                      | `/datasets`                                      | Elenco dei dataset con ricerca                                    |
+| Dettaglio dataset            | `/datasets/:dataset_uuid`                        | Informazioni, versioni e download dei file YAML                   |
+| Nuovo dataset                | `/register-dataset`                              | Form di registrazione (protetta)                                  |
+| Nuova versione               | `/datasets/:dataset_uuid/create-version`         | Creazione di una versione da YAML con anteprima (protetta)        |
+| Dettaglio versione           | `/dataset-versions/:version_uuid`                | Pipeline, esperimenti e relative metriche (protetta)              |
+| Nuova pipeline               | `/dataset-versions/:version_uuid/create-pipeline`| Creazione di una pipeline da YAML con anteprima (protetta)        |
+| Modelli                      | `/models`                                        | Elenco dei modelli                                                |
+| Nuovo modello                | `/register-model`                                | Form di registrazione (protetta)                                  |
+| Nuovo esperimento            | `/experiment`                                    | Invio di un esperimento, con caricamento opzionale del CSV (protetta) |
+| Leaderboard                  | `/leaderboard/:datasetId?/:versionId?/:pipelineId?` | Classifica con filtri e grafici                                |
 
 ---
 
@@ -496,6 +504,7 @@ Questo progetto è distribuito con licenza [MIT](LICENSE).
 
 ---
 
-## Autore
+## Autori
 
-Sviluppato da [Raffaele Grieco](https://github.com/baraff) come progetto di tesi.
+- **Backend, documentazione del backend e progetto originale:** Raffaele Grieco.
+- **Frontend (riprogettazione completa dell'interfaccia):** Vito Burdi, tesi di laurea triennale in Ingegneria Informatica e dell'Automazione, Politecnico di Bari, relatore Prof. Antonio Ferrara.

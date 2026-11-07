@@ -1,16 +1,36 @@
-# React + Vite
+# Polibench — frontend
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Interfaccia web di Polibench: React 19 + Vite, in JavaScript.
 
-Currently, two official plugins are available:
+## Comandi
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+```bash
+npm install     # installa le dipendenze
+npm run dev     # server di sviluppo su http://localhost:5173 (inoltra /api a http://localhost:8000)
+npm run build   # build di produzione
+npm run lint    # controllo ESLint (lo stesso della CI)
+```
 
-## React Compiler
+## Sviluppare con Docker acceso
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+Il modo più semplice è tenere acceso il resto dello stack con Docker e fermare solo il container del frontend:
 
-## Expanding the ESLint configuration
+```bash
+docker compose up -d
+docker compose stop frontend
+cd frontend
+npm run dev
+```
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+- Apri `http://localhost:5173`. `http://localhost` risponde "404 page not found" finché il container del frontend è fermo.
+- Quando hai finito, ferma `npm run dev` (Ctrl+C) e ricostruisci il frontend in Docker: `docker compose up -d --build frontend`. Da quel momento torna a funzionare `http://localhost`.
+
+## Dove guardare
+
+- `src/App.jsx`: le rotte.
+- `src/pages/`: una pagina per file, con il suo CSS in `src/styles/`.
+- `src/hooks/`: le chiamate al backend.
+- `src/index.css`: colori, font, tema chiaro e scuro.
+
+La descrizione completa è in [`docs/frontend/00_overview.md`](../docs/frontend/00_overview.md), nella radice del repository.
+

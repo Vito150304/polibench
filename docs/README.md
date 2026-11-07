@@ -1,7 +1,6 @@
 # Documentazione Polibench
 
-Questa cartella contiene la documentazione tecnica completa del progetto **Polibench**, una piattaforma per la
-valutazione comparativa di modelli di raccomandazione.
+Questa cartella contiene la documentazione tecnica completa del progetto **Polibench**, una piattaforma per la valutazione comparativa di modelli di raccomandazione.
 
 ## Struttura
 
@@ -27,9 +26,7 @@ docs/
 │   ├── domain_model.puml           ← diagramma UML entità (DB layer attuale)
 │   └── domain_model_v2.puml        ← diagramma UML target (post-refactor)
 └── frontend/
-    ├── 00_overview.md              ← panoramica generale del frontend
-    ├── 01_technologies.md          ← stack tecnologico frontend
-    └── 02_architecture.md          ← architettura React, routing, contexts
+    └── 00_overview.md              ← panoramica del frontend (struttura, rotte, sessione, leaderboard, stili)
 ```
 
 ## Come leggere questa documentazione
@@ -50,4 +47,4 @@ Per chi si avvicina al progetto per la prima volta, il percorso consigliato è:
 12. `backend/08_testing.md` — capire la strategia di test
 13. `backend/13_deployment.md` — capire come avviare e distribuire il sistema
 14. `backend/14_future_work.md` — limiti attuali e sviluppi futuri
-15. `frontend/00_overview.md` + `frontend/02_architecture.md` — capire il frontend
+15. `frontend/00_overview.md` — capire il frontend
