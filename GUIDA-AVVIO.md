@@ -50,7 +50,7 @@ Per generare `SECRET_KEY` puoi usare questo comando (serve solo Docker):
 ```bash
 docker run --rm python:3-slim python -c "import secrets; print(secrets.token_urlsafe(32))"
 ```
-
+La prima volta Docker scarica l’immagine e scrive diverse righe (Pulling, Digest: sha256:..., Status): ignorale. La chiave è l’ultima riga, di circa 43 caratteri tra lettere, numeri, - e _. Se non la vedi, lancia di nuovo lo stesso comando: la seconda volta stampa solo la chiave
 In alternativa, da Git Bash, Mac o Linux, funziona anche:
 
 ```bash
